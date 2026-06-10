@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ── Primary SEO ── -->
+<title id="page-title">Blog — Korean Salaryman</title>
+<meta id="meta-desc" name="description" content="Every post from Korean Salaryman — trends, daily life, and culture in Korea, written from the inside. Browse the feed by category.">
+<meta name="keywords" content="Korea blog, Korean life, Korean culture, K-trends, living in Korea, Seoul salaryman, Korea explained">
+<meta name="author" content="Korean Salaryman">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<link id="canonical" rel="canonical" href="https://en.koreansalaryman.com/blog.html">
+
+<!-- ── Open Graph ── -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Korean Salaryman">
+<meta id="og-title" property="og:title" content="Blog — Korean Salaryman">
+<meta id="og-desc" property="og:description" content="Every post from Korean Salaryman — trends, daily life, and culture in Korea, written from the inside.">
+<meta property="og:url" content="https://en.koreansalaryman.com/blog.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://en.koreansalaryman.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- ── Twitter Card ── -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Blog — Korean Salaryman">
+<meta name="twitter:image" content="https://en.koreansalaryman.com/og-image.png">
+
+<!-- ── Search engine verification ── -->
+<meta name="google-site-verification" content="1P5W0PRuRHTv3TV43XU5YSGBQR1V76lyAZF1wxjKpLI">
+<meta name="naver-site-verification" content="ad5bce9f4de14cbe7ccf111ca46b1114e52a25ff">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=Noto+Serif+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--white:#fff;--bg:#f8f7f4;--bg2:#f0ede8;--navy:#1a2640;--navy2:#253352;--navy3:#0f1824;--point:#c17f3e;--point2:#d4924e;--point-light:#f5ead8;--green:#2d6a4f;--green-light:#d8f0e5;--text1:#1a1a1a;--text2:#444;--text3:#888;--border:#e8e4de;--border2:#d4cfc8;--gold:#c8a96e;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text1);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+/* ── Nav (kept consistent with home) ── */
+header{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
+.hd{max-width:1080px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px;}
+.logo{display:flex;flex-direction:column;text-decoration:none;}
+.logo-kr{font-family:'Noto Serif KR',serif;font-size:17px;font-weight:700;color:var(--navy);letter-spacing:-0.02em;}
+.logo-kr span{color:var(--point);}
+.logo-en{font-size:8px;color:var(--text3);letter-spacing:0.25em;margin-top:1px;}
+.desktop-nav{display:flex;align-items:center;gap:2px;}
+.desktop-nav a{color:var(--text2);text-decoration:none;font-size:13px;font-weight:500;padding:6px 14px;border-radius:6px;transition:all 0.15s;}
+.desktop-nav a:hover,.desktop-nav a.active{color:var(--navy);font-weight:700;}
+.nav-divider{width:1px;height:14px;background:var(--border2);margin:0 6px;}
+.btn-cta{display:inline-flex;align-items:center;background:var(--point);color:var(--white);font-size:12px;font-weight:700;padding:8px 18px;border-radius:6px;text-decoration:none;transition:all 0.15s;}
+.btn-cta:hover{background:var(--point2);transform:translateY(-1px);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;}
+.hamburger span{display:block;width:20px;height:1.5px;background:var(--navy);border-radius:2px;}
+.mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);padding:12px 20px 20px;flex-direction:column;gap:2px;z-index:99;box-shadow:0 8px 24px rgba(0,0,0,0.08);}
+.mobile-menu a{color:var(--text2);text-decoration:none;font-size:15px;font-weight:500;padding:12px 16px;border-radius:8px;display:block;}
+.mobile-menu .btn-cta{margin-top:8px;justify-content:center;border-radius:8px;}
+.mobile-menu.open{display:flex!important;}
+
+/* ── Hero ── */
+.hero{background:var(--navy3);padding:60px 24px 52px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.03) 1px,transparent 1px);background-size:28px 28px;}
+.hero-glow{position:absolute;right:-150px;top:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(193,127,62,0.18),transparent 65%);}
+.hero-inner{max-width:760px;margin:0 auto;position:relative;z-index:1;}
+.hero-badge{display:inline-flex;align-items:center;background:rgba(193,127,62,0.15);border:1px solid rgba(193,127,62,0.3);padding:5px 14px;border-radius:100px;margin-bottom:20px;}
+.hero-badge span{font-size:11px;color:var(--gold);letter-spacing:0.15em;font-weight:600;}
+.hero h1{font-family:'Noto Serif KR',serif;font-size:36px;font-weight:900;color:var(--white);line-height:1.25;letter-spacing:-0.03em;margin-bottom:14px;}
+.hero h1 em{color:var(--point);font-style:normal;}
+.hero-desc{font-size:14px;color:rgba(255,255,255,0.55);line-height:1.85;max-width:520px;}
+
+.wrap{max-width:1080px;margin:0 auto;padding:40px 24px 60px;}
+
+/* ── Category tabs ── */
+.cat-tabs{display:flex;gap:8px;margin-bottom:28px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin;}
+.cat-tabs::-webkit-scrollbar{height:4px;}
+.cat-tabs::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+.cat-tab{flex-shrink:0;background:var(--white);border:1px solid var(--border);color:var(--text2);font-size:13px;font-weight:500;padding:10px 18px;border-radius:100px;cursor:pointer;transition:all 0.15s;display:inline-flex;align-items:center;gap:6px;text-decoration:none;}
+.cat-tab:hover{border-color:var(--point);color:var(--navy);}
+.cat-tab.active{background:var(--navy);color:var(--white);border-color:var(--navy);font-weight:700;}
+.cat-tab .count{font-size:11px;opacity:0.7;font-weight:500;}
+.cat-tab.active .count{opacity:0.9;}
+
+/* ── Search + sort ── */
+.controls{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;}
+.search-wrap{flex:1;min-width:240px;position:relative;}
+.search-input{width:100%;background:var(--white);border:1px solid var(--border);border-radius:10px;padding:12px 42px 12px 44px;font-size:14px;color:var(--text1);font-family:inherit;transition:border-color 0.15s;}
+.search-input:focus{outline:none;border-color:var(--point);}
+.search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--text3);}
+.search-clear{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:var(--bg2);border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;color:var(--text3);font-size:14px;display:none;align-items:center;justify-content:center;}
+.search-clear.show{display:flex;}
+.search-clear:hover{background:var(--border);}
+.sort-select{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:12px 16px;font-size:14px;color:var(--text2);font-family:inherit;cursor:pointer;}
+.sort-select:focus{outline:none;border-color:var(--point);}
+
+/* ── Result count ── */
+.result-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.result-count{font-size:13px;color:var(--text3);}
+.result-count strong{color:var(--navy);font-weight:700;}
+.result-tag{font-size:11px;padding:4px 10px;background:var(--point-light);color:var(--point);border-radius:100px;font-weight:700;}
+
+/* ── Post cards (with thumbnail) ── */
+.post-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:40px;}
+.post-card{background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:all 0.2s;text-decoration:none;color:inherit;display:flex;flex-direction:column;}
+.post-card:hover{border-color:var(--border2);box-shadow:0 6px 24px rgba(0,0,0,0.08);transform:translateY(-2px);}
+.post-thumb-box{width:100%;aspect-ratio:1200/630;background:linear-gradient(135deg,var(--navy),var(--navy2));position:relative;overflow:hidden;}
+.post-thumb-box img{width:100%;height:100%;object-fit:cover;display:block;}
+.post-thumb-box .fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:48px;}
+.post-thumb-box .fallback-glow{position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(193,127,62,0.3),transparent 65%);}
+.post-body{padding:16px 18px 18px;flex:1;display:flex;flex-direction:column;}
+.post-cat-badge{font-size:10px;font-weight:700;color:var(--point);letter-spacing:0.1em;margin-bottom:6px;display:block;}
+.post-card h3{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:600;color:var(--text1);line-height:1.5;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.post-summary{font-size:12px;color:var(--text3);line-height:1.6;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1;}
+.post-meta-row{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text3);margin-top:auto;padding-top:10px;border-top:1px solid var(--border);}
+.dot{width:3px;height:3px;border-radius:50%;background:var(--border2);}
+.seo-badge{margin-left:auto;background:var(--point-light);color:var(--point);padding:2px 8px;border-radius:100px;font-size:10px;font-weight:700;}
+
+/* ── Empty state ── */
+.empty-state{text-align:center;padding:60px 24px;background:var(--white);border:1px dashed var(--border2);border-radius:14px;}
+.empty-icon{font-size:44px;margin-bottom:16px;opacity:0.3;}
+.empty-title{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:8px;}
+.empty-desc{font-size:13px;color:var(--text3);line-height:1.6;}
+.empty-desc a{color:var(--point);font-weight:600;text-decoration:none;}
+
+/* ── Pagination ── */
+.pagination{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:36px;}
+.page-btn{background:var(--white);border:1px solid var(--border);color:var(--text2);font-size:13px;font-weight:500;width:36px;height:36px;border-radius:8px;cursor:pointer;transition:all 0.15s;display:inline-flex;align-items:center;justify-content:center;font-family:inherit;}
+.page-btn:hover:not(:disabled){border-color:var(--point);color:var(--navy);}
+.page-btn.active{background:var(--navy);color:var(--white);border-color:var(--navy);font-weight:700;}
+.page-btn:disabled{opacity:0.35;cursor:not-allowed;}
+.page-btn.arrow{width:auto;padding:0 12px;}
+.page-ellipsis{color:var(--text3);padding:0 4px;}
+
+/* ── Footer ── */
+footer{background:var(--navy3);padding:48px 24px;}
+.ft{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;}
+.ft-logo{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;color:var(--white);margin-bottom:8px;}
+.ft-logo span{color:var(--point);}
+.ft-tagline{font-size:12px;color:rgba(255,255,255,0.3);line-height:1.8;}
+.ft-col h4{font-size:12px;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:0.15em;margin-bottom:14px;}
+.ft-col a{display:block;font-size:13px;color:rgba(255,255,255,0.35);text-decoration:none;margin-bottom:8px;transition:color 0.15s;}
+.ft-col a:hover{color:rgba(255,255,255,0.7);}
+.ft-bottom{max-width:1080px;margin:36px auto 0;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,0.2);}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  .desktop-nav{display:none!important;}
+  .hamburger{display:flex!important;}
+  .hero h1{font-size:26px;}
+  .hero{padding:44px 24px 40px;}
+  .wrap{padding:28px 16px 44px;}
+  .post-grid{grid-template-columns:1fr;gap:14px;}
+  .ft{grid-template-columns:1fr!important;gap:28px;}
+  .ft-bottom{flex-direction:column;gap:8px;}
+  .controls{flex-direction:column;}
+  .search-wrap{min-width:100%;}
+  .result-meta{flex-direction:column;align-items:flex-start;gap:10px;}
+}
+</style>
+
+<!-- ── Google Analytics 4 ── -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5D0W7QRLMD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5D0W7QRLMD', {
+    page_title: document.title,
+    page_location: window.location.href
+  });
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hd">
+    <a href="/" class="logo">
+      <div class="logo-kr">Korean <span>Salaryman</span></div>
+      <div class="logo-en">KOREA, AS WE ACTUALLY LIVE IT</div>
+    </a>
+    <nav class="desktop-nav">
+      <a href="blog.html" class="active">Blog</a>
+      <a href="category-k-trends.html">K-Trends</a>
+      <a href="category-korean-life.html">Korean Life</a>
+      <a href="category-culture-explained.html">Culture</a>
+      <a href="about.html">About</a>
+      <div class="nav-divider"></div>
+      <a href="#newsletter" class="btn-cta">Subscribe</a>
+    </nav>
+    <button class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="blog.html">Blog</a>
+  <a href="category-k-trends.html">K-Trends</a>
+  <a href="category-korean-life.html">Korean Life</a>
+  <a href="category-culture-explained.html">Culture</a>
+  <a href="about.html">About</a>
+  <a href="#newsletter" class="btn-cta">Subscribe</a>
+</div>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-badge"><span id="hero-badge-text">ALL POSTS</span></div>
+    <h1 id="hero-title">Korea, <em>as we actually</em> live it</h1>
+    <p class="hero-desc" id="hero-desc">Trends, daily life, and the culture behind it — every post written from the inside by an anonymous Seoul salaryman, for a global audience.</p>
+  </div>
+</section>
+
+<div class="wrap">
+
+  <!-- ── Category tabs ── -->
+  <div class="cat-tabs" id="cat-tabs">
+    <div style="font-size:12px;color:var(--text3);padding:10px;">Loading categories...</div>
+  </div>
+
+  <!-- ── Search + sort ── -->
+  <div class="controls">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" id="search-input" placeholder="Search by title, summary, or tag..." autocomplete="off">
+      <button type="button" class="search-clear" id="search-clear" aria-label="Clear search">✕</button>
+    </div>
+    <select class="sort-select" id="sort-select" aria-label="Sort">
+      <option value="latest">Newest</option>
+      <option value="oldest">Oldest</option>
+      <option value="seo">SEO score</option>
+      <option value="title">Title</option>
+    </select>
+  </div>
+
+  <!-- ── Result count ── -->
+  <div class="result-meta">
+    <div class="result-count" id="result-count">—</div>
+    <div class="result-tag" id="result-tag" style="display:none;"></div>
+  </div>
+
+  <!-- ── Post grid ── -->
+  <div id="post-grid-container">
+    <div style="text-align:center;padding:40px;color:var(--text3);font-size:13px;">Loading posts...</div>
+  </div>
+
+  <!-- ── Pagination ── -->
+  <div class="pagination" id="pagination"></div>
+
+</div>
+
+<footer>
+  <div class="ft">
+    <div>
+      <div class="ft-logo">Korean <span>Salaryman</span></div>
+      <p class="ft-tagline">Korea, as we actually live it.</p>
+    </div>
+    <div class="ft-col">
+      <h4>CATEGORIES</h4>
+      <a href="category-k-trends.html">🔥 K-Trends</a>
+      <a href="category-korean-life.html">🍚 Korean Life</a>
+      <a href="category-culture-explained.html">🧭 Culture</a>
+      <a href="category-essay.html">✍️ Essays</a>
+    </div>
+    <div class="ft-col">
+      <h4>SITE</h4>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="mailto:pride93d@gmail.com">Contact</a>
+      <a href="https://koreansalaryman.com">한국어판</a>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <span>© 2026 Korean Salaryman. All rights reserved.</span>
+    <span>en.koreansalaryman.com</span>
+  </div>
+</footer>
+
+<script>
+function toggleMenu(){ document.getElementById('mobileMenu').classList.toggle('open'); }
+
+/* ═══════════════════════════════════════════════════════
+ *  Blog page main logic
+ * ═══════════════════════════════════════════════════════ */
+
+const PER_PAGE = 12;
+const CATEGORY_EMOJI = {
+  'all':'📚',
+  'k-trends':'🔥','korean-life':'🍚','culture-explained':'🧭','essay':'✍️'
+};
+
+const CATEGORY_LABEL = {
+  'all':'All',
+  'k-trends':'K-Trends', 'korean-life':'Korean Life',
+  'culture-explained':'Culture', 'essay':'Essays'
+};
+
+// SEO: per-category meta info
+const CATEGORY_META = {
+  'all':               { title:'Blog — Korean Salaryman', desc:'Every post from Korean Salaryman — trends, daily life, and culture in Korea, written from the inside.', hero:'Korea, <em>as we actually</em> live it' },
+  'k-trends':          { title:'K-Trends — Korean Salaryman', desc:'What is trending in Korea right now — the news, fads, and conversations everyone here is having.', hero:'What is <em>trending</em> in Korea' },
+  'korean-life':       { title:'Korean Life — Korean Salaryman', desc:'Real daily life in Korea — work, money, food, and the small routines that fill an ordinary day.', hero:'Real <em>daily life</em> in Korea' },
+  'culture-explained': { title:'Culture — Korean Salaryman', desc:'The culture behind it — the history, habits, and unspoken rules that explain how Korea actually works.', hero:'The <em>culture</em> behind it' },
+  'essay':             { title:'Essays — Korean Salaryman', desc:'Personal essays from a Seoul salaryman — honest reflections on living and working in Korea.', hero:'Personal <em>essays</em> from Seoul' }
+};
+
+let allPosts = [];
+let currentCat = 'all';
+let currentSort = 'latest';
+let currentPage = 1;
+let currentSearch = '';
+
+/* ─ Read URL params ─ */
+function readURLParams(){
+  const url = new URL(window.location.href);
+  const cat = url.searchParams.get('cat');
+  const q   = url.searchParams.get('q');
+  const p   = parseInt(url.searchParams.get('page') || '1', 10);
+  if (cat) currentCat = cat;
+  if (q)   currentSearch = q;
+  if (p > 0) currentPage = p;
+}
+
+function updateURL(){
+  const url = new URL(window.location.href);
+  if (currentCat && currentCat !== 'all') {
+    url.searchParams.set('cat', currentCat);
+  } else {
+    url.searchParams.delete('cat');
+  }
+  if (currentSearch) {
+    url.searchParams.set('q', currentSearch);
+  } else {
+    url.searchParams.delete('q');
+  }
+  if (currentPage > 1) {
+    url.searchParams.set('page', currentPage);
+  } else {
+    url.searchParams.delete('page');
+  }
+  window.history.replaceState({}, '', url);
+}
+
+/* ─ Utils ─ */
+function formatDate(s){
+  if (!s) return '—';
+  try {
+    const d = new Date(s);
+    const y = d.getFullYear();
+    const m = String(d.getMonth()+1).padStart(2,'0');
+    const day = String(d.getDate()).padStart(2,'0');
+    return `${y}.${m}.${day}`;
+  } catch(e) { return '—'; }
+}
+
+function readTime(txt){
+  if (!txt) return '2 min';
+  const len = txt.length;
+  const min = Math.max(1, Math.round(len / 900));
+  return `${min} min`;
+}
+
+function escapeHtml(s){
+  return String(s||'').replace(/[&<>"']/g, c => (
+    {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]
+  ));
+}
+
+/* ─ Dynamically update SEO meta tags ─ */
+function updateSEOMeta(){
+  const meta = CATEGORY_META[currentCat] || CATEGORY_META['all'];
+  document.title = meta.title;
+  document.getElementById('page-title').textContent = meta.title;
+  document.getElementById('meta-desc').setAttribute('content', meta.desc);
+  document.getElementById('og-title').setAttribute('content', meta.title);
+  document.getElementById('og-desc').setAttribute('content', meta.desc);
+  document.getElementById('hero-title').innerHTML = meta.hero;
+  document.getElementById('hero-desc').textContent = meta.desc;
+  document.getElementById('hero-badge-text').textContent =
+    (currentCat === 'all' ? 'ALL POSTS' : (CATEGORY_LABEL[currentCat] || currentCat).toUpperCase());
+
+  // Canonical URL
+  const canonical = 'https://en.koreansalaryman.com/blog.html' +
+    (currentCat !== 'all' ? `?cat=${encodeURIComponent(currentCat)}` : '');
+  document.getElementById('canonical').setAttribute('href', canonical);
+}
+
+/* ─ Render category tabs ─ */
+function renderCategoryTabs(){
+  const container = document.getElementById('cat-tabs');
+  const published = allPosts.filter(p => p.status === 'published');
+
+  // Count posts per category
+  const counts = { 'all': published.length };
+  published.forEach(p => {
+    const c = p.category || 'other';
+    counts[c] = (counts[c] || 0) + 1;
+  });
+
+  // Show in a fixed order (skip categories with no posts)
+  const catOrder = ['all','k-trends','korean-life','culture-explained','essay'];
+  const cats = catOrder.filter(c => counts[c] > 0 || c === 'all');
+
+  container.innerHTML = cats.map(cat => {
+    const active = cat === currentCat ? 'active' : '';
+    const count = counts[cat] || 0;
+    const label = CATEGORY_LABEL[cat] || cat;
+    return `<a href="blog.html${cat === 'all' ? '' : '?cat=' + encodeURIComponent(cat)}" class="cat-tab ${active}" data-cat="${escapeHtml(cat)}">
+      <span>${CATEGORY_EMOJI[cat] || '📝'}</span>
+      <span>${escapeHtml(label)}</span>
+      <span class="count">${count}</span>
+    </a>`;
+  }).join('');
+  
+  // Tabs are real links (for SEO), but handled smoothly via JS events
+  container.querySelectorAll('.cat-tab').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      currentCat = el.dataset.cat;
+      currentPage = 1;
+      currentSearch = '';
+      document.getElementById('search-input').value = '';
+      document.getElementById('search-clear').classList.remove('show');
+      updateURL();
+      updateSEOMeta();
+      renderCategoryTabs();
+      renderPosts();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+}
+
+/* ─ Filter + sort ─ */
+function getFilteredPosts(){
+  let result = allPosts.filter(p => p.status === 'published');
+
+  // Category filter
+  if (currentCat && currentCat !== 'all') {
+    result = result.filter(p => p.category === currentCat);
+  }
+
+  // Search filter
+  if (currentSearch) {
+    const q = currentSearch.toLowerCase();
+    result = result.filter(p => {
+      const title = (p.title || '').toLowerCase();
+      const summary = (p.summary || '').toLowerCase();
+      const keyword = (p.keyword || '').toLowerCase();
+      const tags = (p.tags || []).join(' ').toLowerCase();
+      return title.includes(q) || summary.includes(q) || keyword.includes(q) || tags.includes(q);
+    });
+  }
+  
+  // Sort
+  if (currentSort === 'latest') {
+    result.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  } else if (currentSort === 'oldest') {
+    result.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+  } else if (currentSort === 'seo') {
+    result.sort((a, b) => (b.seo_score || 0) - (a.seo_score || 0));
+  } else if (currentSort === 'title') {
+    result.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
+  }
+  
+  return result;
+}
+
+/* ─ Render post cards ─ */
+function renderPosts(){
+  const container = document.getElementById('post-grid-container');
+  const filtered = getFilteredPosts();
+  const totalCount = filtered.length;
+
+  // Result count
+  const countEl = document.getElementById('result-count');
+  const tagEl = document.getElementById('result-tag');
+  if (currentSearch) {
+    countEl.innerHTML = `<strong>${totalCount}</strong> result${totalCount === 1 ? '' : 's'} for '<strong>${escapeHtml(currentSearch)}</strong>'`;
+    tagEl.textContent = '🔍 Search';
+    tagEl.style.display = 'inline-block';
+  } else if (currentCat !== 'all') {
+    const _label = CATEGORY_LABEL[currentCat] || currentCat;
+    countEl.innerHTML = `<strong>${totalCount}</strong> post${totalCount === 1 ? '' : 's'} in <strong>${escapeHtml(_label)}</strong>`;
+    tagEl.textContent = CATEGORY_EMOJI[currentCat] || '📁';
+    tagEl.style.display = 'inline-block';
+  } else {
+    countEl.innerHTML = `<strong>${totalCount}</strong> post${totalCount === 1 ? '' : 's'} in total`;
+    tagEl.style.display = 'none';
+  }
+
+  if (totalCount === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">📭</div>
+        <div class="empty-title">No posts found</div>
+        <div class="empty-desc">
+          There are no posts ${currentSearch ? `matching '${escapeHtml(currentSearch)}'` : 'in this category'} yet.<br>
+          <a href="blog.html">View all posts</a>
+        </div>
+      </div>`;
+    document.getElementById('pagination').innerHTML = '';
+    return;
+  }
+
+  // Pagination
+  const totalPages = Math.ceil(totalCount / PER_PAGE);
+  if (currentPage > totalPages) currentPage = totalPages;
+  const startIdx = (currentPage - 1) * PER_PAGE;
+  const pagePosts = filtered.slice(startIdx, startIdx + PER_PAGE);
+
+  // Card HTML
+  let html = '<div class="post-grid">';
+  pagePosts.forEach(p => {
+    const emoji = CATEGORY_EMOJI[p.category] || '📝';
+    const _catLabel = CATEGORY_LABEL[p.category] || (p.category || '');
+    const thumbnail = p.thumbnail;
+    const seoScore = (typeof p.seo_score === 'number' && p.seo_score > 0)
+      ? `<span class="seo-badge" title="SEO score">⚡ ${Math.round(p.seo_score)}</span>` : '';
+    
+    html += `
+      <a class="post-card" href="/p/${encodeURIComponent(p.slug || p.filename.replace(/\.json$/,''))}.html">
+        <div class="post-thumb-box">
+          ${thumbnail 
+            ? `<img src="${escapeHtml(thumbnail)}" alt="${escapeHtml(p.title||'')}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+               <div class="fallback" style="display:none;"><div class="fallback-glow"></div><span>${emoji}</span></div>`
+            : `<div class="fallback"><div class="fallback-glow"></div><span>${emoji}</span></div>`
+          }
+        </div>
+        <div class="post-body">
+          <span class="post-cat-badge">${escapeHtml(_catLabel)}</span>
+          <h3>${escapeHtml(p.title||'')}</h3>
+          ${p.summary ? `<div class="post-summary">${escapeHtml(p.summary.slice(0,100))}</div>` : ''}
+          <div class="post-meta-row">
+            <span>${formatDate(p.created_at)}</span>
+            <div class="dot"></div>
+            <span>${readTime(p.summary||'')}</span>
+            ${seoScore}
+          </div>
+        </div>
+      </a>`;
+  });
+  html += '</div>';
+  container.innerHTML = html;
+  
+  renderPagination(totalPages);
+}
+
+/* ─ Pagination ─ */
+function renderPagination(totalPages){
+  const container = document.getElementById('pagination');
+  if (totalPages <= 1) { container.innerHTML = ''; return; }
+
+  let html = '';
+
+  // Previous button
+  html += `<button class="page-btn arrow" ${currentPage === 1 ? 'disabled' : ''} onclick="goToPage(${currentPage - 1})">← Prev</button>`;
+
+  // Page numbers (smart display: ±2 around current + first/last)
+  const pages = new Set([1, totalPages]);
+  for (let i = Math.max(1, currentPage-2); i <= Math.min(totalPages, currentPage+2); i++) {
+    pages.add(i);
+  }
+  const sorted = [...pages].sort((a,b) => a - b);
+  let prev = 0;
+  sorted.forEach(p => {
+    if (prev && p - prev > 1) html += `<span class="page-ellipsis">…</span>`;
+    html += `<button class="page-btn ${p === currentPage ? 'active' : ''}" onclick="goToPage(${p})">${p}</button>`;
+    prev = p;
+  });
+  
+  // Next button
+  html += `<button class="page-btn arrow" ${currentPage === totalPages ? 'disabled' : ''} onclick="goToPage(${currentPage + 1})">Next →</button>`;
+  
+  container.innerHTML = html;
+}
+
+window.goToPage = function(p){
+  currentPage = p;
+  updateURL();
+  renderPosts();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+/* ─ Search handler (debounced) ─ */
+let searchTimer = null;
+function handleSearch(e){
+  const val = e.target.value.trim();
+  document.getElementById('search-clear').classList.toggle('show', val.length > 0);
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    currentSearch = val;
+    currentPage = 1;
+    updateURL();
+    renderPosts();
+  }, 250);
+}
+
+/* ─ Init ─ */
+async function init(){
+  readURLParams();
+
+  try {
+    const res = await fetch('./posts/manifest.json?t=' + Date.now());
+    if (!res.ok) throw new Error('manifest fetch failed');
+    allPosts = await res.json();
+  } catch(e){
+    document.getElementById('post-grid-container').innerHTML =
+      '<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Could not load posts</div><div class="empty-desc">Please try again in a moment.</div></div>';
+    console.error('[Blog] manifest load failed', e);
+    return;
+  }
+
+  // Initial search value
+  document.getElementById('search-input').value = currentSearch;
+  if (currentSearch) {
+    document.getElementById('search-clear').classList.add('show');
+  }
+
+  // Event binding
+  document.getElementById('search-input').addEventListener('input', handleSearch);
+  document.getElementById('search-clear').addEventListener('click', () => {
+    document.getElementById('search-input').value = '';
+    document.getElementById('search-clear').classList.remove('show');
+    currentSearch = '';
+    currentPage = 1;
+    updateURL();
+    renderPosts();
+  });
+  document.getElementById('sort-select').addEventListener('change', (e) => {
+    currentSort = e.target.value;
+    currentPage = 1;
+    updateURL();
+    renderPosts();
+  });
+  
+  // First render
+  updateSEOMeta();
+  renderCategoryTabs();
+  renderPosts();
+}
+
+init();
+</script>
+</body>
+</html>

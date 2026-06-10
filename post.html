@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ── Primary SEO (dynamically updated via JS) ── -->
+<title>Korean Salaryman</title>
+<meta name="description" content="Korea, as we actually live it — first-person notes from a Seoul salaryman.">
+<meta name="author" content="Korean Salaryman">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<link rel="canonical" href="https://en.koreansalaryman.com/post.html" id="canonicalTag">
+
+<!-- ── Open Graph (dynamically updated via JS) ── -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Korean Salaryman">
+<meta property="og:title" content="Korean Salaryman" id="ogTitle">
+<meta property="og:description" content="" id="ogDesc">
+<meta property="og:url" content="https://en.koreansalaryman.com/post.html" id="ogUrl">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://en.koreansalaryman.com/og-image.png" id="ogImage">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://en.koreansalaryman.com/og-image.png" id="twImage">
+<meta property="article:author" content="Korean Salaryman">
+<meta property="article:published_time" content="" id="ogPublished">
+<meta property="article:section" content="" id="ogSection">
+
+<!-- ── Twitter Card ── -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="" id="twTitle">
+<meta name="twitter:description" content="" id="twDesc">
+<meta name="twitter:site" content="@koreansalaryman">
+
+<!-- ── Search engine verification ── -->
+<meta name="google-site-verification" content="1P5W0PRuRHTv3TV43XU5YSGBQR1V76lyAZF1wxjKpLI">
+<meta name="naver-site-verification" content="ad5bce9f4de14cbe7ccf111ca46b1114e52a25ff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Source+Serif+4:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Chart.js (defer to avoid blocking; charts initialize via DOMContentLoaded inside post body) -->
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --white:#ffffff;
+  --bg:#f8f7f4;
+  --bg2:#f0ede8;
+  --navy:#1a2640;
+  --navy2:#253352;
+  --point:#c17f3e;
+  --point-light:#f5ead8;
+  --point2:#2d6a4f;
+  --text1:#1a1a1a;
+  --text2:#444444;
+  --text3:#888888;
+  --border:#e8e4de;
+  --border2:#d4cfc8;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text1);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+/* ── Header ─────────────────────────────────────── */
+header{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
+.hd{max-width:1080px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px;}
+.logo{display:flex;flex-direction:column;text-decoration:none;}
+.logo-kr{font-family:'Source Serif 4',serif;font-size:17px;font-weight:700;color:var(--navy);letter-spacing:-0.02em;}
+.logo-kr span{color:var(--point);}
+.logo-en{font-size:8.5px;color:var(--text3);letter-spacing:0.2em;margin-top:1px;}
+.desktop-nav{display:flex;align-items:center;gap:2px;}
+.desktop-nav a{color:var(--text2);text-decoration:none;font-size:13px;font-weight:500;padding:6px 14px;border-radius:6px;transition:all 0.15s;}
+.desktop-nav a:hover{color:var(--navy);background:var(--bg);}
+.nav-divider{width:1px;height:14px;background:var(--border2);margin:0 6px;}
+.btn-sub{display:inline-flex;align-items:center;gap:6px;background:var(--navy);color:var(--white);font-size:12px;font-weight:600;padding:7px 16px;border-radius:6px;text-decoration:none;letter-spacing:0.02em;transition:background 0.15s;}
+.btn-sub:hover{background:var(--navy2);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;}
+.hamburger span{display:block;width:20px;height:1.5px;background:var(--navy);border-radius:2px;}
+.mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);padding:12px 20px 20px;flex-direction:column;gap:2px;z-index:99;box-shadow:0 8px 24px rgba(0,0,0,0.08);}
+.mobile-menu a{color:var(--text2);text-decoration:none;font-size:15px;font-weight:500;padding:12px 16px;border-radius:8px;display:block;}
+.mobile-menu a:hover{background:var(--bg);color:var(--navy);}
+.mobile-menu .btn-sub{margin-top:8px;justify-content:center;border-radius:8px;}
+
+/* ── Post Hero ───────────────────────────────────── */
+.post-hero{background:var(--navy);padding:56px 24px 64px;position:relative;overflow:hidden;}
+.post-hero-texture{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.04) 1px,transparent 1px);background-size:32px 32px;}
+.post-hero-glow{position:absolute;right:-200px;top:-100px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(193,127,62,0.12),transparent 65%);}
+.post-hero-inner{max-width:760px;margin:0 auto;position:relative;z-index:1;}
+.post-breadcrumb{display:flex;align-items:center;gap:8px;margin-bottom:20px;}
+.post-breadcrumb a{font-size:12px;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.15s;}
+.post-breadcrumb a:hover{color:rgba(255,255,255,0.8);}
+.post-breadcrumb span{font-size:12px;color:rgba(255,255,255,0.25);}
+.post-cat-pill{display:inline-block;background:var(--point);color:var(--white);font-size:10px;font-weight:700;padding:4px 14px;border-radius:4px;letter-spacing:0.15em;margin-bottom:16px;}
+.post-hero h1{font-family:'Source Serif 4',serif;font-size:32px;font-weight:700;color:var(--white);line-height:1.35;letter-spacing:-0.02em;margin-bottom:20px;}
+.post-hero-meta{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.post-hero-author{display:flex;align-items:center;gap:10px;}
+.post-author-avatar{width:32px;height:32px;border-radius:50%;background:var(--point);display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;font-size:13px;font-weight:700;color:var(--white);}
+.post-author-name{font-size:13px;color:rgba(255,255,255,0.8);font-weight:500;}
+.post-meta-divider{width:1px;height:12px;background:rgba(255,255,255,0.15);}
+.post-meta-info{font-size:12px;color:rgba(255,255,255,0.4);}
+
+/* ── Layout ──────────────────────────────────────── */
+.post-layout{max-width:1080px;margin:0 auto;padding:52px 24px;display:grid;grid-template-columns:1fr 280px;gap:52px;}
+
+/* ── Article ─────────────────────────────────────── */
+.article-wrap{min-width:0;}
+.article-summary{background:var(--point-light);border:1px solid rgba(193,127,62,0.2);border-radius:12px;padding:20px 24px;margin-bottom:40px;}
+.article-summary-label{font-size:10px;font-weight:700;color:var(--point);letter-spacing:0.2em;margin-bottom:8px;}
+.article-summary p{font-size:14px;color:var(--text2);line-height:1.85;font-weight:400;}
+.article-body{color:var(--text1);font-size:16px;line-height:1.95;}
+.article-body p{margin-bottom:1.6em;color:var(--text2);}
+.article-body p:first-child{font-size:17px;color:var(--text1);font-weight:400;}
+.article-body h2{font-family:'Source Serif 4',serif;font-size:22px;font-weight:700;color:var(--navy);margin:40px 0 16px;padding-bottom:10px;border-bottom:2px solid var(--border);}
+.article-body h3{font-family:'Source Serif 4',serif;font-size:18px;font-weight:700;color:var(--navy);margin:28px 0 12px;}
+.article-body blockquote{border-left:4px solid var(--point);background:var(--point-light);padding:14px 20px;border-radius:0 10px 10px 0;margin:20px 0;font-size:14px;color:var(--text2);line-height:1.8;}
+.article-body figure{margin:28px 0;}
+.article-body figure img{width:100%;border-radius:12px;object-fit:cover;max-height:420px;}
+.article-body figcaption{font-size:11px;color:var(--text3);margin-top:6px;text-align:right;}
+.article-body ul,.article-body ol{padding-left:24px;margin:16px 0;}
+.article-body li{margin-bottom:8px;color:var(--text2);}
+.article-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:40px;padding-top:24px;border-top:1px solid var(--border);}
+.article-tag{font-size:12px;background:var(--bg);border:1px solid var(--border);color:var(--text2);padding:5px 12px;border-radius:20px;font-weight:500;}
+.back-btn{display:inline-flex;align-items:center;gap:8px;margin-top:40px;font-size:13px;font-weight:600;color:var(--navy);text-decoration:none;padding:10px 20px;background:var(--white);border:1px solid var(--border);border-radius:8px;transition:all 0.15s;}
+.back-btn:hover{background:var(--navy);color:var(--white);border-color:var(--navy);}
+
+/* ── View count & share bar ── */
+.post-meta-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.post-view-count{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);}
+.post-view-icon{font-size:14px;}
+.share-btns{display:flex;align-items:center;gap:8px;}
+.share-label{font-size:11px;color:var(--text3);font-weight:600;letter-spacing:0.08em;margin-right:4px;}
+.share-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all 0.15s;text-decoration:none;}
+.share-btn.twitter{background:#1DA1F2;color:#fff;}
+.share-btn.twitter:hover{background:#1a91da;}
+.share-btn.copy{background:var(--bg2);color:var(--text2);}
+.share-btn.copy:hover{background:var(--border2);}
+
+/* ── Comments section ── */
+.comments-section{margin-top:52px;padding-top:40px;border-top:2px solid var(--border);}
+.comments-title{font-family:'Source Serif 4',serif;font-size:20px;font-weight:700;color:var(--navy);margin-bottom:24px;}
+.comment-form{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:32px;}
+.comment-form-row{display:flex;gap:12px;margin-bottom:12px;}
+.comment-input{flex:1;border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;font-size:13px;font-family:inherit;outline:none;color:var(--text1);background:var(--bg);transition:border 0.15s;}
+.comment-input:focus{border-color:var(--navy);background:var(--white);}
+.comment-textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;font-size:13px;font-family:inherit;outline:none;color:var(--text1);background:var(--bg);min-height:100px;resize:vertical;transition:border 0.15s;margin-bottom:10px;}
+.comment-textarea:focus{border-color:var(--navy);background:var(--white);}
+.comment-submit{background:var(--navy);color:var(--white);border:none;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:background 0.15s;}
+.comment-submit:hover{background:var(--navy2);}
+.comment-list{display:flex;flex-direction:column;gap:16px;}
+.comment-item{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:18px 20px;}
+.comment-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.comment-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--navy2));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--white);flex-shrink:0;}
+.comment-name{font-size:13px;font-weight:700;color:var(--text1);}
+.comment-date{font-size:11px;color:var(--text3);margin-left:auto;}
+.comment-text{font-size:13px;color:var(--text2);line-height:1.8;}
+.comment-empty{text-align:center;padding:32px;color:var(--text3);font-size:13px;}
+
+/* ── Typography refinements ── */
+.article-body{color:var(--text1);font-size:16px;line-height:2.0;letter-spacing:-0.01em;}
+.article-body>p:first-child{font-size:18px;line-height:1.9;color:var(--text1);font-weight:400;margin-bottom:2em;}
+.article-body p{margin-bottom:1.6em;color:var(--text2);word-break:keep-all;}
+.article-body h2{font-family:'Source Serif 4',serif;font-size:22px;font-weight:700;color:var(--navy);margin:44px 0 18px;padding-bottom:12px;border-bottom:2px solid var(--border);}
+.article-body h3{font-family:'Source Serif 4',serif;font-size:18px;font-weight:700;color:var(--navy);margin:32px 0 14px;}
+.article-body blockquote{border-left:4px solid var(--point);background:var(--point-light);padding:16px 22px;border-radius:0 10px 10px 0;margin:24px 0;font-size:14px;color:var(--text2);line-height:1.85;font-style:italic;}
+.article-body figure{margin:32px 0;}
+.article-body figure img{width:100%;border-radius:12px;object-fit:cover;max-height:440px;}
+.article-body figcaption{font-size:11px;color:var(--text3);margin-top:8px;text-align:right;}
+.article-body ul,.article-body ol{padding-left:24px;margin:16px 0 24px;}
+.article-body li{margin-bottom:10px;color:var(--text2);line-height:1.8;}
+.article-body strong{color:var(--text1);font-weight:700;}
+
+/* ── Previous / Next post ── */
+.post-nav{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:40px;}
+.post-nav-item{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px 20px;text-decoration:none;transition:all 0.15s;display:block;}
+.post-nav-item:hover{border-color:var(--point);transform:translateY(-2px);}
+.post-nav-label{font-size:10px;color:var(--text3);font-weight:600;letter-spacing:0.1em;margin-bottom:6px;}
+.post-nav-title{font-size:13px;font-weight:600;color:var(--navy);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+
+/* Sidebar refinements */
+.about-msg{font-size:13px;color:var(--text2);line-height:1.85;font-weight:300;margin-bottom:14px;}
+
+/* ── 2026 new post structure (TL;DR / comparison table / steps / references) ── */
+.article-body .post-tldr{margin:0 0 28px !important;}
+.article-body .post-tldr ul{padding-left:20px !important;margin:0 !important;}
+.article-body .post-comparison{margin:36px 0 24px !important;}
+.article-body .post-comparison table{font-size:14px;}
+.article-body .post-steps ol{padding:0 !important;list-style:none !important;}
+.article-body .post-steps li{margin-bottom:14px !important;}
+.article-body .post-references{margin:36px 0 16px !important;}
+.article-body .post-references ul{margin:0 !important;}
+.article-body .post-references li{margin:8px 0 !important;}
+
+@media(max-width:768px){
+  .post-meta-bar{padding:12px 0;}
+  .share-btns{flex-wrap:wrap;}
+  .comment-form-row{flex-direction:column;}
+  .post-nav{grid-template-columns:1fr;}
+  /* New post structure mobile optimization */
+  .article-body .post-tldr{padding:14px 16px !important;font-size:14px;}
+  .article-body .post-comparison{overflow-x:auto !important;}
+  .article-body .post-comparison table{min-width:520px;}
+  .article-body .post-steps li{padding:12px !important;}
+  .article-body .post-audience{font-size:12px !important;}
+}
+
+/* ── Sidebar ─────────────────────────────────────── */
+.sidebar{display:flex;flex-direction:column;gap:20px;}
+.widget{background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.wg-top{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.wg-top h3{font-size:12px;font-weight:700;color:var(--text1);letter-spacing:0.08em;}
+.wg-body{padding:16px 18px;}
+.about-msg{font-size:13px;color:var(--text2);line-height:1.85;font-weight:300;margin-bottom:14px;}
+.chips{display:flex;flex-wrap:wrap;gap:6px;}
+.chip{font-size:11px;background:var(--bg);color:var(--text2);border:1px solid var(--border);padding:4px 10px;border-radius:20px;font-weight:500;}
+.nl-desc{font-size:13px;color:var(--text2);line-height:1.7;font-weight:300;margin-bottom:12px;}
+.nl-input{width:100%;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:13px;font-family:inherit;outline:none;color:var(--text1);background:var(--bg);transition:border 0.15s;margin-bottom:8px;}
+.nl-input:focus{border-color:var(--navy);background:var(--white);}
+.nl-btn{width:100%;background:var(--navy);color:var(--white);border:none;padding:10px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:background 0.15s;}
+.nl-btn:hover{background:var(--navy2);}
+.rel-item{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--border);text-decoration:none;}
+.rel-item:last-child{border-bottom:none;}
+.rel-dot{width:6px;height:6px;border-radius:50%;background:var(--point);flex-shrink:0;margin-top:7px;}
+.rel-title{font-size:12.5px;color:var(--text1);font-weight:500;line-height:1.55;transition:color 0.15s;}
+.rel-title:hover{color:var(--point);}
+.rel-cat{font-size:10px;color:var(--text3);margin-top:3px;}
+
+/* ── Footer ──────────────────────────────────────── */
+footer{background:var(--navy);padding:48px 24px;}
+.ft{max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:32px;}
+.ft-logo{font-family:'Source Serif 4',serif;font-size:18px;font-weight:700;color:var(--white);margin-bottom:6px;}
+.ft-logo span{color:var(--point);}
+.ft-tagline{font-size:12px;color:rgba(255,255,255,0.35);line-height:1.7;}
+.ft-right{display:flex;flex-direction:column;align-items:flex-end;gap:12px;}
+.ft-links{display:flex;gap:16px;}
+.ft-links a{font-size:12px;color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.15s;}
+.ft-links a:hover{color:rgba(255,255,255,0.8);}
+.ft-copy{font-size:11px;color:rgba(255,255,255,0.25);}
+
+/* ── Skeleton / Error ────────────────────────────── */
+.skeleton{background:linear-gradient(90deg,var(--bg2) 25%,var(--border) 50%,var(--bg2) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px;}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.error-box{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:60px 40px;text-align:center;}
+.error-box h2{font-size:20px;color:var(--text1);margin-bottom:12px;}
+.error-box p{font-size:14px;color:var(--text3);margin-bottom:24px;}
+
+@media(max-width:768px){
+  .desktop-nav{display:none!important;}
+  .hamburger{display:flex!important;}
+  .mobile-menu.open{display:flex!important;}
+  .hd{padding:0 16px;}
+  .post-hero{padding:40px 16px 52px;}
+  .post-hero h1{font-size:24px;}
+  .post-layout{grid-template-columns:1fr!important;padding:28px 16px;gap:32px;}
+  .article-body{font-size:15px;}
+  .ft{flex-direction:column;align-items:flex-start;gap:24px;}
+  .ft-right{align-items:flex-start;}
+  .ft-links{flex-wrap:wrap;}
+}
+</style>
+<!-- ── Google Analytics 4 ── -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5D0W7QRLMD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5D0W7QRLMD', {
+    page_title: document.title,
+    page_location: window.location.href
+  });
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hd">
+    <a href="index.html" class="logo">
+      <div class="logo-kr">Korean <span>Salaryman</span></div>
+      <div class="logo-en">KOREA, AS WE ACTUALLY LIVE IT</div>
+    </a>
+    <div class="desktop-nav">
+      <a href="blog.html">Blog</a>
+      <a href="category-k-trends.html">K-Trends</a>
+      <a href="category-korean-life.html">Korean Life</a>
+      <a href="category-culture-explained.html">Culture</a>
+      <a href="about.html">About</a>
+      <div class="nav-divider"></div>
+      <a href="index.html#newsletter" class="btn-sub">Subscribe</a>
+    </div>
+    <button class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="blog.html">Blog</a>
+  <a href="category-k-trends.html">K-Trends</a>
+  <a href="category-korean-life.html">Korean Life</a>
+  <a href="category-culture-explained.html">Culture</a>
+  <a href="about.html">About</a>
+  <a href="index.html#newsletter" class="btn-sub">Subscribe</a>
+</div>
+
+<!-- Post hero (filled in via JS) -->
+<div id="postHero" class="post-hero" style="display:none">
+  <div class="post-hero-texture"></div>
+  <div class="post-hero-glow"></div>
+  <div class="post-hero-inner">
+    <div class="post-breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span id="heroCat"></span>
+    </div>
+    <div id="heroCatPill" class="post-cat-pill"></div>
+    <h1 id="heroTitle"></h1>
+    <div class="post-hero-meta">
+      <div class="post-hero-author">
+        <div class="post-author-avatar">S</div>
+        <span class="post-author-name">Korean Salaryman</span>
+      </div>
+      <div class="post-meta-divider"></div>
+      <span class="post-meta-info" id="heroDate"></span>
+      <div class="post-meta-divider"></div>
+      <span class="post-meta-info" id="heroReadTime"></span>
+    </div>
+  </div>
+</div>
+
+<!-- Loading skeleton -->
+<div id="loadingSkeleton" style="max-width:1080px;margin:40px auto;padding:0 24px;">
+  <div class="skeleton" style="height:200px;margin-bottom:20px;border-radius:12px;"></div>
+  <div class="skeleton" style="height:24px;width:60%;margin-bottom:12px;"></div>
+  <div class="skeleton" style="height:16px;margin-bottom:10px;"></div>
+  <div class="skeleton" style="height:16px;margin-bottom:10px;"></div>
+  <div class="skeleton" style="height:16px;width:80%;"></div>
+</div>
+
+<!-- Post body -->
+<div id="postLayout" class="post-layout" style="display:none">
+  <article class="article-wrap">
+    <div class="article-summary" id="articleSummary"></div>
+    <div class="article-body" id="articleBody"></div>
+    <!-- View count & share bar -->
+    <div class="post-meta-bar">
+      <div class="post-view-count">
+        <span class="post-view-icon">👁</span>
+        <span id="viewCount">Loading views...</span>
+      </div>
+      <div class="share-btns">
+        <span class="share-label">Share</span>
+        <button class="share-btn twitter" onclick="shareTwitter()">Twitter</button>
+        <button class="share-btn copy" onclick="copyLink()">Copy link</button>
+      </div>
+    </div>
+
+    <div class="article-tags" id="articleTags"></div>
+
+    <!-- Previous / Next post -->
+    <div class="post-nav" id="postNav"></div>
+
+    <a href="index.html" class="back-btn">← Back to all posts</a>
+
+    <!-- Comments section -->
+    <div class="comments-section">
+      <div class="comments-title">Comments <span id="commentCount" style="color:var(--point);"></span></div>
+      <div class="comment-form">
+        <div class="comment-form-row">
+          <input class="comment-input" type="text" id="commentName" placeholder="Name" maxlength="20">
+          <input class="comment-input" type="password" id="commentPw" placeholder="Password (to delete)" maxlength="20">
+        </div>
+        <textarea class="comment-textarea" id="commentText" placeholder="Leave a comment. Questions and shared experiences are always welcome."></textarea>
+        <button class="comment-submit" onclick="submitComment()">Post comment</button>
+      </div>
+      <div class="comment-list" id="commentList">
+        <div class="comment-empty">Be the first to comment.</div>
+      </div>
+    </div>
+  </article>
+
+  <aside class="sidebar">
+    <div class="widget">
+      <div class="wg-top"><h3>ABOUT</h3></div>
+      <div class="wg-body">
+        <p class="about-msg">An anonymous Seoul salaryman writing about Korea as we actually live it — work, money, culture, and the small details that never make the brochures.</p>
+        <div class="chips">
+          <span class="chip">Seoul-based</span>
+          <span class="chip">First-person</span>
+          <span class="chip">Real Korean life</span>
+        </div>
+        <a href="about.html" style="display:block;margin-top:12px;text-align:center;font-size:12px;color:var(--point);font-weight:600;text-decoration:none;">Learn more →</a>
+      </div>
+    </div>
+
+    <div class="widget">
+      <div class="wg-top"><h3>NEWSLETTER</h3></div>
+      <div class="wg-body">
+        <p class="nl-desc">Get new stories on Korean life and culture delivered to your inbox.</p>
+        <input class="nl-input" type="email" placeholder="Enter your email address">
+        <button class="nl-btn">Subscribe for free</button>
+      </div>
+    </div>
+
+    <div class="widget">
+      <div class="wg-top"><h3>MORE IN THIS CATEGORY</h3></div>
+      <div class="wg-body" id="relatedPosts">
+        <p style="font-size:13px;color:var(--text3);">Loading...</p>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- Error state -->
+<div id="errorBox" style="max-width:760px;margin:60px auto;padding:0 24px;display:none">
+  <div class="error-box">
+    <h2>Post not found</h2>
+    <p>The post you requested doesn't exist or has been removed.</p>
+    <a href="index.html" class="back-btn">← Back to home</a>
+  </div>
+</div>
+
+<footer>
+  <div class="ft">
+    <div>
+      <div class="ft-logo">Korean <span>Salaryman</span></div>
+      <p class="ft-tagline">Korea, as we actually live it.<br>SINCE 2022 · en.koreansalaryman.com</p>
+    </div>
+    <div class="ft-right">
+      <div class="ft-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="mailto:pride93d@gmail.com">Contact</a>
+        <a href="https://koreansalaryman.com">한국어판</a>
+      </div>
+      <div class="ft-copy">© 2026 Korean Salaryman. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+// ── View count (localStorage-based) ──────────────────────────
+function updateViewCount(postId) {
+  const key = 'views_' + postId;
+  const count = (parseInt(localStorage.getItem(key) || '0')) + 1;
+  localStorage.setItem(key, count);
+  document.getElementById('viewCount').textContent = count.toLocaleString() + ' views';
+}
+
+// ── Share buttons ──────────────────────────────────────────
+function shareTwitter() {
+  const title = encodeURIComponent(document.title);
+  const url = encodeURIComponent(window.location.href);
+  window.open('https://twitter.com/intent/tweet?text=' + title + '&url=' + url, '_blank', 'width=600,height=400');
+}
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    const btn = document.querySelector('.share-btn.copy');
+    const orig = btn.textContent;
+    btn.textContent = 'Copied ✓';
+    btn.style.background = 'var(--green)';
+    btn.style.color = '#fff';
+    setTimeout(() => { btn.textContent = orig; btn.style.background = ''; btn.style.color = ''; }, 2000);
+  });
+}
+
+// ── Comments (localStorage-based) ──────────────────────────
+function getComments(postId) {
+  try { return JSON.parse(localStorage.getItem('comments_' + postId) || '[]'); } catch(e) { return []; }
+}
+function saveComments(postId, comments) {
+  localStorage.setItem('comments_' + postId, JSON.stringify(comments));
+}
+function renderComments(postId) {
+  const comments = getComments(postId);
+  const list = document.getElementById('commentList');
+  const countEl = document.getElementById('commentCount');
+  countEl.textContent = comments.length > 0 ? comments.length : '';
+  if (comments.length === 0) {
+    list.innerHTML = '<div class="comment-empty">Be the first to comment.</div>';
+    return;
+  }
+  list.innerHTML = comments.map((c, i) => `
+    <div class="comment-item">
+      <div class="comment-head">
+        <div class="comment-avatar">${c.name[0]}</div>
+        <div class="comment-name">${escHtml(c.name)}</div>
+        <div class="comment-date">${c.date}</div>
+      </div>
+      <div class="comment-text">${escHtml(c.text).replace(/\n/g,'<br>')}</div>
+    </div>`).join('');
+}
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function submitComment() {
+  const name = document.getElementById('commentName').value.trim();
+  const text = document.getElementById('commentText').value.trim();
+  if (!name) { alert('Please enter your name.'); return; }
+  if (!text) { alert('Please enter a comment.'); return; }
+  const postId = new URLSearchParams(window.location.search).get('id');
+  const comments = getComments(postId);
+  const now = new Date();
+  comments.push({
+    name, text,
+    date: now.getFullYear() + '.' + String(now.getMonth()+1).padStart(2,'0') + '.' + String(now.getDate()).padStart(2,'0')
+  });
+  saveComments(postId, comments);
+  document.getElementById('commentName').value = '';
+  document.getElementById('commentText').value = '';
+  renderComments(postId);
+}
+
+// ── Previous / Next post ──────────────────────────────────────
+function renderPostNav(manifest, currentId) {
+  const published = manifest.filter(p => p.status === 'published');
+  const idx = published.findIndex(p => p.filename === currentId);
+  if (idx === -1) return;
+  const prev = published[idx - 1];
+  const next = published[idx + 1];
+  const nav = document.getElementById('postNav');
+  if (!nav) return;
+  let html = '';
+  if (prev) {
+    html += `<a class="post-nav-item" href="/p/${encodeURIComponent(prev.slug || prev.filename.replace(/\.json$/,''))}.html">
+      <div class="post-nav-label">← Previous</div>
+      <div class="post-nav-title">${prev.title}</div>
+    </a>`;
+  } else { html += '<div></div>'; }
+  if (next) {
+    html += `<a class="post-nav-item" href="/p/${encodeURIComponent(next.slug || next.filename.replace(/\.json$/,''))}.html" style="text-align:right;">
+      <div class="post-nav-label">Next →</div>
+      <div class="post-nav-title">${next.title}</div>
+    </a>`;
+  }
+  nav.innerHTML = html;
+}
+
+function formatDate(iso) {
+  const d = new Date(iso);
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+}
+
+function readTime(content) {
+  return Math.max(1, Math.ceil(content.length / 500)) + ' min';
+}
+
+// Convert plain-text body into HTML paragraphs
+function textToHtml(text) {
+  return text
+    .split(/\n\n+/)
+    .map(p => p.trim())
+    .filter(p => p.length > 0)
+    .map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`)
+    .join('');
+}
+
+// Extract post ID from URL parameters
+const params = new URLSearchParams(window.location.search);
+const postId = params.get('id');
+
+// Permanently moved to static pages — fallback redirect for old URLs
+if (postId && postId.endsWith('.json')) {
+  fetch('/posts/manifest.json').then(r=>r.json()).then(m=>{
+    const e = m.find(x=>x.filename===postId);
+    const target = e && e.slug ? e.slug : postId.replace(/\.json$/,'');
+    window.location.replace('/p/' + encodeURIComponent(target) + '.html');
+  }).catch(()=>{ window.location.replace('/p/' + postId.replace(/\.json$/,'.html')); });
+}
+
+if (!postId) {
+  document.getElementById('loadingSkeleton').style.display = 'none';
+  document.getElementById('errorBox').style.display = 'block';
+} else {
+  // Load post JSON
+  fetch(`./posts/${encodeURIComponent(postId)}`)
+    .then(r => {
+      if (!r.ok) throw new Error('Post not found');
+      return r.json();
+    })
+    .then(post => {
+      // ── Dynamically update SEO meta tags ──────────────────────
+      // Prefer seo_title/seo_description fields (auto-generated by automation.py)
+      const pageTitle = post.seo_title || `${post.title} | Korean Salaryman`;
+      const pageDesc  = post.seo_description
+        || (post.summary ? post.summary.slice(0, 150).replace(/\n/g, ' ') + ' | Korean Salaryman'
+        : `${post.category || 'Korean life'}, as we actually live it. Read it on Korean Salaryman.`);
+      const pageUrl   = `https://en.koreansalaryman.com/post.html?id=${encodeURIComponent(postId)}`;
+
+      document.title = pageTitle;
+
+      // Description
+      let descEl = document.querySelector('meta[name="description"]');
+      if (descEl) descEl.setAttribute('content', pageDesc);
+
+      // Canonical
+      let canonical = document.getElementById('canonicalTag');
+      if (canonical) canonical.setAttribute('href', pageUrl);
+
+      // OG
+      const ogTitle = document.getElementById('ogTitle');
+      const ogDesc  = document.getElementById('ogDesc');
+      const ogUrl   = document.getElementById('ogUrl');
+      const ogPub   = document.getElementById('ogPublished');
+      const ogSec   = document.getElementById('ogSection');
+      if (ogTitle) ogTitle.setAttribute('content', pageTitle);
+      if (ogDesc)  ogDesc.setAttribute('content', pageDesc);
+      if (ogUrl)   ogUrl.setAttribute('content', pageUrl);
+      if (ogPub)   ogPub.setAttribute('content', post.created_at || '');
+      if (ogSec)   ogSec.setAttribute('content', post.category || '');
+
+      // Twitter
+      const twTitle = document.getElementById('twTitle');
+      const twDesc  = document.getElementById('twDesc');
+      if (twTitle) twTitle.setAttribute('content', pageTitle);
+      if (twDesc)  twDesc.setAttribute('content', pageDesc);
+
+      // JSON-LD structured data (Article)
+      const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": post.title,
+        "description": pageDesc,
+        "url": pageUrl,
+        "datePublished": post.created_at || '',
+        "dateModified": post.created_at || '',
+        "author": {
+          "@type": "Person",
+          "name": "Korean Salaryman",
+          "url": "https://en.koreansalaryman.com/about.html"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Korean Salaryman",
+          "url": "https://en.koreansalaryman.com"
+        },
+        "keywords": (post.tags || []).join(', '),
+        "articleSection": post.category || '',
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": pageUrl
+        }
+      };
+      const ldScript = document.createElement('script');
+      ldScript.type = 'application/ld+json';
+      ldScript.textContent = JSON.stringify(jsonLd);
+      document.head.appendChild(ldScript);
+
+      // Fill in the hero section
+      document.getElementById('heroCat').textContent = post.category;
+      document.getElementById('heroCatPill').textContent = post.category;
+      document.getElementById('heroTitle').textContent = post.title;
+      document.getElementById('heroDate').textContent = formatDate(post.created_at);
+      document.getElementById('heroReadTime').textContent = 'Read time ' + readTime(post.content || '');
+
+      // Summary
+      if (post.summary) {
+        document.getElementById('articleSummary').innerHTML = `
+          <div class="article-summary-label">SUMMARY</div>
+          <p>${post.summary.replace(/\n/g, '<br>')}</p>`;
+      } else {
+        document.getElementById('articleSummary').style.display = 'none';
+      }
+
+      // Body — automation.py stores HTML, so insert directly via innerHTML
+      // Older posts (stored as plain text) fall back to textToHtml
+      const rawContent = post.content || '';
+      const isHtml = rawContent.trim().startsWith('<');
+      document.getElementById('articleBody').innerHTML = isHtml
+        ? rawContent
+        : textToHtml(rawContent);
+
+      // Tags
+      const tags = post.tags || [];
+      document.getElementById('articleTags').innerHTML = tags
+        .map(t => `<span class="article-tag">${t}</span>`)
+        .join('');
+
+      // Hide loading skeleton and show content
+      document.getElementById('loadingSkeleton').style.display = 'none';
+      document.getElementById('postHero').style.display = 'block';
+      document.getElementById('postLayout').style.display = 'grid';
+
+      // Update view count
+      updateViewCount(postId);
+
+      // Render comments
+      renderComments(postId);
+
+      // Load related posts (same category)
+      return fetch('./posts/manifest.json');
+    })
+    .then(r => r.json())
+    .then(manifest => {
+      // Render previous / next post
+      renderPostNav(manifest, postId);
+
+      const currentCat = document.getElementById('heroCat').textContent;
+      const related = manifest
+        .filter(p => p.status === 'published' && p.filename !== postId && p.category === currentCat)
+        .slice(0, 4);
+
+      const relBox = document.getElementById('relatedPosts');
+      if (related.length === 0) {
+        relBox.innerHTML = '<p style="font-size:13px;color:var(--text3);">No related posts yet.</p>';
+      } else {
+        relBox.innerHTML = related.map(p => `
+          <a class="rel-item" href="/p/${encodeURIComponent(p.slug || p.filename.replace(/\.json$/,''))}.html">
+            <div class="rel-dot"></div>
+            <div>
+              <div class="rel-title">${p.title}</div>
+              <div class="rel-cat">${formatDate(p.created_at)}</div>
+            </div>
+          </a>`).join('');
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      document.getElementById('loadingSkeleton').style.display = 'none';
+      document.getElementById('errorBox').style.display = 'block';
+    });
+}
+</script>
+</body>
+</html>

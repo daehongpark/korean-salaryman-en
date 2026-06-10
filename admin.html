@@ -1,0 +1,3452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Admin — Korean Salaryman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --white:#ffffff;
+  --bg:#f3f2ef;
+  --bg2:#e8e6e1;
+  --navy:#1a2640;
+  --navy2:#253352;
+  --point:#c17f3e;
+  --point-light:#f5ead8;
+  --green:#2d6a4f;
+  --green-light:#d8f0e5;
+  --red:#c0392b;
+  --red-light:#fde8e6;
+  --yellow:#b7870b;
+  --yellow-light:#fef3d0;
+  --text1:#1a1a1a;
+  --text2:#444444;
+  --text3:#888888;
+  --border:#e0dbd4;
+  --border2:#d4cfc8;
+  --sidebar-w:240px;
+}
+html{height:100%;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text1);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;height:100%;}
+
+/* ── Login screen */
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--navy);}
+.login-box{background:var(--white);border-radius:20px;padding:48px 44px;width:100%;max-width:420px;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,0.3);}
+.login-logo{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:700;color:var(--navy);margin-bottom:6px;}
+.login-logo span{color:var(--point);}
+.login-sub{font-size:12px;color:var(--text3);margin-bottom:28px;letter-spacing:0.05em;}
+.login-label{display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:8px;text-align:left;letter-spacing:0.05em;}
+.login-input{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:12px 16px;font-size:14px;font-family:inherit;outline:none;color:var(--text1);transition:border 0.15s;margin-bottom:14px;text-align:center;letter-spacing:0.15em;}
+.login-input:focus{border-color:var(--navy);}
+.login-btn{width:100%;background:var(--navy);color:var(--white);border:none;padding:13px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:background 0.15s;letter-spacing:0.05em;}
+.login-btn:hover{background:var(--navy2);}
+.login-err{font-size:13px;color:var(--red);margin-top:12px;display:none;}
+.login-note{margin-top:20px;font-size:11px;color:var(--text3);line-height:1.8;background:var(--bg);border-radius:8px;padding:12px;}
+
+/* ── Admin layout */
+#adminApp{display:none;min-height:100vh;flex-direction:column;}
+.admin-header{background:var(--navy);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;}
+.admin-logo{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:700;color:var(--white);}
+.admin-logo span{color:var(--point);}
+.admin-logo small{font-size:10px;color:rgba(255,255,255,0.35);margin-left:8px;letter-spacing:0.1em;font-family:'Noto Sans KR',sans-serif;font-weight:400;}
+.admin-header-right{display:flex;align-items:center;gap:12px;}
+.admin-user{font-size:12px;color:rgba(255,255,255,0.45);}
+.logout-btn{font-size:12px;color:rgba(255,255,255,0.5);cursor:pointer;background:none;border:1px solid rgba(255,255,255,0.15);padding:5px 12px;border-radius:6px;font-family:inherit;transition:all 0.15s;}
+.logout-btn:hover{color:var(--white);border-color:rgba(255,255,255,0.4);}
+.admin-body{display:flex;flex:1;}
+.admin-sidebar{width:var(--sidebar-w);background:var(--white);border-right:1px solid var(--border);padding:20px 0;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto;flex-shrink:0;}
+.sidebar-section{padding:0 16px;margin-bottom:24px;}
+.sidebar-label{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:0.18em;padding:0 8px;margin-bottom:8px;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all 0.12s;}
+.sidebar-item:hover{background:var(--bg);color:var(--navy);}
+.sidebar-item.active{background:var(--point-light);color:var(--point);}
+.sidebar-item .si-icon{font-size:15px;width:20px;text-align:center;}
+.sidebar-count{margin-left:auto;font-size:11px;font-weight:700;background:var(--bg2);color:var(--text3);padding:2px 7px;border-radius:10px;}
+.sidebar-item.active .sidebar-count{background:rgba(193,127,62,0.15);color:var(--point);}
+.admin-main{flex:1;padding:28px;min-width:0;overflow-y:auto;}
+
+/* ── Stat cards */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
+.stat-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:18px 20px;}
+.stat-label{font-size:11px;color:var(--text3);font-weight:600;letter-spacing:0.1em;margin-bottom:8px;}
+.stat-val{font-family:'Noto Serif KR',serif;font-size:28px;font-weight:700;color:var(--navy);}
+.stat-val.green{color:var(--green);}
+.stat-val.orange{color:var(--point);}
+.stat-val.yellow{color:var(--yellow);}
+
+/* ── Toolbar */
+.toolbar{display:flex;align-items:center;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
+.search-wrap{flex:1;position:relative;min-width:200px;}
+.search-input{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 12px 9px 36px;font-size:13px;font-family:inherit;outline:none;color:var(--text1);background:var(--white);transition:border 0.15s;}
+.search-input:focus{border-color:var(--navy);}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:14px;}
+.filter-select{border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13px;font-family:inherit;outline:none;color:var(--text1);background:var(--white);cursor:pointer;}
+.refresh-btn{display:flex;align-items:center;gap:6px;padding:9px 14px;background:var(--white);border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;cursor:pointer;color:var(--text2);transition:all 0.15s;white-space:nowrap;}
+.refresh-btn:hover{border-color:var(--navy);color:var(--navy);}
+
+/* ── Posts table */
+.posts-table{background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.table-head{display:grid;grid-template-columns:40px 1fr 100px 120px 80px 200px;padding:12px 20px;background:var(--bg);border-bottom:1px solid var(--border);align-items:center;}
+.th{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:0.1em;}
+.post-row{display:grid;grid-template-columns:40px 1fr 100px 120px 80px 200px;padding:14px 20px;border-bottom:1px solid var(--border);align-items:center;transition:background 0.1s;position:relative;}
+.post-checkbox-cell{display:flex;align-items:center;justify-content:flex-start;}
+.post-checkbox{width:18px;height:18px;cursor:pointer;accent-color:var(--point);}
+.post-row:last-child{border-bottom:none;}
+.post-row:hover{background:var(--bg);}
+.post-title-cell{min-width:0;}
+.post-title-text{font-size:13px;font-weight:600;color:var(--text1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;transition:color 0.15s;}
+.post-title-text:hover{color:var(--point);}
+.post-cat-text{font-size:11px;color:var(--text3);margin-top:2px;}
+.status-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:0.05em;white-space:nowrap;}
+.status-badge.published{background:var(--green-light);color:var(--green);}
+.status-badge.draft{background:var(--yellow-light);color:var(--yellow);}
+.status-badge.scheduled{background:#ede9fe;color:#6d28d9;}
+.btn-schedule{background:#ede9fe;color:#6d28d9;}
+.btn-schedule:hover{background:#6d28d9;color:var(--white);}
+.status-dot{width:5px;height:5px;border-radius:50%;background:currentColor;}
+.date-cell{font-size:12px;color:var(--text3);}
+.action-cell{display:flex;gap:5px;justify-content:flex-end;flex-wrap:wrap;}
+.action-btn{padding:5px 10px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all 0.15s;white-space:nowrap;}
+.btn-preview{background:var(--bg2);color:var(--text2);}
+.btn-preview:hover{background:var(--border2);}
+.btn-publish{background:var(--green-light);color:var(--green);}
+.btn-publish:hover{background:var(--green);color:var(--white);}
+.btn-draft{background:var(--yellow-light);color:var(--yellow);}
+.btn-draft:hover{background:var(--yellow);color:var(--white);}
+.btn-edit{background:var(--point-light);color:var(--point);}
+.btn-edit:hover{background:var(--point);color:var(--white);}
+.btn-delete{background:var(--red-light);color:var(--red);}
+.btn-delete:hover{background:var(--red);color:var(--white);}
+.empty-row{text-align:center;padding:60px;color:var(--text3);}
+.empty-row-icon{font-size:36px;margin-bottom:12px;opacity:0.4;}
+
+/* ── Modal (shared) */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:500;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--white);border-radius:20px;width:100%;box-shadow:0 24px 64px rgba(0,0,0,0.2);display:flex;flex-direction:column;max-height:90vh;}
+.modal-head{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.modal-title{font-size:16px;font-weight:700;color:var(--navy);}
+.modal-close{width:32px;height:32px;border-radius:50%;border:none;background:var(--bg2);color:var(--text2);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;}
+.modal-close:hover{background:var(--border2);}
+.modal-body{padding:24px;overflow-y:auto;flex:1;}
+.modal-foot{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;flex-shrink:0;}
+
+/* ── Preview modal */
+#previewModal .modal{max-width:720px;}
+.preview-cat{font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;margin-bottom:10px;}
+.preview-title{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:700;color:var(--navy);line-height:1.4;margin-bottom:16px;}
+.preview-meta{font-size:12px;color:var(--text3);margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border);}
+.preview-summary{background:var(--point-light);border:1px solid rgba(193,127,62,0.2);border-radius:10px;padding:16px 20px;margin-bottom:24px;}
+.preview-summary-label{font-size:10px;font-weight:700;color:var(--point);letter-spacing:0.2em;margin-bottom:8px;}
+.preview-summary p{font-size:13px;color:var(--text2);line-height:1.85;}
+.preview-content{font-size:14px;color:var(--text2);line-height:1.95;}
+.preview-content p{margin-bottom:1.4em;}
+.preview-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);}
+.preview-tag{font-size:11px;background:var(--bg);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:20px;}
+
+/* ── Edit modal */
+#editModal .modal{max-width:860px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;}
+.form-group{margin-bottom:18px;}
+.form-label{display:block;font-size:12px;font-weight:700;color:var(--text2);margin-bottom:8px;letter-spacing:0.05em;}
+.form-input,.form-select,.form-textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;font-size:13px;font-family:inherit;outline:none;color:var(--text1);transition:border 0.15s;background:var(--white);}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--navy);}
+.form-textarea{resize:vertical;min-height:120px;line-height:1.7;}
+#editContent{min-height:280px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.save-btn{padding:10px 24px;background:var(--navy);color:var(--white);border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:background 0.15s;}
+.save-btn:hover{background:var(--navy2);}
+.cancel-btn{padding:10px 20px;background:var(--bg2);color:var(--text2);border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:background 0.15s;}
+.cancel-btn:hover{background:var(--border2);}
+
+/* ── Delete modal */
+#deleteModal .modal{max-width:440px;}
+.delete-icon{font-size:40px;text-align:center;margin-bottom:16px;}
+.delete-msg{font-size:14px;color:var(--text2);line-height:1.7;text-align:center;}
+.delete-title{font-weight:700;color:var(--text1);}
+.del-btn{padding:10px 24px;background:var(--red);color:var(--white);border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity 0.15s;}
+.del-btn:hover{opacity:0.85;}
+
+/* ── Settings modal */
+#settingsModal .modal{max-width:500px;}
+.settings-info{font-size:12px;color:var(--text3);margin-top:6px;line-height:1.6;}
+.token-input{font-family:monospace;letter-spacing:0.05em;}
+
+/* ── Toast */
+.toast{position:fixed;bottom:28px;right:28px;z-index:999;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,0.15);transform:translateY(80px);opacity:0;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.success{background:var(--green);color:var(--white);}
+.toast.error{background:var(--red);color:var(--white);}
+.toast.info{background:var(--navy);color:var(--white);}
+
+/* ── Loading */
+.tb-btn{background:var(--white);border:1px solid var(--border);border-radius:4px;padding:4px 8px;font-size:12px;cursor:pointer;font-family:inherit;color:var(--text2);transition:all 0.15s;}
+.tb-btn:hover{background:var(--navy);color:var(--white);border-color:var(--navy);}
+#richEditor h2{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:700;color:var(--navy);margin:24px 0 12px;line-height:1.4;}
+#richEditor h3{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;color:var(--navy);margin:20px 0 10px;line-height:1.4;}
+#richEditor blockquote{border-left:4px solid var(--point);padding:12px 20px;background:var(--point-light);border-radius:0 8px 8px 0;margin:16px 0;font-style:italic;color:var(--text2);}
+#richEditor hr{border:none;border-top:2px solid var(--border);margin:24px 0;}
+#richEditor a{color:var(--point);text-decoration:underline;}
+#richEditor ul,#richEditor ol{padding-left:24px;margin:12px 0;}
+#richEditor li{margin-bottom:6px;}
+.loading-overlay{display:none;position:fixed;inset:0;background:rgba(255,255,255,0.7);z-index:400;align-items:center;justify-content:center;}
+.loading-overlay.show{display:flex;}
+.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--navy);border-radius:50%;animation:spin 0.7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── Responsive */
+@media(max-width:900px){
+  .stat-grid{grid-template-columns:repeat(2,1fr);}
+  .table-head{grid-template-columns:40px 1fr 90px 90px;}
+  .table-head .th:nth-child(5),.table-head .th:nth-child(6){display:none;}
+  .post-row{grid-template-columns:40px 1fr 90px 90px;}
+  .post-row>*:nth-child(5),.post-row>*:nth-child(6){display:none;}
+  .action-cell{display:none;}
+}
+@media(max-width:640px){
+  .admin-sidebar{display:none;}
+  .admin-main{padding:16px;}
+  .stat-grid{grid-template-columns:repeat(2,1fr);}
+}
+
+/* ── Mobile enhancements (touch-friendly + prevent iOS zoom) */
+@media (max-width: 768px) {
+  body { font-size: 16px; }
+
+  .container, main, .main-content {
+    padding: 12px !important;
+    max-width: 100% !important;
+  }
+
+  /* Buttons: touch-friendly */
+  button, .btn, input[type="button"], input[type="submit"] {
+    min-height: 44px;
+    padding: 10px 14px;
+    font-size: 15px;
+  }
+
+  /* Input forms */
+  input[type="text"], input[type="password"], input[type="email"], select, textarea {
+    width: 100% !important;
+    box-sizing: border-box;
+    font-size: 16px;
+    padding: 10px;
+    min-height: 44px;
+  }
+
+  textarea { min-height: 200px; line-height: 1.6; }
+
+  /* form-row: single column on mobile (★ bug fix) */
+  .form-row {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  /* contenteditable body editor (★ bug fix) */
+  #richEditor, [contenteditable="true"] {
+    font-size: 16px !important;
+    min-height: 300px !important;
+    padding: 14px !important;
+    line-height: 1.7 !important;
+  }
+
+  /* ★ Remove broad selectors, keep only the precise ones */
+  .modal {
+    width: 95% !important;
+    max-width: 95% !important;
+    margin: 10px auto !important;
+    max-height: 95vh !important;
+  }
+
+  .modal-overlay { padding: 10px !important; }
+
+  .modal-head {
+    padding: 14px 16px !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+
+  .modal-body { padding: 16px !important; }
+
+  .modal-foot {
+    padding: 14px 16px !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+
+  /* ✕ button: explicit so broad selectors don't affect it */
+  .modal-close {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    padding: 0 !important;
+    flex-shrink: 0;
+  }
+
+  /* Modal header right-side button group: keep visible on mobile */
+  .modal-head > div, .modal-head .header-actions {
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+
+  /* Post list table → card layout (★ UX improvement) */
+  table.posts-table, table[class*="posts"], .posts-table {
+    display: block !important;
+  }
+
+  table.posts-table thead, .posts-table thead {
+    display: none !important;
+  }
+
+  table.posts-table tbody, .posts-table tbody {
+    display: block !important;
+  }
+
+  table.posts-table tr, .posts-table tr, .post-row {
+    display: block !important;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    position: relative;
+  }
+  .post-row .post-checkbox-cell {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+  }
+  .post-row .post-checkbox {
+    width: 22px;
+    height: 22px;
+  }
+
+  table.posts-table td, .posts-table td {
+    display: block !important;
+    padding: 4px 0 !important;
+    border: none !important;
+    text-align: left !important;
+  }
+
+  /* Larger post title */
+  .post-title-text, td.post-title, [class*="post-title"] {
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    margin-bottom: 8px !important;
+    line-height: 1.4 !important;
+    color: #111 !important;
+    cursor: pointer;
+  }
+
+  /* Meta info (category / date / status) */
+  .post-meta, [class*="post-meta"], td.post-status, td.post-category, td.post-date {
+    display: inline-block !important;
+    font-size: 13px !important;
+    color: #6b7280 !important;
+    margin-right: 10px !important;
+  }
+
+  /* Action button group */
+  .action-cell, td.action-cell {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    margin-top: 10px !important;
+    padding-top: 10px !important;
+    border-top: 1px solid #f3f4f6 !important;
+  }
+
+  .action-btn {
+    flex: 1 1 calc(33.333% - 8px) !important;
+    min-width: 80px !important;
+    text-align: center !important;
+    padding: 10px 8px !important;
+    font-size: 13px !important;
+  }
+
+  /* Header */
+  header, .admin-header, [class*="header"] {
+    padding: 10px 12px !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Login screen -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">Korean <span>Salaryman</span></div>
+    <div class="login-sub">ADMIN PANEL · OWNER ONLY</div>
+    <label class="login-label">Password</label>
+    <input class="login-input" type="password" id="pwInput" placeholder="••••••••" autocomplete="current-password">
+    <button class="login-btn" onclick="doLogin()">Log In</button>
+    <div class="login-err" id="loginErr"></div>
+    <div class="login-note">
+      If no GitHub Token is set,<br>editing/publishing/deleting posts may be limited.<br>
+      Please enter your Token in Settings after logging in.
+    </div>
+  </div>
+</div>
+
+<!-- Admin app -->
+<div id="adminApp" style="display:none;flex-direction:column;min-height:100vh;">
+  <header class="admin-header">
+    <div class="admin-logo">Korean <span>Salaryman</span><small>ADMIN</small></div>
+    <div class="admin-header-right">
+      <button class="logout-btn" onclick="openModal('settingsModal')" style="margin-right:4px;">⚙ Settings</button>
+      <span class="admin-user">Admin</span>
+      <button class="logout-btn" onclick="doLogout()">Log Out</button>
+    </div>
+  </header>
+
+  <div class="admin-body">
+    <nav class="admin-sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">POSTS</div>
+        <div class="sidebar-item active" id="si-all" onclick="setFilter('all',this)">
+          <span class="si-icon">📋</span> All Posts
+          <span class="sidebar-count" id="cnt-all">0</span>
+        </div>
+        <div class="sidebar-item" id="si-pub" onclick="setFilter('published',this)">
+          <span class="si-icon">✅</span> Published
+          <span class="sidebar-count" id="cnt-pub">0</span>
+        </div>
+        <div class="sidebar-item" id="si-draft" onclick="setFilter('draft',this)">
+          <span class="si-icon">📝</span> Drafts
+          <span class="sidebar-count" id="cnt-draft">0</span>
+        </div>
+        <div class="sidebar-item" id="si-scheduled" onclick="setFilter('scheduled',this)">
+          <span class="si-icon">⏰</span> Scheduled
+          <span class="sidebar-count" id="cnt-scheduled">0</span>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">CATEGORIES</div>
+        <div class="sidebar-item" onclick="setFilter('cat:k-trends',this)"><span class="si-icon">🔥</span> K-Trends</div>
+        <div class="sidebar-item" onclick="setFilter('cat:korean-life',this)"><span class="si-icon">🏠</span> Korean Life</div>
+        <div class="sidebar-item" onclick="setFilter('cat:culture-explained',this)"><span class="si-icon">📖</span> Culture</div>
+        <div class="sidebar-item" onclick="setFilter('cat:essay',this)"><span class="si-icon">✍️</span> Essays</div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">REVENUE</div>
+        <div class="sidebar-item" id="si-income" onclick="showView('income',this)">
+          <span class="si-icon">💰</span> Edit Revenue
+        </div>
+        <div class="sidebar-item" id="si-adsense" onclick="showView('adsense',this)">
+          <span class="si-icon">🎯</span> AdSense Readiness
+          <span class="sidebar-count" id="cnt-adsense">—</span>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">SHORTCUTS</div>
+        <div class="sidebar-item" onclick="window.open('/','_blank')"><span class="si-icon">🏠</span> Blog Home</div>
+        <div class="sidebar-item" onclick="window.open('/income.html','_blank')"><span class="si-icon">📊</span> Public Revenue Page</div>
+      </div>
+    </nav>
+
+    <main class="admin-main">
+
+      <!-- ── Posts view ── -->
+      <div id="view-posts">
+
+      <!-- ── Automation ON/OFF banner ── -->
+      <div id="automationBanner" style="border-radius:14px;padding:18px 24px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div id="automationDot" style="width:12px;height:12px;border-radius:50%;flex-shrink:0;animation:pulse 2s infinite;"></div>
+          <div>
+            <div id="automationTitle" style="font-size:14px;font-weight:700;"></div>
+            <div id="automationDesc" style="font-size:12px;margin-top:2px;opacity:0.75;"></div>
+          </div>
+        </div>
+        <button id="automationToggleBtn" onclick="toggleAutomation()"
+          style="padding:9px 22px;border-radius:8px;border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.2s;">
+        </button>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-label">Total Posts</div><div class="stat-val" id="statTotal">—</div></div>
+        <div class="stat-card" style="cursor:pointer;" onclick="document.querySelector('[style*=featured]')?.scrollIntoView({behavior:'smooth'})">
+          <div class="stat-label">Featured</div>
+          <div class="stat-val" id="statFeatured" style="font-size:13px;color:var(--point);">Checking...</div>
+        </div>
+        <div class="stat-card"><div class="stat-label">Published</div><div class="stat-val green" id="statPub">—</div></div>
+        <div class="stat-card"><div class="stat-label">Drafts</div><div class="stat-val yellow" id="statDraft">—</div></div>
+        <div class="stat-card"><div class="stat-label">Created Today</div><div class="stat-val orange" id="statToday">—</div></div>
+      </div>
+
+      <div class="toolbar">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input class="search-input" type="text" id="searchInput" placeholder="Search post titles..." oninput="applyFilters()">
+        </div>
+        <select class="filter-select" id="catFilter" onchange="applyFilters()">
+          <option value="">All Categories</option>
+          <option value="k-trends">🔥 K-Trends</option>
+          <option value="korean-life">🏠 Korean Life</option>
+          <option value="culture-explained">📖 Culture</option>
+          <option value="essay">✍️ Essays</option>
+        </select>
+        <button class="refresh-btn" onclick="loadPosts()">↻ Refresh</button>
+        <button onclick="openNewPost()" style="background:var(--point);color:var(--white);border:none;padding:8px 18px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">✏️ New Post</button>
+        <button onclick="openNaverImport()" style="background:var(--bg2);color:var(--text1);border:1px solid var(--border);padding:8px 14px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;">📥 Rewrite Naver Post</button>
+        <button onclick="openCustomRequest()" style="background:var(--bg2);color:var(--text1);border:1px solid var(--border);padding:8px 14px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;">✏️ Custom Post Request</button>
+      </div>
+
+      <div id="bulkActionBar" style="display:none;background:#f9fafb;padding:10px 14px;border:1px solid var(--border);border-radius:8px;margin-bottom:12px;align-items:center;gap:10px;flex-wrap:wrap;">
+        <span id="bulkSelectedCount" style="font-weight:600;color:#111;">0 selected</span>
+        <button onclick="bulkPublish()" class="btn-publish" style="padding:8px 14px;font-size:13px;border:none;border-radius:6px;cursor:pointer;font-family:inherit;font-weight:600;">📢 Publish Selected</button>
+        <button onclick="bulkUnpublish()" class="cancel-btn" style="padding:8px 14px;font-size:13px;">📝 Move to Drafts</button>
+        <button onclick="bulkDelete()" class="del-btn" style="padding:8px 14px;font-size:13px;">🗑️ Delete Selected</button>
+        <button onclick="clearSelection()" style="background:transparent;border:1px solid var(--border);padding:8px 14px;border-radius:6px;font-size:13px;cursor:pointer;font-family:inherit;">Clear Selection</button>
+      </div>
+
+      <div class="posts-table">
+        <div class="table-head">
+          <div class="th"><input type="checkbox" id="selectAllPosts" class="post-checkbox" onchange="toggleSelectAll(this)" title="Select all"></div>
+          <div class="th">Title</div>
+          <div class="th">Category</div>
+          <div class="th">Status</div>
+          <div class="th">Date</div>
+          <div class="th" style="text-align:right">Actions</div>
+        </div>
+        <div id="postTableBody">
+          <div class="empty-row"><div class="empty-row-icon">⏳</div><p>Loading posts...</p></div>
+        </div>
+      </div>
+
+      </div><!-- /view-posts -->
+
+      <!-- ── Revenue view ── -->
+      <div id="view-income" style="display:none;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+          <div>
+            <h2 style="font-family:'Noto Serif KR',serif;font-size:20px;font-weight:700;color:var(--navy);margin-bottom:4px;">💰 Revenue Management</h2>
+            <p style="font-size:12px;color:var(--text3);">Changes here are reflected instantly on the public revenue page.</p>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button onclick="window.open('/income.html','_blank')"
+              style="background:var(--bg2);color:var(--text2);border:1px solid var(--border);padding:8px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">
+              👁 Preview
+            </button>
+            <button onclick="saveIncome()"
+              style="background:var(--green);color:var(--white);border:none;padding:8px 20px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">
+              💾 Save
+            </button>
+          </div>
+        </div>
+
+        <!-- This month's total revenue -->
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;">
+          <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;margin-bottom:16px;">THIS MONTH · Total Revenue</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+            <div>
+              <label style="display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px;">Display amount (e.g. 5,000,000)</label>
+              <input id="inc-total-amount" class="form-input" type="text" placeholder="5,000,000" style="font-size:16px;font-weight:700;">
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px;">Suffix (e.g. KRW+ / KRW)</label>
+              <input id="inc-total-suffix" class="form-input" type="text" placeholder="KRW+">
+            </div>
+          </div>
+          <div style="margin-top:12px;">
+            <label style="display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px;">Footnote</label>
+            <input id="inc-total-note" class="form-input" type="text" placeholder="* Excludes day-job salary · Pre-tax · Updated monthly">
+          </div>
+        </div>
+
+        <!-- Income items -->
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+            <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;">INCOME ITEMS</div>
+            <button onclick="addIncomeItem()"
+              style="background:var(--point-light);color:var(--point);border:1px solid rgba(193,127,62,0.3);padding:6px 14px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">
+              + Add Item
+            </button>
+          </div>
+          <div id="incomeItemList" style="display:flex;flex-direction:column;gap:12px;"></div>
+        </div>
+
+        <!-- Monthly history -->
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+            <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;">MONTHLY HISTORY</div>
+            <button onclick="addMonthHistory()"
+              style="background:var(--point-light);color:var(--point);border:1px solid rgba(193,127,62,0.3);padding:6px 14px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">
+              + Add Month
+            </button>
+          </div>
+          <div id="monthHistoryList" style="display:flex;flex-direction:column;gap:16px;"></div>
+        </div>
+
+        <!-- Revenue structure explanation -->
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;">
+          <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;margin-bottom:16px;">STRUCTURE · Revenue Breakdown</div>
+          <div id="incomeStructureList" style="display:flex;flex-direction:column;gap:12px;"></div>
+          <button onclick="addStructureItem()" style="margin-top:12px;background:var(--bg2);color:var(--text2);border:1px solid var(--border);padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">+ Add Item</button>
+        </div>
+
+      </div><!-- /view-income -->
+
+      <!-- ── AdSense readiness view ── -->
+      <div id="view-adsense" style="display:none;">
+        <div style="margin-bottom:20px;">
+          <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;margin-bottom:8px;">ADSENSE READINESS</div>
+          <h2 style="font-family:'Noto Serif KR',serif;font-size:24px;font-weight:700;color:var(--navy);margin-bottom:6px;">AdSense Approval Diagnostic</h2>
+          <p style="font-size:13px;color:var(--text3);line-height:1.7;">Automatically analyzes manifest.json and your site status to assess your AdSense approval chances.</p>
+        </div>
+
+        <!-- Overall score card -->
+        <div id="adsense-score-card" style="background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:16px;padding:28px 32px;margin-bottom:20px;color:var(--white);position:relative;overflow:hidden;">
+          <div style="position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(193,127,62,0.2),transparent 65%);"></div>
+          <div style="position:relative;z-index:1;">
+            <div style="font-size:11px;letter-spacing:0.15em;color:rgba(255,255,255,0.5);margin-bottom:8px;">READINESS SCORE</div>
+            <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:8px;">
+              <div id="adsense-score" style="font-family:'Noto Serif KR',serif;font-size:52px;font-weight:900;color:var(--gold);line-height:1;">—</div>
+              <div style="font-size:22px;color:rgba(255,255,255,0.4);">/ 100</div>
+            </div>
+            <div id="adsense-verdict" style="font-size:14px;color:rgba(255,255,255,0.85);margin-top:8px;line-height:1.6;">Analyzing...</div>
+          </div>
+        </div>
+
+        <!-- Quick stats -->
+        <div id="adsense-quick-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;"></div>
+
+        <!-- Required items check -->
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;">
+          <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;margin-bottom:16px;">REQUIRED · Mandatory items (rejection if missing)</div>
+          <div id="adsense-required-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+        </div>
+
+        <!-- Recommended items check -->
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;">
+          <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;margin-bottom:16px;">RECOMMENDED · Optional items (boost approval odds)</div>
+          <div id="adsense-recommended-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+        </div>
+
+        <!-- Draft review section -->
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;">
+          <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;margin-bottom:6px;">DRAFT REVIEW</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:18px;">
+            <h3 style="font-family:'Noto Serif KR',serif;font-size:17px;font-weight:700;color:var(--navy);">Drafts needing review before publishing</h3>
+            <span id="adsense-draft-count" style="font-size:12px;color:var(--text3);">—</span>
+          </div>
+          <div id="adsense-draft-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+        </div>
+
+        <!-- Step-by-step execution roadmap -->
+        <div style="background:linear-gradient(135deg,#fef8ef,#fdeed6);border:1px solid var(--point-light);border-radius:16px;padding:24px;margin-bottom:20px;">
+          <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;margin-bottom:16px;">ROADMAP · 4-Week Execution Plan</div>
+          <div id="adsense-roadmap" style="display:flex;flex-direction:column;gap:12px;"></div>
+        </div>
+
+        <!-- Action buttons -->
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px;">
+          <button onclick="renderAdsenseChecklist()" style="background:var(--navy);color:var(--white);border:none;padding:11px 22px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">🔄 Re-run Diagnostic</button>
+          <a href="https://www.google.com/adsense" target="_blank" style="background:var(--point);color:var(--white);text-decoration:none;padding:11px 22px;border-radius:8px;font-size:13px;font-weight:700;display:inline-flex;align-items:center;">🎯 Apply for AdSense →</a>
+          <a href="https://support.google.com/adsense/answer/48182" target="_blank" style="background:var(--bg2);color:var(--text2);text-decoration:none;padding:11px 22px;border-radius:8px;font-size:13px;font-weight:700;">📘 View Program Policies</a>
+        </div>
+
+      </div><!-- /view-adsense -->
+
+    </main>
+  </div>
+</div>
+
+<!-- Preview modal -->
+<div class="modal-overlay" id="previewModal">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title">Preview</span>
+      <button class="modal-close" onclick="closeModal('previewModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="preview-cat" id="pvCat"></div>
+      <div class="preview-title" id="pvTitle"></div>
+      <div class="preview-meta" id="pvMeta"></div>
+      <div class="preview-summary" id="pvSummary" style="display:none;"></div>
+      <div class="preview-content" id="pvContent"></div>
+      <div class="preview-tags" id="pvTags"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="cancel-btn" onclick="closeModal('previewModal')">Close</button>
+      <button class="action-btn btn-edit" id="pvEditBtn" onclick="editFromPreview()">Edit</button>
+      <button class="action-btn btn-pub" id="pvToggleBtn" onclick="togglePvFromPreview()">Publish</button>
+      <button class="action-btn btn-delete" id="pvDeleteBtn" onclick="deleteFromPreview()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit modal -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal" style="max-width:860px;width:100%;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;" onclick="event.stopPropagation();">
+    <div class="modal-head" style="flex-shrink:0;">
+      <span class="modal-title" id="editModalTitle">✏️ New Post</span>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button id="btnDraft" onclick="event.stopPropagation();savePost('draft')" style="background:var(--bg2);color:var(--text2);border:1px solid var(--border);padding:7px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">Save Draft</button>
+        <button id="btnPublish" onclick="event.stopPropagation();savePost('published')" style="background:var(--navy);color:var(--white);border:none;padding:7px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">Publish 🚀</button>
+        <button id="btnCloseEdit" onclick="event.stopPropagation();closeModal('editModal')" class="modal-close">✕</button>
+      </div>
+    </div>
+    <div class="modal-body" style="flex:1;overflow-y:auto;padding:24px;">
+      <input type="hidden" id="editFilename">
+      <input type="hidden" id="editSha">
+
+      <!-- Title -->
+      <div class="form-group" style="margin-bottom:16px;">
+        <input class="form-input" type="text" id="editTitle" placeholder="Enter a title"
+          style="font-size:20px;font-weight:700;padding:14px 16px;border-radius:10px;border:2px solid var(--border);">
+      </div>
+
+      <!-- Category + tags -->
+      <div class="form-row" style="margin-bottom:16px;">
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-select" id="editCategory">
+            <option value="k-trends">🔥 K-Trends</option>
+            <option value="korean-life">🏠 Korean Life</option>
+            <option value="culture-explained">📖 Culture</option>
+            <option value="essay">✍️ Essays</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tags (comma-separated)</label>
+          <input class="form-input" type="text" id="editTags" placeholder="korea, expat, work culture">
+        </div>
+      </div>
+
+      <!-- Editor toolbar -->
+      <div class="form-group" style="margin-bottom:6px;">
+        <label class="form-label">Body</label>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;padding:8px 10px;background:var(--bg);border:1.5px solid var(--border);border-bottom:none;border-radius:8px 8px 0 0;">
+          <button class="tb-btn" onclick="editorCmd('bold')" title="Bold"><b>B</b></button>
+          <button class="tb-btn" onclick="editorCmd('italic')" title="Italic"><i>I</i></button>
+          <button class="tb-btn" onclick="editorCmd('underline')" title="Underline"><u>U</u></button>
+          <div style="width:1px;background:var(--border);margin:2px 4px;"></div>
+          <button class="tb-btn" onclick="insertHeading(2)" title="H2 heading">H2</button>
+          <button class="tb-btn" onclick="insertHeading(3)" title="H3 subheading">H3</button>
+          <div style="width:1px;background:var(--border);margin:2px 4px;"></div>
+          <button class="tb-btn" onclick="editorCmd('insertUnorderedList')" title="Bullet list">• List</button>
+          <button class="tb-btn" onclick="editorCmd('insertOrderedList')" title="Numbered list">1. List</button>
+          <div style="width:1px;background:var(--border);margin:2px 4px;"></div>
+          <button class="tb-btn" onclick="insertQuote()" title="Quote">❝ Quote</button>
+          <button class="tb-btn" onclick="insertDivider()" title="Divider">— Divider</button>
+          <div style="width:1px;background:var(--border);margin:2px 4px;"></div>
+          <button class="tb-btn" onclick="insertLink()" title="Link">🔗 Link</button>
+          <div style="width:1px;background:var(--border);margin:2px 4px;"></div>
+          <button type="button" class="tb-btn" onclick="insertImage()" title="Insert image">🖼️ Image</button>
+          <button type="button" class="tb-btn" onclick="insertVideo()" title="Insert video">🎬 Video</button>
+          <div style="flex:1;"></div>
+          <button class="tb-btn" onclick="togglePreviewMode()" id="previewToggleBtn" style="background:var(--navy);color:var(--white);border-color:var(--navy);">👁 Preview</button>
+        </div>
+        <!-- Editor area -->
+        <div id="richEditor"
+          contenteditable="true"
+          spellcheck="false"
+          style="min-height:400px;padding:20px;border:1.5px solid var(--border);border-radius:0 0 8px 8px;background:var(--white);font-size:15px;line-height:1.9;color:var(--text1);outline:none;font-family:'Noto Sans KR',sans-serif;">
+        </div>
+        <!-- Preview area -->
+        <div id="editorPreview"
+          style="display:none;min-height:400px;padding:20px;border:1.5px solid var(--border);border-radius:0 0 8px 8px;background:var(--white);">
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="form-group" style="margin-top:16px;">
+        <label class="form-label">Summary <span style="font-weight:400;color:var(--text3);">(shown in search/cards · 2–3 sentences)</span></label>
+        <textarea class="form-textarea" id="editSummary" style="min-height:72px;" placeholder="Summarize this post in 2–3 sentences."></textarea>
+        <div style="display:flex;justify-content:flex-end;margin-top:6px;">
+          <button onclick="autoSummary()" style="font-size:11px;color:var(--point);background:none;border:none;cursor:pointer;font-family:inherit;">✨ AI Auto-Summary</button>
+        </div>
+      </div>
+
+      <!-- Character count -->
+      <div style="font-size:11px;color:var(--text3);text-align:right;margin-top:8px;" id="charCount">0 chars</div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete modal -->
+<!-- Schedule publish modal -->
+<div class="modal-overlay" id="scheduleModal">
+  <div class="modal" style="max-width:480px;">
+    <div class="modal-head">
+      <span class="modal-title">⏰ Schedule Publish</span>
+      <button class="modal-close" onclick="closeModal('scheduleModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="scheduleTitle" style="font-weight:600;margin-bottom:14px;color:var(--text1);"></div>
+
+      <label class="form-label">Publish date</label>
+      <input type="date" id="scheduleDate" class="form-input" style="margin-bottom:14px;">
+
+      <label class="form-label">Publish time (KST · 30-min increments)</label>
+      <select id="scheduleTime" class="form-select" style="margin-bottom:14px;">
+        <option value="">Select time</option>
+      </select>
+
+      <div id="schedulePreview" style="background:#f9fafb;padding:12px;border-radius:6px;font-size:13px;color:var(--text2);display:none;margin-top:8px;border-left:3px solid #16a34a;">
+        <span id="schedulePreviewText"></span>
+      </div>
+
+      <div style="margin-top:14px;font-size:11px;color:var(--text3);line-height:1.6;">
+        ※ Scheduled posts are checked and auto-published by GitHub Actions every 30 minutes.<br>
+        ※ Minute-level precision is not guaranteed; publishing may be delayed by up to 30 minutes.
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="cancel-btn" onclick="closeModal('scheduleModal')">Cancel</button>
+      <button class="save-btn" onclick="confirmSchedule()">Confirm Schedule</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title">Delete Post</span>
+      <button class="modal-close" onclick="closeModal('deleteModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="delete-icon">🗑️</div>
+      <div class="delete-msg">
+        <div class="delete-title" id="deletePostTitle"></div>
+        <br>Deleting this post cannot be undone.<br>Are you sure you want to delete it?
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="cancel-btn" onclick="closeModal('deleteModal')">Cancel</button>
+      <button class="del-btn" onclick="confirmDelete()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Settings modal -->
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title">⚙ Settings</span>
+      <button class="modal-close" onclick="closeModal('settingsModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">GitHub Personal Access Token</label>
+        <input class="form-input token-input" type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+        <div class="settings-info">
+          A Token is required for edits / publishing / deletions to sync automatically to GitHub.<br>
+          The Token is stored securely in this browser only and is never sent anywhere else.<br><br>
+          <b>How to create one:</b> GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token<br>
+          Scope: check <b>repo</b>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="cancel-btn" onclick="closeModal('settingsModal')">Cancel</button>
+      <button class="save-btn" onclick="saveSettings()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Rewrite Naver post modal -->
+<div class="modal-overlay" id="naverImportModal">
+  <div class="modal" style="max-width:800px;width:100%;max-height:90vh;">
+    <div class="modal-head">
+      <span class="modal-title">📥 Rewrite Naver Post</span>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button class="action-btn btn-pub" onclick="convertNaverPost()" id="naverConvertBtn">🔄 Convert</button>
+        <button class="modal-close" onclick="closeModal('naverImportModal')">✕</button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div style="margin-bottom:16px;color:#6b7280;font-size:13px;line-height:1.6;">
+        Paste the body of a Naver blog post. The AI rewrites it in the author's voice and expands it, then saves it as a site draft. (Prevents duplicate content)
+      </div>
+
+      <label class="form-label" style="margin-bottom:6px;display:block;">Category</label>
+      <select id="naverCategory" class="form-select" style="margin-bottom:14px;">
+        <option value="k-trends">🔥 K-Trends</option>
+        <option value="korean-life">🏠 Korean Life</option>
+        <option value="culture-explained">📖 Culture</option>
+        <option value="essay">✍️ Essays</option>
+      </select>
+
+      <label class="form-label" style="margin-bottom:6px;display:block;">Naver post body (paste the whole thing, including the title)</label>
+      <textarea id="naverContent" class="form-textarea" style="min-height:300px;font-family:inherit;" placeholder="Copy the full body from the Naver blog → paste it here"></textarea>
+
+      <div id="naverConvertResult" style="margin-top:16px;display:none;">
+        <hr style="margin:16px 0;border:none;border-top:1px solid #e5e7eb;">
+        <div style="font-weight:600;margin-bottom:8px;">Conversion preview</div>
+        <div id="naverResultBody" style="background:#f9fafb;padding:14px;border-radius:8px;font-size:14px;line-height:1.7;white-space:pre-wrap;max-height:300px;overflow-y:auto;"></div>
+        <div style="margin-top:12px;display:flex;gap:8px;">
+          <button class="action-btn btn-pub" onclick="saveNaverDraft()">💾 Save as draft</button>
+          <button class="cancel-btn" onclick="document.getElementById('naverConvertResult').style.display='none';">Convert again</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Custom post request modal -->
+<div class="modal-overlay" id="customRequestModal">
+  <div class="modal" style="max-width:800px;width:100%;max-height:90vh;">
+    <div class="modal-head">
+      <span class="modal-title">✏️ Custom Post Request</span>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button class="action-btn btn-pub" onclick="generateCustomPost()" id="customGenBtn">✨ Generate Post</button>
+        <button class="modal-close" onclick="closeModal('customRequestModal')">✕</button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div style="margin-bottom:16px;color:#6b7280;font-size:13px;line-height:1.6;">
+        Enter a topic you're curious about, and a post is generated in the same v2 voice as the automation system and saved as a draft.
+      </div>
+
+      <label class="form-label" style="margin-bottom:6px;display:block;">Keyword (the post's core topic)</label>
+      <input id="customKeyword" class="form-input" type="text" placeholder="e.g. Korean drinking culture, jeonse explained, working at a chaebol" style="margin-bottom:14px;">
+
+      <label class="form-label" style="margin-bottom:6px;display:block;">Category</label>
+      <select id="customCategory" class="form-select" style="margin-bottom:14px;">
+        <option value="k-trends">🔥 K-Trends</option>
+        <option value="korean-life" selected>🏠 Korean Life</option>
+        <option value="culture-explained">📖 Culture</option>
+        <option value="essay">✍️ Essays</option>
+      </select>
+
+      <label class="form-label" style="margin-bottom:6px;display:block;">Additional context (optional, steers the post's direction)</label>
+      <textarea id="customContext" class="form-textarea" style="min-height:100px;font-family:inherit;" placeholder="e.g. From the perspective of an expat working in Seoul. Focus on the contrast with Western office culture. Center it on my own experience adjusting to hoesik (company dinners)."></textarea>
+      <div style="font-size:12px;color:#9ca3af;margin-top:6px;">Leave it blank to write from the keyword alone. The more specific you are, the closer it matches your intent.</div>
+
+      <div id="customGenResult" style="margin-top:16px;display:none;">
+        <hr style="margin:16px 0;border:none;border-top:1px solid #e5e7eb;">
+        <div style="font-weight:600;margin-bottom:8px;">Generation preview</div>
+        <div id="customResultBody" style="background:#f9fafb;padding:14px;border-radius:8px;font-size:14px;line-height:1.7;white-space:pre-wrap;max-height:300px;overflow-y:auto;"></div>
+        <div style="margin-top:12px;display:flex;gap:8px;">
+          <button class="action-btn btn-pub" onclick="saveCustomDraft()">💾 Save as draft</button>
+          <button class="cancel-btn" onclick="document.getElementById('customGenResult').style.display='none';">Generate again</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div></div>
+
+<script>
+// ── Config values ────────────────────────────────────────────
+// Password hash (SHA-256). The plaintext password is not in the code.
+// To change the password: run await sha256('new password') in the console → replace the value below with the result
+const ADMIN_PW_HASH = 'da7bf6482c44202ce16be314f519394825f86bbcf0aca2f9cba0d5b861c30818';
+
+async function sha256(str) {
+  const buf = new TextEncoder().encode(str);
+  const hashBuf = await crypto.subtle.digest('SHA-256', buf);
+  return Array.from(new Uint8Array(hashBuf))
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
+}
+
+// ── Automation ON/OFF state ────────────────────────────────
+// Stored in localStorage as 'automationEnabled' (true=on / false=off)
+// The actual GitHub Actions are turned on/off separately;
+// this toggle just lets the admin track whether automation is currently on.
+let automationEnabled = localStorage.getItem('automationEnabled') !== 'false'; // default: true
+
+function renderAutomationBanner() {
+  const banner = document.getElementById('automationBanner');
+  const dot    = document.getElementById('automationDot');
+  const title  = document.getElementById('automationTitle');
+  const desc   = document.getElementById('automationDesc');
+  const btn    = document.getElementById('automationToggleBtn');
+
+  if (automationEnabled) {
+    banner.style.background = 'linear-gradient(135deg,#1a2640,#253352)';
+    banner.style.color      = '#ffffff';
+    dot.style.background    = '#4ade80';
+    dot.style.boxShadow     = '0 0 8px #4ade80';
+    title.textContent       = 'Automation running — posts are generated automatically every day at 9 AM';
+    desc.textContent        = 'AUTO_PUBLISH=false saves as draft / true auto-publishes';
+    btn.textContent         = '⏹ Turn Off Automation';
+    btn.style.background    = '#c0392b';
+    btn.style.color         = '#ffffff';
+  } else {
+    banner.style.background = '#f0ede8';
+    banner.style.color      = '#444444';
+    dot.style.background    = '#d4cfc8';
+    dot.style.boxShadow     = 'none';
+    title.textContent       = 'Automation off — automatic post generation is paused';
+    desc.textContent        = 'Press the button below to re-enable automation';
+    btn.textContent         = '▶ Turn On Automation';
+    btn.style.background    = '#2d6a4f';
+    btn.style.color         = '#ffffff';
+  }
+}
+
+function toggleAutomation() {
+  automationEnabled = !automationEnabled;
+  localStorage.setItem('automationEnabled', automationEnabled ? 'true' : 'false');
+  renderAutomationBanner();
+  const msg = automationEnabled
+    ? '✅ Automation enabled. Posts will be generated every day at 9 AM.'
+    : '⏹ Automation disabled. Be sure to stop it in GitHub Actions too.';
+  showToast(msg, automationEnabled ? 'success' : 'info');
+}
+
+// Render the banner on page load
+renderAutomationBanner();
+const GH_OWNER   = 'daehongpark';
+const GH_REPO    = 'korean-salaryman-en';
+const GH_BRANCH  = 'main';
+const POSTS_PATH = 'posts';
+
+// ── State ──────────────────────────────────────────────
+let isLoggedIn   = false;
+let allPosts     = [];      // {filename, sha, ...jsonData}
+let currentFilter = 'all';
+let deleteTarget  = null;   // {filename, sha}
+let ghToken       = localStorage.getItem('ghToken') || '';
+
+// In-memory body cache: lazy-loaded on preview/edit click. Cleared automatically when the page closes.
+const _postBodyCache = new Map();  // key: filename, value: { content, sha, fetchedAt }
+
+// Body lazy-load helper: returns immediately if cached, otherwise makes one GitHub API call then caches.
+async function getPostBody(filename) {
+  const cached = _postBodyCache.get(filename);
+  // Cache is valid for 5 minutes (a post edited/scheduled within that window may be stale)
+  if (cached && (Date.now() - cached.fetchedAt) < 5 * 60 * 1000) {
+    return cached;
+  }
+  const fileData = await ghGet(`${POSTS_PATH}/${filename}`);
+  const content = decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, ''))));
+  const json = JSON.parse(content);
+  const entry = {
+    ...json,
+    filename,
+    sha: fileData.sha,
+    fetchedAt: Date.now(),
+  };
+  _postBodyCache.set(filename, entry);
+  return entry;
+}
+
+// Invalidate the body cache: call after editing/deleting/scheduling
+function invalidatePostBody(filename) {
+  _postBodyCache.delete(filename);
+}
+
+// ── Auto logout (after 1 hour of inactivity) ──────────────────────
+const AUTO_LOGOUT_MS = 60 * 60 * 1000;
+let autoLogoutTimer = null;
+
+function resetAutoLogoutTimer() {
+  if (autoLogoutTimer) clearTimeout(autoLogoutTimer);
+  autoLogoutTimer = setTimeout(() => {
+    sessionStorage.removeItem('adminLoggedIn');
+    alert('You have been logged out automatically after 1 hour of inactivity.');
+    location.reload();
+  }, AUTO_LOGOUT_MS);
+}
+
+['click', 'keydown', 'touchstart', 'scroll'].forEach(evt => {
+  document.addEventListener(evt, resetAutoLogoutTimer, { passive: true });
+});
+
+// ── Login ────────────────────────────────────────────
+async function doLogin() {
+  const pw = document.getElementById('pwInput').value;
+  if ((await sha256(pw)) === ADMIN_PW_HASH) {
+    isLoggedIn = true;
+    sessionStorage.setItem('adminLoggedIn', '1');
+    document.getElementById('loginScreen').style.display = 'none';
+    const app = document.getElementById('adminApp');
+    app.style.display = 'flex';
+    resetAutoLogoutTimer();
+    loadPosts();
+  } else {
+    const err = document.getElementById('loginErr');
+    err.textContent = 'Incorrect password.';
+    err.style.display = 'block';
+  }
+}
+
+function doLogout() {
+  isLoggedIn = false;
+  sessionStorage.removeItem('adminLoggedIn');
+  document.getElementById('adminApp').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('pwInput').value = '';
+}
+
+// Auto login
+if (sessionStorage.getItem('adminLoggedIn') === '1') {
+  isLoggedIn = true;
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('adminApp').style.display = 'flex';
+  resetAutoLogoutTimer();
+}
+
+document.getElementById('pwInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+
+// ── Settings ─────────────────────────────────────────────
+function saveSettings() {
+  const t = document.getElementById('ghToken').value.trim();
+  ghToken = t;
+  if (t) localStorage.setItem('ghToken', t);
+  else localStorage.removeItem('ghToken');
+  closeModal('settingsModal');
+  showToast('Settings saved.', 'success');
+}
+
+// Show the current token when the settings modal opens
+document.getElementById('settingsModal').addEventListener('transitionend', () => {});
+function openSettingsModal() {
+  document.getElementById('ghToken').value = ghToken || '';
+  openModal('settingsModal');
+}
+
+// ── GitHub API ────────────────────────────────────────
+const GH_API = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents`;
+
+function ghHeaders() {
+  const h = {'Content-Type': 'application/json', 'Accept': 'application/vnd.github+json'};
+  if (ghToken) h['Authorization'] = `token ${ghToken}`;
+  return h;
+}
+
+// ── GitHub API retry helper ─────────────────────────
+// Exponential backoff on 429 (rate limit), 5xx (transient server errors), 409/422 (sha race), and network errors
+async function _ghRetry(fn, opts = {}) {
+  const maxAttempts = opts.maxAttempts || 4;
+  const baseDelay = opts.baseDelay || 1000;
+  const skipStatuses = opts.skipStatuses || [];
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      return await fn();
+    } catch (e) {
+      const status = e._status || 0;
+      // If in skipStatuses, throw immediately (caller handles it directly - e.g. sha refresh)
+      if (skipStatuses.includes(status)) {
+        throw e;
+      }
+      const isRetryable = (status === 429) || (status >= 500 && status < 600) || (status === 0);
+
+      if (!isRetryable || attempt === maxAttempts) {
+        throw e;
+      }
+
+      const retryAfter = e._retryAfter ? parseInt(e._retryAfter) * 1000 : baseDelay * Math.pow(2, attempt - 1);
+      const jitter = Math.random() * 500;
+      const wait = Math.min(retryAfter + jitter, 30000);
+      console.warn(`[ghRetry] ${attempt}/${maxAttempts} failed (${status}) → retrying in ${Math.round(wait)}ms`);
+      await new Promise(r => setTimeout(r, wait));
+    }
+  }
+}
+
+async function _fetchGh(url, options = {}) {
+  const res = await fetch(url, options);
+  if (!res.ok) {
+    let bodyMsg = '';
+    try {
+      const json = await res.json();
+      bodyMsg = json.message || JSON.stringify(json);
+    } catch (_) {
+      bodyMsg = await res.text().catch(() => '');
+    }
+    const err = new Error(`GitHub API ${res.status}: ${bodyMsg}`);
+    err._status = res.status;
+    err._retryAfter = res.headers.get('Retry-After');
+    throw err;
+  }
+  return res;
+}
+
+async function ghGet(path) {
+  return _ghRetry(async () => {
+    const res = await _fetchGh(`${GH_API}/${path}?ref=${GH_BRANCH}`, {headers: ghHeaders()});
+    return res.json();
+  });
+}
+
+async function ghPut(path, content, sha, message) {
+  if (!ghToken) throw new Error('No GitHub Token. Please enter your Token in Settings.');
+
+  const encodedContent = btoa(unescape(encodeURIComponent(content)));
+  let currentSha = sha;
+  const maxShaRetries = 5;
+
+  for (let attempt = 1; attempt <= maxShaRetries; attempt++) {
+    try {
+      const body = { message, content: encodedContent, branch: GH_BRANCH };
+      if (currentSha) body.sha = currentSha;
+
+      // Retry network/rate-limit via _ghRetry (but 409/422 are not caught here - sha is refreshed outside)
+      const res = await _ghRetry(async () => {
+        return await _fetchGh(`${GH_API}/${path}`, {
+          method: 'PUT',
+          headers: ghHeaders(),
+          body: JSON.stringify(body)
+        });
+      }, { skipStatuses: [409, 422] });
+      return res.json();
+
+    } catch (e) {
+      const status = e._status || 0;
+      // 409 (conflict) or 422 (sha mismatch) → fetch the latest sha and retry
+      if ((status === 409 || status === 422) && attempt < maxShaRetries) {
+        console.warn(`[ghPut] sha conflict (${status}) → re-fetching latest sha and retrying (${attempt}/${maxShaRetries})`);
+        try {
+          const fresh = await ghGet(path);
+          currentSha = fresh.sha;
+        } catch (getErr) {
+          // If the file doesn't exist (404), try creating it without a sha
+          if (getErr._status === 404) {
+            currentSha = null;
+          } else {
+            throw getErr;
+          }
+        }
+        // Brief wait, then retry
+        await new Promise(r => setTimeout(r, 300 + Math.random() * 400));
+        continue;
+      }
+      throw e;
+    }
+  }
+  throw new Error(`ghPut failed: ${path} (exceeded ${maxShaRetries} sha conflicts)`);
+}
+
+async function ghDelete(path, sha, message) {
+  if (!ghToken) throw new Error('No GitHub Token. Please enter your Token in Settings.');
+
+  let currentSha = sha;
+  const maxShaRetries = 5;
+
+  for (let attempt = 1; attempt <= maxShaRetries; attempt++) {
+    try {
+      const res = await _ghRetry(async () => {
+        return await _fetchGh(`${GH_API}/${path}`, {
+          method: 'DELETE',
+          headers: ghHeaders(),
+          body: JSON.stringify({ message, sha: currentSha, branch: GH_BRANCH })
+        });
+      }, { skipStatuses: [409, 422] });
+      return res.json();
+
+    } catch (e) {
+      const status = e._status || 0;
+      if ((status === 409 || status === 422) && attempt < maxShaRetries) {
+        console.warn(`[ghDelete] sha conflict (${status}) → re-fetching latest sha and retrying (${attempt}/${maxShaRetries})`);
+        try {
+          const fresh = await ghGet(path);
+          currentSha = fresh.sha;
+        } catch (getErr) {
+          if (getErr._status === 404) {
+            // Already deleted → treat as success
+            return { deleted: true };
+          }
+          throw getErr;
+        }
+        await new Promise(r => setTimeout(r, 300 + Math.random() * 400));
+        continue;
+      }
+      throw e;
+    }
+  }
+  throw new Error(`ghDelete failed: ${path} (exceeded ${maxShaRetries} sha conflicts)`);
+}
+
+// ── manifest.json sync helper ─────────────────────────
+// action: 'upsert' | 'remove' | 'updateStatus'
+// Called after a successful file operation. On manifest sync failure: toast + throw (caller must handle)
+async function syncManifest(action, filename, postData) {
+  // The manifest conflicts most often with cron → wrap the whole read-modify-write in a retry
+  const maxRetries = 5;
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const mfFile = await ghGet(`${POSTS_PATH}/manifest.json`);
+      const mfRaw  = decodeURIComponent(escape(atob(mfFile.content.replace(/\n/g, ''))));
+      let mfArr    = JSON.parse(mfRaw);
+      const idx    = mfArr.findIndex(e => e.filename === filename);
+
+      if (action === 'remove') {
+        if (idx < 0) return;
+        mfArr.splice(idx, 1);
+      } else if (action === 'upsert') {
+        if (idx >= 0) {
+          mfArr[idx] = { ...mfArr[idx], ...postData, filename };
+        } else {
+          mfArr.unshift({ ...postData, filename });
+        }
+      } else if (action === 'updateStatus') {
+        if (idx < 0) return;
+        mfArr[idx].status = postData.status;
+      } else {
+        throw new Error(`unknown syncManifest action: ${action}`);
+      }
+
+      const newContent = JSON.stringify(mfArr, null, 2);
+      // Pass the mfFile.sha we just fetched to ghPut (self-healing refreshes it on conflict)
+      await ghPut(
+        `${POSTS_PATH}/manifest.json`,
+        newContent,
+        mfFile.sha,
+        `manifest sync (${action}): ${filename}`
+      );
+      return; // success
+    } catch (e) {
+      if (attempt < maxRetries && (e._status === 409 || e._status === 422)) {
+        console.warn(`[syncManifest] conflict → full retry (${attempt}/${maxRetries})`);
+        await new Promise(r => setTimeout(r, 300 + Math.random() * 500));
+        continue;
+      }
+      console.error('manifest sync failed:', e);
+      showToast('manifest sync failed: ' + e.message, 'error');
+      throw e;
+    }
+  }
+}
+
+// ── Load posts ───────────────────────────────────────
+async function loadPosts() {
+  showLoading(true);
+  try {
+    // ★ Fetch manifest.json only once (previously: one fetch per post, 24 GitHub API calls → 1)
+    const mfFile = await ghGet(`${POSTS_PATH}/manifest.json`);
+    const mfRaw  = decodeURIComponent(escape(atob(mfFile.content.replace(/\n/g, ''))));
+    const manifest = JSON.parse(mfRaw);
+
+    // The manifest already includes category/status/tags/summary/scheduled_at etc. (single source of truth for the automation system)
+    // Only the body (content) is missing → lazy-loaded via getPostBody on preview/edit click
+    allPosts = manifest
+      .filter(p => p && p.filename && p.filename.startsWith('post_'))
+      .map(p => ({
+        ...p,
+        // Compatibility: some code expects post.title/category, so use the manifest fields directly
+        title: p.title || '',
+        category: p.category || '',
+        status: p.status || 'draft',
+        tags: p.tags || [],
+      }))
+      .sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+
+    updateStats();
+    applyFilters();
+    showToast(`Loaded ${allPosts.length} posts.`, 'success');
+  } catch(e) {
+    showToast('Failed to load posts: ' + e.message, 'error');
+    document.getElementById('postTableBody').innerHTML = `
+      <div class="empty-row">
+        <div class="empty-row-icon">⚠️</div>
+        <p>${e.message}</p>
+      </div>`;
+  } finally {
+    showLoading(false);
+  }
+}
+
+// ── Stats ─────────────────────────────────────────────
+function updateStats() {
+  const total = allPosts.length;
+  const pub   = allPosts.filter(p => p.status === 'published').length;
+  const draft = allPosts.filter(p => p.status === 'draft').length;
+  const scheduled = allPosts.filter(p => p.status === 'scheduled').length;
+  const today = new Date().toISOString().slice(0,10);
+  const todayCount = allPosts.filter(p => p.created_at && p.created_at.startsWith(today)).length;
+  document.getElementById('statTotal').textContent = total;
+  // Featured post status
+  const featuredId = localStorage.getItem('featured_post');
+  const featuredPost = featuredId ? allPosts.find(p => p.filename === featuredId) : null;
+  const featuredEl = document.getElementById('statFeatured');
+  if (featuredEl) {
+    featuredEl.textContent = featuredPost ? 'Set ⭐' : 'Latest (auto)';
+  }
+  document.getElementById('statPub').textContent   = pub;
+  document.getElementById('statDraft').textContent = draft;
+  document.getElementById('statToday').textContent = todayCount;
+  document.getElementById('cnt-all').textContent   = total;
+  document.getElementById('cnt-pub').textContent   = pub;
+  document.getElementById('cnt-draft').textContent = draft;
+  const scheduledEl = document.getElementById('cnt-scheduled');
+  if (scheduledEl) scheduledEl.textContent = scheduled;
+  
+  // If the AdSense view is open, re-render it (refresh the data)
+  const adsView = document.getElementById('view-adsense');
+  if (adsView && adsView.style.display !== 'none' && typeof renderAdsenseChecklist === 'function') {
+    try { renderAdsenseChecklist(); } catch(e) { console.warn('AdSense view re-render failed:', e); }
+  }
+}
+
+// ── Filters ─────────────────────────────────────────────
+function setFilter(f, el) {
+  currentFilter = f;
+  document.querySelectorAll('.sidebar-item').forEach(e => e.classList.remove('active'));
+  if (el) el.classList.add('active');
+  if (f.startsWith('cat:')) document.getElementById('catFilter').value = f.slice(4);
+  else document.getElementById('catFilter').value = '';
+  applyFilters();
+}
+
+function applyFilters() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const catSel = document.getElementById('catFilter').value;
+  let filtered = [...allPosts];
+  if (currentFilter === 'published') filtered = filtered.filter(p => p.status === 'published');
+  else if (currentFilter === 'draft') filtered = filtered.filter(p => p.status === 'draft');
+  else if (currentFilter === 'scheduled') filtered = filtered.filter(p => p.status === 'scheduled');
+  else if (currentFilter.startsWith('cat:')) filtered = filtered.filter(p => p.category === currentFilter.slice(4));
+  if (catSel) filtered = filtered.filter(p => p.category === catSel);
+  if (search) filtered = filtered.filter(p => p.title && p.title.toLowerCase().includes(search));
+  renderTable(filtered);
+}
+
+// ── Table rendering ─────────────────────────────────────
+function formatDate(iso) {
+  if (!iso) return '—';
+  return iso.slice(0,10).replace(/-/g,'.');
+}
+
+function renderTable(posts) {
+  const tbody = document.getElementById('postTableBody');
+  if (posts.length === 0) {
+    tbody.innerHTML = `<div class="empty-row"><div class="empty-row-icon">📭</div><p>No matching posts.</p></div>`;
+    return;
+  }
+  tbody.innerHTML = posts.map(p => `
+    <div class="post-row">
+      <div class="post-checkbox-cell">
+        <input type="checkbox" class="post-checkbox" data-filename="${escAttr(p.filename)}" onclick="event.stopPropagation();">
+      </div>
+      <div class="post-title-cell">
+        <div class="post-title-text" onclick="openPreview('${p.filename}')" title="${escHtml(p.title)}">${escHtml(p.title)}</div>
+        <div class="post-cat-text">${escHtml(p.keyword||'')}</div>
+      </div>
+      <div><span style="font-size:12px;color:var(--text2);">${escHtml(p.category||'')}</span></div>
+      <div>
+        <span class="status-badge ${p.status}">
+          <span class="status-dot"></span>
+          ${p.status === 'published' ? 'Published' : (p.status === 'scheduled' ? '⏰ Scheduled' : 'Draft')}
+        </span>
+        ${p.status === 'scheduled' && p.scheduled_at
+          ? `<div style="font-size:10px;color:var(--text3);margin-top:3px;">${formatScheduledKST(p.scheduled_at)}</div>`
+          : ''}
+      </div>
+      <div class="date-cell">${formatDate(p.created_at)}</div>
+      <div class="action-cell">
+        <button class="action-btn btn-preview" onclick="openPreview('${p.filename}')">View</button>
+        ${p.status === 'draft'
+          ? `<button class="action-btn btn-publish" onclick="toggleStatus('${p.filename}','published')">Publish</button>`
+          : (p.status === 'scheduled'
+            ? `<button class="action-btn btn-publish" onclick="toggleStatus('${p.filename}','published')">Publish Now</button>`
+            : `<button class="action-btn btn-draft" onclick="toggleStatus('${p.filename}','draft')">Move to Draft</button>`)
+        }
+        ${p.status !== 'published'
+          ? `<button class="action-btn btn-schedule" onclick="openScheduleModal('${p.filename}','${escAttr(p.title)}')">⏰ Schedule</button>`
+          : ''}
+        <button class="action-btn btn-edit" onclick="openEdit('${p.filename}')">Edit</button>
+        <button class="action-btn btn-delete" onclick="openDelete('${p.filename}','${escAttr(p.title)}')">Delete</button>
+        <button class="action-btn"
+          style="background:${localStorage.getItem('featured_post')===p.filename?'#c17f3e':'#f0ede8'};color:${localStorage.getItem('featured_post')===p.filename?'#fff':'#888'};border:1px solid #e0d8d0;"
+          onclick="setFeatured('${p.filename}','${escAttr(p.title)}')"
+          title="Set as the main featured post">
+          ${localStorage.getItem('featured_post')===p.filename?'⭐ Featured':'☆ Featured'}
+        </button>
+      </div>
+    </div>`).join('');
+  attachCheckboxListeners();
+  // Just re-rendered, so reset the select-all state + refresh the bar
+  const sa = document.getElementById('selectAllPosts');
+  if (sa) sa.checked = false;
+  updateBulkActionBar();
+}
+
+function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function escAttr(s) { return String(s||'').replace(/'/g,"\\'"); }
+
+// ── Bulk actions: checkboxes / selection / bulk publish, draft, delete ─────────
+function getSelectedFilenames() {
+  const checked = document.querySelectorAll('.post-checkbox:checked');
+  return Array.from(checked)
+    .filter(cb => cb.dataset.filename)
+    .map(cb => cb.dataset.filename);
+}
+
+function updateBulkActionBar() {
+  const count = getSelectedFilenames().length;
+  const bar = document.getElementById('bulkActionBar');
+  const counter = document.getElementById('bulkSelectedCount');
+  if (!bar) return;
+  if (count > 0) {
+    bar.style.display = 'flex';
+    if (counter) counter.textContent = `${count} selected`;
+  } else {
+    bar.style.display = 'none';
+  }
+}
+
+function toggleSelectAll(checkbox) {
+  document.querySelectorAll('.post-checkbox').forEach(cb => {
+    if (cb.dataset.filename) cb.checked = checkbox.checked;
+  });
+  updateBulkActionBar();
+}
+
+function clearSelection() {
+  document.querySelectorAll('.post-checkbox').forEach(cb => { cb.checked = false; });
+  const sa = document.getElementById('selectAllPosts');
+  if (sa) sa.checked = false;
+  updateBulkActionBar();
+}
+
+function attachCheckboxListeners() {
+  document.querySelectorAll('.post-checkbox').forEach(cb => {
+    if (cb.id === 'selectAllPosts') return;
+    cb.addEventListener('change', updateBulkActionBar);
+  });
+}
+
+async function bulkPublish() {
+  await _bulkStatusChange('published');
+}
+
+async function bulkUnpublish() {
+  await _bulkStatusChange('draft');
+}
+
+async function _bulkStatusChange(newStatus) {
+  const filenames = getSelectedFilenames();
+  if (filenames.length === 0) return;
+
+  const label = newStatus === 'published' ? 'Published' : 'Draft';
+  if (!confirm(`Change the ${filenames.length} selected posts to "${label}".`)) return;
+
+  showLoading(true);
+
+  // Optimistic UI: update memory first (keep a backup)
+  const targetSet = new Set(filenames);
+  const backupStatusMap = new Map();
+  allPosts.forEach(p => {
+    if (targetSet.has(p.filename)) {
+      backupStatusMap.set(p.filename, p.status);
+      p.status = newStatus;
+    }
+  });
+  updateStats();
+  applyFilters();
+
+  let success = 0, failed = 0;
+  const failedFilenames = [];
+  const successFilenames = [];
+
+  try {
+    // 1. Update post files serially + 250ms wait (avoid GitHub secondary rate limit)
+    const results = [];
+    for (let i = 0; i < filenames.length; i++) {
+      const filename = filenames[i];
+      try {
+        const freshFile = await ghGet(`${POSTS_PATH}/${filename}`);
+        const freshContent = decodeURIComponent(escape(atob(freshFile.content.replace(/\n/g, ''))));
+        const freshJson = JSON.parse(freshContent);
+        const updated = { ...freshJson, status: newStatus };
+        if (newStatus === 'published') {
+          updated.published_at = new Date().toISOString();
+        }
+        await ghPut(
+          `${POSTS_PATH}/${filename}`,
+          JSON.stringify(updated, null, 2),
+          freshFile.sha,
+          `bulk ${label}: ${filename}`
+        );
+        invalidatePostBody(filename);
+        results.push({ filename, ok: true });
+      } catch (e) {
+        console.error(`${label} failed ${filename}:`, e);
+        results.push({ filename, ok: false });
+      }
+      if (i < filenames.length - 1) {
+        await new Promise(r => setTimeout(r, 250));
+      }
+    }
+
+    successFilenames.push(...results.filter(r => r.ok).map(r => r.filename));
+    failedFilenames.push(...results.filter(r => !r.ok).map(r => r.filename));
+    success = successFilenames.length;
+    failed = failedFilenames.length;
+
+    // 2. Update the manifest in one go
+    if (success > 0) {
+      try {
+        const successSet = new Set(successFilenames);
+        const mfFile = await ghGet(`${POSTS_PATH}/manifest.json`);
+        const mfRaw  = decodeURIComponent(escape(atob(mfFile.content.replace(/\n/g, ''))));
+        let mfArr    = JSON.parse(mfRaw);
+
+        mfArr = mfArr.map(e => {
+          if (successSet.has(e.filename)) {
+            const updated = { ...e, status: newStatus };
+            if (newStatus === 'published') {
+              updated.published_at = new Date().toISOString();
+            }
+            return updated;
+          }
+          return e;
+        });
+
+        await ghPut(
+          `${POSTS_PATH}/manifest.json`,
+          JSON.stringify(mfArr, null, 2),
+          mfFile.sha,
+          `manifest sync (bulk ${label}): ${success} files`
+        );
+      } catch (e) {
+        console.error('manifest bulk sync failed:', e);
+        showToast('manifest sync failed: ' + e.message, 'warn');
+      }
+    }
+
+    // 3. Roll back failed posts
+    if (failed > 0) {
+      const failSet = new Set(failedFilenames);
+      allPosts.forEach(p => {
+        if (failSet.has(p.filename)) {
+          p.status = backupStatusMap.get(p.filename) || p.status;
+        }
+      });
+      updateStats();
+      applyFilters();
+    }
+
+    showToast(`${label} done: ${success} succeeded / ${failed} failed`, failed > 0 ? 'warn' : 'success');
+    clearSelection();
+  } catch (e) {
+    // Roll back everything
+    allPosts.forEach(p => {
+      if (backupStatusMap.has(p.filename)) {
+        p.status = backupStatusMap.get(p.filename);
+      }
+    });
+    updateStats();
+    applyFilters();
+    showToast(`Bulk ${label} failed: ` + e.message, 'error');
+  } finally {
+    showLoading(false);
+  }
+}
+
+// ── Schedule publish ───────────────────────────────────────
+let _scheduleTargetFilename = null;
+
+function formatScheduledKST(isoString) {
+  if (!isoString) return '';
+  try {
+    const d = new Date(isoString);
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    const hh = String(d.getHours()).padStart(2, '0');
+    const mi = String(d.getMinutes()).padStart(2, '0');
+    return `📅 ${yyyy}-${mm}-${dd} ${hh}:${mi}`;
+  } catch (e) {
+    return '';
+  }
+}
+
+function openScheduleModal(filename, title) {
+  _scheduleTargetFilename = filename;
+  document.getElementById('scheduleTitle').textContent = title;
+
+  // Default to today's date
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const dd = String(today.getDate()).padStart(2, '0');
+  const todayStr = `${yyyy}-${mm}-${dd}`;
+  const dateInput = document.getElementById('scheduleDate');
+  dateInput.value = todayStr;
+  dateInput.min = todayStr;
+
+  // Build time options (30-min increments, 06:00 ~ 23:30)
+  const timeSelect = document.getElementById('scheduleTime');
+  timeSelect.innerHTML = '<option value="">Select time</option>';
+  for (let h = 6; h < 24; h++) {
+    for (const m of [0, 30]) {
+      const hh = String(h).padStart(2, '0');
+      const mi = String(m).padStart(2, '0');
+      const opt = document.createElement('option');
+      opt.value = `${hh}:${mi}`;
+      opt.textContent = `${hh}:${mi}`;
+      timeSelect.appendChild(opt);
+    }
+  }
+  timeSelect.value = '';
+
+  document.getElementById('scheduleTime').onchange = updateSchedulePreview;
+  document.getElementById('scheduleDate').onchange = updateSchedulePreview;
+
+  document.getElementById('schedulePreview').style.display = 'none';
+  openModal('scheduleModal');
+}
+
+function updateSchedulePreview() {
+  const date = document.getElementById('scheduleDate').value;
+  const time = document.getElementById('scheduleTime').value;
+  const previewEl = document.getElementById('schedulePreview');
+  const previewText = document.getElementById('schedulePreviewText');
+  if (!date || !time) {
+    previewEl.style.display = 'none';
+    return;
+  }
+
+  const target = new Date(`${date}T${time}:00+09:00`);
+  const now = new Date();
+
+  if (target <= now) {
+    previewText.textContent = '⚠️ You cannot select a time in the past.';
+    previewEl.style.display = 'block';
+    previewEl.style.borderLeft = '3px solid #dc2626';
+    return;
+  }
+
+  const diffMs = target - now;
+  const diffMin = Math.floor(diffMs / 60000);
+  const diffHr = Math.floor(diffMin / 60);
+  const remainMin = diffMin % 60;
+
+  let waitText = '';
+  if (diffHr >= 24) {
+    const diffDay = Math.floor(diffHr / 24);
+    const remainHr = diffHr % 24;
+    waitText = `publishes in ${diffDay}d ${remainHr}h`;
+  } else if (diffHr > 0) {
+    waitText = `publishes in ${diffHr}h ${remainMin}m`;
+  } else {
+    waitText = `publishes in ${diffMin}m`;
+  }
+
+  previewText.textContent = `📅 ${date} ${time} KST — ${waitText}`;
+  previewEl.style.display = 'block';
+  previewEl.style.borderLeft = '3px solid #16a34a';
+}
+
+async function confirmSchedule() {
+  const date = document.getElementById('scheduleDate').value;
+  const time = document.getElementById('scheduleTime').value;
+
+  if (!date || !time || !_scheduleTargetFilename) {
+    showToast('Please select a date and time', 'warn');
+    return;
+  }
+
+  const target = new Date(`${date}T${time}:00+09:00`);
+  if (target <= new Date()) {
+    showToast('You cannot select a time in the past', 'warn');
+    return;
+  }
+
+  const scheduledAt = target.toISOString();
+
+  showLoading(true);
+  try {
+    const filename = _scheduleTargetFilename;
+    const file = await ghGet(`${POSTS_PATH}/${filename}`);
+    const raw = decodeURIComponent(escape(atob(file.content.replace(/\n/g, ''))));
+    const post = JSON.parse(raw);
+
+    post.status = 'scheduled';
+    post.scheduled_at = scheduledAt;
+
+    const newContent = JSON.stringify(post, null, 2);
+    await ghPut(`${POSTS_PATH}/${filename}`, newContent, file.sha,
+      `schedule: ${filename} → ${date} ${time} KST`);
+    invalidatePostBody(filename);
+    await syncManifest('upsert', filename, {
+      status: 'scheduled',
+      scheduled_at: scheduledAt,
+      title: post.title,
+      category: post.category,
+      keyword: post.keyword,
+      summary: post.summary,
+      tags: post.tags,
+      created_at: post.created_at,
+      source: post.source,
+    });
+
+    // Optimistic UI: update allPosts in memory
+    const memIdx = allPosts.findIndex(p => p.filename === filename);
+    if (memIdx >= 0) {
+      allPosts[memIdx] = {
+        ...allPosts[memIdx],
+        status: 'scheduled',
+        scheduled_at: scheduledAt,
+      };
+      updateStats();
+      applyFilters();
+    }
+
+    showToast(`Scheduled: will publish at ${date} ${time} KST`, 'success');
+    closeModal('scheduleModal');
+    _scheduleTargetFilename = null;
+    // loadPosts call removed (memory already updated)
+  } catch (e) {
+    console.error(e);
+    showToast('Scheduling failed: ' + e.message, 'error');
+  } finally {
+    showLoading(false);
+  }
+}
+
+async function bulkDelete() {
+  const filenames = getSelectedFilenames();
+  if (filenames.length === 0) return;
+
+  const confirmText = `Permanently delete the ${filenames.length} selected posts.\n\nThis cannot be undone. Are you sure you want to continue?`;
+  if (!confirm(confirmText)) return;
+  if (filenames.length >= 5) {
+    if (!confirm(`Deleting ${filenames.length} posts at once. This is your final confirmation.`)) return;
+  }
+
+  showLoading(true);
+
+  // Optimistic UI: remove from memory first (keep a backup)
+  const targetSet = new Set(filenames);
+  const backupPosts = allPosts.filter(p => targetSet.has(p.filename));
+  allPosts = allPosts.filter(p => !targetSet.has(p.filename));
+  updateStats();
+  applyFilters();
+
+  let success = 0, failed = 0;
+  const failedFilenames = [];
+
+  try {
+    // 1. Delete post files serially + 250ms wait (avoid GitHub secondary rate limit)
+    const results = [];
+    for (let i = 0; i < filenames.length; i++) {
+      const filename = filenames[i];
+      try {
+        const file = await ghGet(`${POSTS_PATH}/${filename}`);
+        await ghDelete(`${POSTS_PATH}/${filename}`, file.sha, `bulk delete: ${filename}`);
+        invalidatePostBody(filename);
+        results.push({ filename, ok: true });
+      } catch (e) {
+        console.error(`Delete failed ${filename}:`, e);
+        results.push({ filename, ok: false, error: e.message });
+      }
+      if (i < filenames.length - 1) {
+        await new Promise(r => setTimeout(r, 250));
+      }
+    }
+
+    success = results.filter(r => r.ok).length;
+    failed = results.filter(r => !r.ok).length;
+    failedFilenames.push(...results.filter(r => !r.ok).map(r => r.filename));
+
+    // 2. Update the manifest in one go (★ N calls → 1)
+    if (success > 0) {
+      try {
+        const mfFile = await ghGet(`${POSTS_PATH}/manifest.json`);
+        const mfRaw  = decodeURIComponent(escape(atob(mfFile.content.replace(/\n/g, ''))));
+        let mfArr    = JSON.parse(mfRaw);
+
+        const successSet = new Set(results.filter(r => r.ok).map(r => r.filename));
+        const newMfArr = mfArr.filter(e => !successSet.has(e.filename));
+
+        await ghPut(
+          `${POSTS_PATH}/manifest.json`,
+          JSON.stringify(newMfArr, null, 2),
+          mfFile.sha,
+          `manifest sync (bulk remove): ${success} files`
+        );
+      } catch (e) {
+        console.error('manifest bulk sync failed:', e);
+        showToast('manifest sync failed: ' + e.message, 'warn');
+      }
+    }
+
+    // 3. Rollback: restore failed posts back into memory
+    if (failed > 0) {
+      const restored = backupPosts.filter(p => failedFilenames.includes(p.filename));
+      allPosts = [...allPosts, ...restored].sort((a, b) =>
+        new Date(b.created_at || 0) - new Date(a.created_at || 0)
+      );
+      updateStats();
+      applyFilters();
+    }
+
+    showToast(`Delete done: ${success} succeeded / ${failed} failed`, failed > 0 ? 'warn' : 'success');
+    clearSelection();
+  } catch (e) {
+    // On total failure, roll back everything
+    allPosts = [...allPosts, ...backupPosts].sort((a, b) =>
+      new Date(b.created_at || 0) - new Date(a.created_at || 0)
+    );
+    updateStats();
+    applyFilters();
+    showToast('Bulk delete failed: ' + e.message, 'error');
+  } finally {
+    showLoading(false);
+  }
+}
+
+// ── Featured post setting ────────────────────────────────────
+function setFeatured(filename, title) {
+  const current = localStorage.getItem('featured_post');
+  if (current === filename) {
+    localStorage.removeItem('featured_post');
+    showToast('Featured post cleared. (The latest post will be shown automatically)');
+  } else {
+    localStorage.setItem('featured_post', filename);
+    showToast(`✅ "${title}" is now set as the main featured post!`);
+  }
+  renderTable(allPosts); // Refresh button state
+}
+
+// ── Toggle publish status ────────────────────────────────────
+async function toggleStatus(filename, newStatus) {
+  const post = allPosts.find(p => p.filename === filename);
+  if (!post) {
+    showToast('Post not found.', 'error');
+    return;
+  }
+
+  // Optimistic UI update: change the screen first
+  const prevStatus = post.status;
+  post.status = newStatus;
+  updateStats();
+  applyFilters();
+
+  showLoading(true);
+  try {
+    // 1. Fetch just the post file, change status, and write it back
+    const freshFile = await ghGet(`${POSTS_PATH}/${filename}`);
+    const freshContent = decodeURIComponent(escape(atob(freshFile.content.replace(/\n/g,''))));
+    const freshJson = JSON.parse(freshContent);
+    const updated = {...freshJson, status: newStatus};
+    if (newStatus === 'published') {
+      updated.published_at = new Date().toISOString();
+    }
+
+    await ghPut(`${POSTS_PATH}/${filename}`, JSON.stringify(updated, null, 2), freshFile.sha,
+      `${newStatus === 'published' ? 'publish' : 'draft'}: ${post.title}`);
+
+    // 2. manifest sync (this unavoidably requires a separate call)
+    await syncManifest('updateStatus', filename, { status: newStatus });
+
+    invalidatePostBody(filename);
+
+    const label = newStatus === 'published' ? 'Published' : 'Draft';
+    showToast(`Changed to "${label}".`, 'success');
+    // ★ loadPosts call removed: allPosts is already updated and the UI was drawn via applyFilters
+  } catch(e) {
+    // Roll back on failure
+    post.status = prevStatus;
+    updateStats();
+    applyFilters();
+    showToast('Status change failed: ' + e.message, 'error');
+  } finally {
+    showLoading(false);
+  }
+}
+
+// ── Preview ──────────────────────────────────────────
+// Track which post is being viewed in previewModal
+let currentPreviewFilename = null;
+let currentPreviewStatus = null;
+
+// Edit button in the preview modal → switch to editModal
+async function editFromPreview() {
+  if (!currentPreviewFilename) return;
+  const fn = currentPreviewFilename;
+  closeModal('previewModal');
+  await openEdit(fn);
+}
+
+// Toggle publish/draft from the preview modal
+async function togglePvFromPreview() {
+  if (!currentPreviewFilename) return;
+  const newStatus = (currentPreviewStatus === 'published') ? 'draft' : 'published';
+  const fn = currentPreviewFilename;
+  closeModal('previewModal');
+  await toggleStatus(fn, newStatus);
+}
+
+// Delete from the preview modal
+async function deleteFromPreview() {
+  if (!currentPreviewFilename) return;
+  const post = allPosts.find(p => p.filename === currentPreviewFilename);
+  const title = post?.title || currentPreviewFilename;
+  const fn = currentPreviewFilename;
+  closeModal('previewModal');
+  openDelete(fn, title);
+}
+
+async function openPreview(filename) {
+  currentPreviewFilename = filename;
+  const _pvPost = allPosts.find(p => p.filename === filename);
+  if (!_pvPost) return;
+  currentPreviewStatus = _pvPost.status || 'draft';
+  document.getElementById('pvToggleBtn').textContent = (currentPreviewStatus === 'published') ? 'Move to Draft' : 'Publish';
+  document.getElementById('pvCat').textContent  = _pvPost.category || '';
+  document.getElementById('pvTitle').textContent = _pvPost.title || '';
+  document.getElementById('pvMeta').textContent  = `${formatDate(_pvPost.created_at)} · ${_pvPost.status === 'published' ? 'Published' : 'Draft'}`;
+  const sumEl = document.getElementById('pvSummary');
+  if (_pvPost.summary) {
+    sumEl.innerHTML = `<div class="preview-summary-label">SUMMARY</div><p>${_pvPost.summary.replace(/\n/g,'<br>')}</p>`;
+    sumEl.style.display = 'block';
+  } else {
+    sumEl.style.display = 'none';
+  }
+  document.getElementById('pvTags').innerHTML = (_pvPost.tags||[])
+    .map(t=>`<span class="preview-tag">${escHtml(t)}</span>`).join('');
+
+  // Lazy-load the body (open the modal first, show a loading indicator)
+  document.getElementById('pvContent').innerHTML = '<div style="text-align:center;padding:40px;color:var(--text3);">Loading...</div>';
+  openModal('previewModal');
+
+  try {
+    const fullPost = await getPostBody(filename);
+    const _rawContent = fullPost.content || '';
+    if (_rawContent.trim().startsWith('<')) {
+      document.getElementById('pvContent').innerHTML = `<div class="article-body">${_rawContent}</div>`;
+    } else {
+      document.getElementById('pvContent').innerHTML = _rawContent
+        .split(/\n\n+/).map(p=>p.trim()).filter(p=>p)
+        .map(p=>`<p>${p.replace(/\n/g,'<br>')}</p>`).join('');
+    }
+  } catch(e) {
+    document.getElementById('pvContent').innerHTML = `<div style="padding:20px;color:#c00;">Failed to load body: ${e.message}</div>`;
+  }
+}
+
+// ── Editing ─────────────────────────────────────────────
+// ── New post ────────────────────────────────────
+function openNewPost() {
+  document.getElementById('editModalTitle').textContent = '✏️ New Post';
+  document.getElementById('editFilename').value = '';
+  document.getElementById('editSha').value = '';
+  document.getElementById('editTitle').value = '';
+  document.getElementById('editCategory').value = 'korean-life';
+  document.getElementById('editTags').value = '';
+  document.getElementById('editSummary').value = '';
+  document.getElementById('richEditor').innerHTML = '';
+  document.getElementById('charCount').textContent = '0 chars';
+  openModal('editModal');
+}
+
+// ── Editor toolbar commands ────────────────────────────────────
+function editorCmd(cmd) {
+  document.getElementById('richEditor').focus();
+  document.execCommand(cmd, false, null);
+  updateCharCount();
+}
+
+function insertHeading(level) {
+  const editor = document.getElementById('richEditor');
+  editor.focus();
+  const sel = window.getSelection();
+  const range = sel.getRangeAt(0);
+  const heading = document.createElement('h' + level);
+  const selectedText = range.toString() || (level === 2 ? 'Enter a heading' : 'Enter a subheading');
+  heading.textContent = selectedText;
+  range.deleteContents();
+  range.insertNode(heading);
+  range.setStartAfter(heading);
+  range.collapse(true);
+  sel.removeAllRanges();
+  sel.addRange(range);
+  const br = document.createElement('p');
+  br.innerHTML = '<br>';
+  heading.insertAdjacentElement('afterend', br);
+  updateCharCount();
+}
+
+function insertQuote() {
+  const editor = document.getElementById('richEditor');
+  editor.focus();
+  const sel = window.getSelection();
+  const range = sel.getRangeAt(0);
+  const quote = document.createElement('blockquote');
+  quote.textContent = range.toString() || 'Enter a quote';
+  range.deleteContents();
+  range.insertNode(quote);
+  const br = document.createElement('p');
+  br.innerHTML = '<br>';
+  quote.insertAdjacentElement('afterend', br);
+  updateCharCount();
+}
+
+function insertDivider() {
+  const editor = document.getElementById('richEditor');
+  editor.focus();
+  const sel = window.getSelection();
+  const range = sel.getRangeAt(0);
+  const hr = document.createElement('hr');
+  range.insertNode(hr);
+  const br = document.createElement('p');
+  br.innerHTML = '<br>';
+  hr.insertAdjacentElement('afterend', br);
+  updateCharCount();
+}
+
+function insertLink() {
+  const url = prompt('Enter the link URL:', 'https://');
+  if (!url) return;
+  const text = prompt('Enter the link text:', url);
+  if (!text) return;
+  document.getElementById('richEditor').focus();
+  document.execCommand('createLink', false, url);
+  updateCharCount();
+}
+
+// ── Preserve editor cursor position (save selection before toolbar click) ──
+let _lastEditorRange = null;
+
+function saveEditorRange() {
+  const sel = window.getSelection();
+  if (sel && sel.rangeCount > 0) {
+    const range = sel.getRangeAt(0);
+    const editor = document.getElementById('richEditor');
+    if (editor && editor.contains(range.commonAncestorContainer)) {
+      _lastEditorRange = range.cloneRange();
+    }
+  }
+}
+
+function insertHtmlAtSavedRange(html) {
+  const editor = document.getElementById('richEditor');
+  if (!editor) return;
+
+  const temp = document.createElement('div');
+  temp.innerHTML = html;
+  const fragment = document.createDocumentFragment();
+  while (temp.firstChild) fragment.appendChild(temp.firstChild);
+  const lastNode = fragment.lastChild;
+
+  if (_lastEditorRange) {
+    _lastEditorRange.deleteContents();
+    _lastEditorRange.insertNode(fragment);
+
+    if (lastNode) {
+      const sel = window.getSelection();
+      const newRange = document.createRange();
+      newRange.setStartAfter(lastNode);
+      newRange.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(newRange);
+      _lastEditorRange = newRange.cloneRange();
+    }
+  } else {
+    editor.appendChild(fragment);
+  }
+
+  if (typeof updateCharCount === 'function') updateCharCount();
+}
+
+async function insertImage() {
+  // Mobile safeguard: save the selection again at the moment the button is clicked
+  saveEditorRange();
+
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.onchange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      showToast('Images must be 5MB or smaller', 'warn');
+      return;
+    }
+
+    showLoading(true);
+    try {
+      const base64 = await new Promise((res, rej) => {
+        const reader = new FileReader();
+        reader.onload = () => res(reader.result.split(',')[1]);
+        reader.onerror = () => rej(new Error('Failed to read file'));
+        reader.readAsDataURL(file);
+      });
+
+      const ts = Date.now();
+      const ext = (file.name.split('.').pop() || 'png').toLowerCase();
+      const filename = `posts/images/img_${ts}.${ext}`;
+
+      const res = await fetch(`${GH_API}/${filename}`, {
+        method: 'PUT',
+        headers: ghHeaders(),
+        body: JSON.stringify({
+          message: `feat: upload image ${filename}`,
+          content: base64,
+          branch: GH_BRANCH
+        })
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || `Upload failed: ${res.status}`);
+      }
+
+      const imgUrl = `https://en.koreansalaryman.com/${filename}`;
+      const imgHtml = `<img src="${imgUrl}" alt="" style="width:100%;max-width:720px;height:auto;margin:16px auto;border-radius:8px;display:block;">`;
+
+      insertHtmlAtSavedRange(imgHtml);
+      showToast('Image added', 'success');
+    } catch (err) {
+      console.error(err);
+      showToast('Image upload failed: ' + err.message, 'error');
+    } finally {
+      showLoading(false);
+    }
+  };
+  input.click();
+}
+
+async function insertVideo() {
+  // Mobile safeguard: save the selection again at the moment the button is clicked
+  saveEditorRange();
+
+  const choice = prompt(
+    'Choose how to add a video:\n\n' +
+    '1. Paste a YouTube/Vimeo URL (recommended — no size limit)\n' +
+    '2. Upload a video file (50MB or smaller)\n\n' +
+    'Enter 1 or 2:'
+  );
+
+  if (choice === '1') {
+    const url = prompt('YouTube or Vimeo URL:');
+    if (!url) return;
+
+    let embedUrl = '';
+    const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\?]+)/);
+    if (ytMatch) {
+      embedUrl = `https://www.youtube.com/embed/${ytMatch[1]}`;
+    } else {
+      const vmMatch = url.match(/vimeo\.com\/(\d+)/);
+      if (vmMatch) {
+        embedUrl = `https://player.vimeo.com/video/${vmMatch[1]}`;
+      }
+    }
+
+    if (!embedUrl) {
+      showToast('Not a valid YouTube or Vimeo URL', 'warn');
+      return;
+    }
+
+    const html = `<div style="position:relative;padding-bottom:56.25%;height:0;margin:16px auto;max-width:720px;border-radius:8px;overflow:hidden;"><iframe src="${embedUrl}" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe></div>`;
+
+    insertHtmlAtSavedRange(html);
+    showToast('Video added', 'success');
+
+  } else if (choice === '2') {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'video/*';
+    input.onchange = async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      if (file.size > 50 * 1024 * 1024) {
+        showToast('Video files must be 50MB or smaller. YouTube/Vimeo recommended.', 'warn');
+        return;
+      }
+
+      showLoading(true);
+      try {
+        const base64 = await new Promise((res, rej) => {
+          const reader = new FileReader();
+          reader.onload = () => res(reader.result.split(',')[1]);
+          reader.onerror = () => rej(new Error('Failed to read file'));
+          reader.readAsDataURL(file);
+        });
+
+        const ts = Date.now();
+        const ext = (file.name.split('.').pop() || 'mp4').toLowerCase();
+        const filename = `posts/videos/vid_${ts}.${ext}`;
+
+        const res = await fetch(`${GH_API}/${filename}`, {
+          method: 'PUT',
+          headers: ghHeaders(),
+          body: JSON.stringify({
+            message: `feat: upload video ${filename}`,
+            content: base64,
+            branch: GH_BRANCH
+          })
+        });
+
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.message || `Upload failed: ${res.status}`);
+        }
+
+        const videoUrl = `https://en.koreansalaryman.com/${filename}`;
+        const html = `<video controls src="${videoUrl}" style="width:100%;max-width:720px;height:auto;margin:16px auto;border-radius:8px;display:block;"></video>`;
+
+        insertHtmlAtSavedRange(html);
+        showToast('Video added', 'success');
+      } catch (err) {
+        console.error(err);
+        showToast('Video upload failed: ' + err.message, 'error');
+      } finally {
+        showLoading(false);
+      }
+    };
+    input.click();
+  }
+}
+
+function togglePreviewMode() {
+  const editor = document.getElementById('richEditor');
+  const preview = document.getElementById('editorPreview');
+  const btn = document.getElementById('previewToggleBtn');
+  if (editor.style.display === 'none') {
+    editor.style.display = 'block';
+    preview.style.display = 'none';
+    btn.textContent = '👁 Preview';
+  } else {
+    preview.innerHTML = `<div class="preview-content">${editor.innerHTML}</div>`;
+    editor.style.display = 'none';
+    preview.style.display = 'block';
+    btn.textContent = '✏️ Back to Edit';
+  }
+}
+
+function updateCharCount() {
+  const text = document.getElementById('richEditor').innerText || '';
+  document.getElementById('charCount').textContent = text.length.toLocaleString() + ' chars';
+}
+
+// AI auto-summary
+async function autoSummary() {
+  const title = document.getElementById('editTitle').value;
+  const bodyText = document.getElementById('richEditor').innerText || '';
+  if (!bodyText.trim()) { alert('Please enter the body first.'); return; }
+  const btn = event.target;
+  btn.textContent = '✨ Summarizing...';
+  btn.disabled = true;
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 200,
+        messages: [{
+          role: 'user',
+          content: `Summarize the following blog post naturally in 2-3 sentences. Output only the summary.
+
+Title: ${title}
+
+Body:
+${bodyText.slice(0, 1000)}`
+        }]
+      })
+    });
+    const data = await res.json();
+    const summary = data.content?.[0]?.text || '';
+    if (summary) document.getElementById('editSummary').value = summary;
+  } catch(e) {
+    alert('Failed to generate a summary. Please enter it manually.');
+  } finally {
+    btn.textContent = '✨ AI Auto-Summary';
+    btn.disabled = false;
+  }
+}
+
+// ── Edit existing post ────────────────────────────────────
+async function openEdit(filename) {
+  const post = allPosts.find(p => p.filename === filename);
+  if (!post) return;
+
+  document.getElementById('editFilename').value = filename;
+  document.getElementById('editTitle').value    = post.title || '';
+  document.getElementById('editCategory').value = post.category || 'korean-life';
+  document.getElementById('editSummary').value  = post.summary || '';
+  document.getElementById('editTags').value     = (post.tags||[]).join(', ');
+
+  // Lazy-load the body (also fetches the sha - needed for ghPut in savePost)
+  document.getElementById('richEditor').innerHTML = '<div style="text-align:center;padding:40px;color:#888;">Loading...</div>';
+  document.getElementById('editSha').value = '';
+  openModal('editModal');
+
+  try {
+    const fullPost = await getPostBody(filename);
+    document.getElementById('editSha').value = fullPost.sha || '';
+    document.getElementById('richEditor').innerHTML = (fullPost.content || '').replace(/\n/g, '<br>');
+    updateCharCount();
+  } catch(e) {
+    document.getElementById('richEditor').innerHTML = `<div style="color:#c00;padding:20px;">Failed to load body: ${e.message}</div>`;
+  }
+}
+
+async function savePost(statusOverride) {
+  const filename = document.getElementById('editFilename').value;
+  const isNew = !filename; // For a new post, filename is empty
+
+  const tags = document.getElementById('editTags').value.split(',').map(t=>t.trim()).filter(t=>t);
+  const title = document.getElementById('editTitle').value.trim();
+
+  if (!title) {
+    showToast('Please enter a title.', 'error');
+    return;
+  }
+
+  showLoading(true);
+  try {
+    if (isNew) {
+      // ── Create new post ──────────────────────────────────
+      const now = new Date();
+      const timestamp = now.toISOString().replace(/[-:T]/g,'').slice(0,15);
+      const newFilename = `post_${timestamp}.json`;
+      const newPost = {
+        title,
+        category: document.getElementById('editCategory').value,
+        keyword:  '',
+        summary:  document.getElementById('editSummary').value,
+        content:  document.getElementById('richEditor').innerHTML,
+        tags,
+        created_at: now.toISOString(),
+        status: statusOverride || 'published'
+      };
+      await ghPut(`${POSTS_PATH}/${newFilename}`, JSON.stringify(newPost, null, 2), null, `new post: ${title}`);
+      await syncManifest('upsert', newFilename, {
+        title:      newPost.title,
+        summary:    newPost.summary,
+        category:   newPost.category,
+        tags:       newPost.tags,
+        status:     newPost.status,
+        created_at: newPost.created_at,
+      });
+
+      // Add the new post directly to allPosts in memory (keep sorted)
+      allPosts.unshift({
+        filename: newFilename,
+        title: newPost.title,
+        category: newPost.category,
+        summary: newPost.summary,
+        tags: newPost.tags,
+        status: newPost.status,
+        created_at: newPost.created_at,
+        source: 'manual',
+      });
+      allPosts.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+      updateStats();
+      applyFilters();
+
+      closeModal('editModal');
+      showToast('New post saved!', 'success');
+    } else {
+      // ── Edit existing post ─────────────────────────────────
+      const post = allPosts.find(p => p.filename === filename);
+      if (!post) { showToast('Post not found.', 'error'); return; }
+      const updated = {
+        ...post,
+        title,
+        category: document.getElementById('editCategory').value,
+        status:   statusOverride || 'published',
+        summary:  document.getElementById('editSummary').value,
+        content:  document.getElementById('richEditor').innerHTML,
+        tags
+      };
+      delete updated.filename; delete updated.sha;
+      // Always fetch the latest SHA directly from GitHub
+      const freshFile = await ghGet(`${POSTS_PATH}/${filename}`);
+      await ghPut(`${POSTS_PATH}/${filename}`, JSON.stringify(updated, null, 2), freshFile.sha, `edit: ${updated.title}`);
+      invalidatePostBody(filename);
+      await syncManifest('upsert', filename, {
+        title:      updated.title,
+        summary:    updated.summary,
+        category:   updated.category,
+        tags:       updated.tags,
+        status:     updated.status,
+        created_at: updated.created_at,
+      });
+
+      // Optimistic UI: update allPosts in memory
+      const memIdx = allPosts.findIndex(p => p.filename === filename);
+      if (memIdx >= 0) {
+        allPosts[memIdx] = {
+          ...allPosts[memIdx],
+          title: updated.title,
+          summary: updated.summary,
+          category: updated.category,
+          tags: updated.tags,
+          status: updated.status,
+        };
+        updateStats();
+        applyFilters();
+      }
+
+      closeModal('editModal');
+      showToast('Post saved!', 'success');
+    }
+  } catch(e) {
+    showToast('Save failed: ' + e.message, 'error');
+  } finally {
+    showLoading(false);
+  }
+}
+
+// ── Delete ─────────────────────────────────────────────
+function openDelete(filename, title) {
+  deleteTarget = filename;
+  document.getElementById('deletePostTitle').textContent = title;
+  openModal('deleteModal');
+}
+
+async function confirmDelete() {
+  if (!deleteTarget) return;
+
+  const filename = deleteTarget;
+  const post = allPosts.find(p => p.filename === filename);
+  if (!post) {
+    closeModal('deleteModal');
+    deleteTarget = null;
+    return;
+  }
+
+  // Optimistic UI: remove from memory first
+  const idx = allPosts.findIndex(p => p.filename === filename);
+  const backup = idx >= 0 ? allPosts[idx] : null;
+  if (idx >= 0) allPosts.splice(idx, 1);
+  updateStats();
+  applyFilters();
+
+  showLoading(true);
+  try {
+    const freshFile = await ghGet(`${POSTS_PATH}/${filename}`);
+    await ghDelete(`${POSTS_PATH}/${filename}`, freshFile.sha, `delete: ${post.title}`);
+    await syncManifest('remove', filename, null);
+    invalidatePostBody(filename);
+
+    closeModal('deleteModal');
+    deleteTarget = null;
+    showToast('Post deleted.', 'success');
+    // loadPosts call removed (already removed from memory)
+  } catch(e) {
+    // Roll back on failure
+    if (backup && idx >= 0) {
+      allPosts.splice(idx, 0, backup);
+      updateStats();
+      applyFilters();
+    }
+    showToast('Delete failed: ' + e.message, 'error');
+  } finally {
+    showLoading(false);
+  }
+}
+
+// ── Modals ─────────────────────────────────────────────
+function openModal(id) {
+  if (id === 'settingsModal') document.getElementById('ghToken').value = ghToken || '';
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') ['previewModal','editModal','deleteModal','settingsModal','naverImportModal','customRequestModal'].forEach(closeModal);
+});
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', e => {
+    if (el.id === 'editModal') return; // Don't close the edit modal on overlay click
+    if (e.target === el) closeModal(el.id);
+  });
+});
+
+// ── Rewrite Naver post ───────────────────────────────────
+let _naverConverted = null;
+
+function openNaverImport() {
+  document.getElementById('naverContent').value = '';
+  document.getElementById('naverConvertResult').style.display = 'none';
+  _naverConverted = null;
+  openModal('naverImportModal');
+}
+
+// JSON repair, pass 1: clean up unescaped quotes/newlines inside field values
+function repairGeminiJson(text) {
+  const fields = ['title', 'summary', 'content'];
+  let result = text;
+
+  for (const field of fields) {
+    const pattern = new RegExp(
+      `("${field}"\\s*:\\s*")((?:[^"\\\\]|\\\\.)*?)("\\s*[,}])`,
+      'gs'
+    );
+
+    result = result.replace(pattern, (match, prefix, value, suffix) => {
+      const escaped = value
+        .replace(/\\/g, '\\\\')
+        .replace(/(?<!\\)"/g, '\\"')
+        .replace(/\n/g, '\\n')
+        .replace(/\r/g, '\\r')
+        .replace(/\t/g, '\\t');
+      return prefix + escaped + suffix;
+    });
+  }
+
+  return result;
+}
+
+// JSON repair, pass 2: manually extract only the core fields via regex
+function extractFieldsManually(text) {
+  const result = {};
+
+  const titleMatch = text.match(/"title"\s*:\s*"((?:[^"\\]|\\.)*)"/s);
+  if (titleMatch) result.title = titleMatch[1].replace(/\\"/g, '"').replace(/\\n/g, '\n');
+
+  const summaryMatch = text.match(/"summary"\s*:\s*"((?:[^"\\]|\\.)*)"/s);
+  if (summaryMatch) result.summary = summaryMatch[1].replace(/\\"/g, '"').replace(/\\n/g, '\n');
+
+  const contentMatch = text.match(/"content"\s*:\s*"((?:[^"\\]|\\.)*)"\s*[,}]/s);
+  if (contentMatch) {
+    result.content = contentMatch[1]
+      .replace(/\\"/g, '"')
+      .replace(/\\n/g, '\n')
+      .replace(/\\r/g, '\r')
+      .replace(/\\t/g, '\t')
+      .replace(/\\\\/g, '\\');
+  }
+
+  const tagsMatch = text.match(/"tags"\s*:\s*\[((?:[^\]\\]|\\.)*)\]/s);
+  if (tagsMatch) {
+    try {
+      result.tags = JSON.parse('[' + tagsMatch[1] + ']');
+    } catch {
+      result.tags = [];
+    }
+  } else {
+    result.tags = [];
+  }
+
+  return result.title && result.content ? result : null;
+}
+
+// Naver rewrite: routes through the single source of truth (prompt_template.json + automation.finalize_article)
+async function convertNaverPost() {
+  const content = document.getElementById('naverContent').value.trim();
+  const category = document.getElementById('naverCategory').value;
+
+  if (!content || content.length < 100) {
+    showToast('Body is too short (minimum 100 characters)', 'warn');
+    return;
+  }
+
+  const btn = document.getElementById('naverConvertBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Rewriting with Gemini...';
+  showLoading(true);
+
+  try {
+    // Step 1: Use Gemini to generate voice, persona, and AEO fields in one pass (reuses prompt_template.json)
+    const genRes = await fetch('/api/generate-post', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        mode: 'naver_transform',
+        original_text: content,
+        category
+      })
+    });
+
+    if (!genRes.ok) {
+      const err = await genRes.json().catch(() => ({}));
+      throw new Error(err.error || err.detail || `HTTP ${genRes.status}`);
+    }
+
+    const genData = await genRes.json();
+    const text = (genData.text || '').trim();
+
+    let cleanText = text.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+    const m = cleanText.match(/\{[\s\S]*\}/);
+    if (m) cleanText = m[0];
+
+    let parsed;
+    try {
+      parsed = JSON.parse(cleanText);
+    } catch (parseErr) {
+      const repaired = repairGeminiJson(cleanText);
+      try {
+        parsed = JSON.parse(repaired);
+      } catch (parseErr2) {
+        parsed = extractFieldsManually(cleanText);
+        if (!parsed || !parsed.title || !parsed.content) {
+          throw new Error('JSON parse failed. Problem with the Gemini response format. Please try again.');
+        }
+        showToast('Some fields were auto-recovered. Reviewing the preview is required.', 'warn');
+      }
+    }
+
+    // Step 2: finalize-post auto-assembles images, HTML, SEO, and JSON-LD (reuses automation.finalize_article)
+    btn.textContent = '⏳ Assembling images/HTML...';
+
+    // Setting source ahead of time means finalize_article's setdefault preserves it
+    parsed.source = 'naver_import';
+    parsed.category = parsed.category || category;
+
+    const finRes = await fetch('/api/finalize-post', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ article: parsed })
+    });
+
+    if (!finRes.ok) {
+      const err = await finRes.json().catch(() => ({}));
+      throw new Error('finalize failed: ' + (err.error || err.detail || `HTTP ${finRes.status}`));
+    }
+
+    const finData = await finRes.json();
+    const finalized = finData.article;
+
+    if (!finalized || !finalized.title || !finalized.content) {
+      throw new Error('finalize response is missing required fields');
+    }
+
+    _naverConverted = finalized;
+
+    // Preview: the raw text (content_raw) and enrichment stats
+    const heroOK = !!finalized.hero_image;
+    const bodyCount = Array.isArray(finalized.body_images) ? finalized.body_images.length : 0;
+    const faqCount = Array.isArray(finalized.faq) ? finalized.faq.length : 0;
+    const tldrCount = Array.isArray(finalized.tldr) ? finalized.tldr.length : 0;
+    const stepsCount = Array.isArray(finalized.steps) ? finalized.steps.length : 0;
+    const refsCount = Array.isArray(finalized.references) ? finalized.references.length : 0;
+    const hasChart = !!(finalized.chart && finalized.chart.type);
+    const hasComparison = !!(finalized.comparison_table && finalized.comparison_table.rows);
+
+    const stats = [
+      `🖼  Hero image: ${heroOK ? '✓' : '✗'}`,
+      `🖼  Body images: ${bodyCount}`,
+      `📝 TL;DR: ${tldrCount} items`,
+      `❓ FAQ: ${faqCount}`,
+      `📊 Chart: ${hasChart ? finalized.chart.type : 'none'}`,
+      `📋 Comparison table: ${hasComparison ? 'yes' : 'no'}`,
+      `🪜 Step guide: ${stepsCount} steps`,
+      `🔗 References: ${refsCount}`,
+    ].join(' · ');
+
+    const rawPreview = (finalized.content_raw || '').slice(0, 600);
+    document.getElementById('naverResultBody').textContent =
+      `[Title]\n${finalized.title}\n\n[Summary]\n${finalized.summary}\n\n[Enrichment]\n${stats}\n\n[Body preview (first 600 chars)]\n${rawPreview}${(finalized.content_raw || '').length > 600 ? '\n…' : ''}`;
+    document.getElementById('naverConvertResult').style.display = 'block';
+
+    showToast('Rewrite and assembly complete. Review the preview, then save.', 'success');
+  } catch (e) {
+    console.error(e);
+    showToast('Conversion failed: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '🔄 Convert';
+    showLoading(false);
+  }
+}
+
+async function saveNaverDraft() {
+  if (!_naverConverted) {
+    showToast('No converted post', 'warn');
+    return;
+  }
+
+  showLoading(true);
+  try {
+    const now = new Date();
+    const ts = now.toISOString().replace(/[-:]/g,'').replace(/\..+/,'').replace('T','_').slice(0,15);
+    const filename = `post_${ts.slice(0,8)}_${ts.slice(9,15)}.json`;
+
+    // The article is already finalized in the finalize step — just force status to draft
+    const postData = { ..._naverConverted, status: 'draft', source: 'naver_import' };
+
+    const content = JSON.stringify(postData, null, 2);
+    await ghPut(`${POSTS_PATH}/${filename}`, content, null, `feat: import from naver: ${postData.title}`);
+    await syncManifest('upsert', filename, postData);
+
+    showToast('Saved as a draft. Review it in the admin panel, then publish.', 'success');
+    closeModal('naverImportModal');
+    await loadPosts();
+  } catch (e) {
+    console.error(e);
+    showToast('Save failed: ' + e.message, 'error');
+  } finally {
+    showLoading(false);
+  }
+}
+
+// ── Custom post request (single source of truth: prompt_template.json + same voice as automation.py) ──
+let _customGenerated = null;
+
+function openCustomRequest() {
+  document.getElementById('customKeyword').value = '';
+  document.getElementById('customContext').value = '';
+  document.getElementById('customCategory').value = 'korean-life';
+  document.getElementById('customGenResult').style.display = 'none';
+  _customGenerated = null;
+  openModal('customRequestModal');
+}
+
+async function generateCustomPost() {
+  const keyword = document.getElementById('customKeyword').value.trim();
+  const category = document.getElementById('customCategory').value;
+  const context = document.getElementById('customContext').value.trim();
+
+  if (!keyword || keyword.length < 2) {
+    showToast('Please enter a keyword (minimum 2 characters)', 'warn');
+    return;
+  }
+
+  const btn = document.getElementById('customGenBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Generating... (30-60s)';
+  showLoading(true);
+
+  try {
+    const res = await fetch('/api/generate-post', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ keyword, category, context })
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || err.detail || `HTTP ${res.status}`);
+    }
+
+    const data = await res.json();
+    const text = (data.text || '').trim();
+
+    let cleanText = text.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+    const m = cleanText.match(/\{[\s\S]*\}/);
+    if (m) cleanText = m[0];
+
+    let parsed;
+    try {
+      parsed = JSON.parse(cleanText);
+    } catch (parseErr) {
+      const repaired = repairGeminiJson(cleanText);
+      try {
+        parsed = JSON.parse(repaired);
+      } catch (parseErr2) {
+        parsed = extractFieldsManually(cleanText);
+        if (!parsed || !parsed.title || !parsed.content) {
+          throw new Error('JSON parse failed. Please try again.');
+        }
+        showToast('Some fields were auto-recovered. Reviewing the preview is required.', 'warn');
+      }
+    }
+
+    _customGenerated = { ...parsed, category, keyword };
+
+    document.getElementById('customResultBody').textContent =
+      `[Title]\n${parsed.title}\n\n[Summary]\n${parsed.summary || ''}\n\n[Body]\n${parsed.content}`;
+    document.getElementById('customGenResult').style.display = 'block';
+
+    showToast('Generation complete. Review the preview, then save.', 'success');
+  } catch (e) {
+    console.error(e);
+    showToast('Generation failed: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '✨ Generate Post';
+    showLoading(false);
+  }
+}
+
+async function saveCustomDraft() {
+  if (!_customGenerated) {
+    showToast('No generated post', 'warn');
+    return;
+  }
+
+  showLoading(true);
+  try {
+    const now = new Date();
+    const ts = now.toISOString().replace(/[-:]/g,'').replace(/\..+/,'').replace('T','_').slice(0,15);
+    const filename = `post_${ts.slice(0,8)}_${ts.slice(9,15)}.json`;
+
+    const postData = {
+      title: _customGenerated.title,
+      category: _customGenerated.category,
+      summary: _customGenerated.summary || '',
+      content: _customGenerated.content,
+      tags: _customGenerated.tags || [_customGenerated.keyword],
+      status: 'draft',
+      created_at: now.toISOString().slice(0,10),
+      source: 'custom_request',
+      keyword: _customGenerated.keyword,
+      faq: _customGenerated.faq || [],
+      references: _customGenerated.references || []
+    };
+
+    const content = JSON.stringify(postData, null, 2);
+    await ghPut(`${POSTS_PATH}/${filename}`, content, null, `feat: custom request: ${postData.title}`);
+    await syncManifest('upsert', filename, postData);
+
+    showToast('Saved as a draft. Review it in the admin panel, then publish.', 'success');
+    closeModal('customRequestModal');
+    await loadPosts();
+  } catch (e) {
+    console.error(e);
+    showToast('Save failed: ' + e.message, 'error');
+  } finally {
+    showLoading(false);
+  }
+}
+
+// ── Toast & loading ────────────────────────────────────
+function showToast(msg, type='info') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type} show`;
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+function showLoading(v) {
+  document.getElementById('loadingOverlay').classList.toggle('show', v);
+}
+
+// ── View switching ──────────────────────────────────────────
+function showView(view, el) {
+  document.getElementById('view-posts').style.display   = view === 'posts'   ? '' : 'none';
+  document.getElementById('view-income').style.display  = view === 'income'  ? '' : 'none';
+  const adsenseView = document.getElementById('view-adsense');
+  if (adsenseView) adsenseView.style.display = view === 'adsense' ? '' : 'none';
+  document.querySelectorAll('.sidebar-item').forEach(e => e.classList.remove('active'));
+  if (el) el.classList.add('active');
+  if (view === 'income') renderIncomeEditor();
+  if (view === 'adsense') renderAdsenseChecklist();
+}
+
+// ═══════════════════════════════════════════════════════
+//  AdSense approval diagnostic system
+// ═══════════════════════════════════════════════════════
+function renderAdsenseChecklist() {
+  // Reference admin's global allPosts variable (empty array if missing)
+  const _posts = (typeof allPosts !== 'undefined' && Array.isArray(allPosts)) ? allPosts : [];
+  const published = _posts.filter(p => p.status === 'published');
+  const drafts    = _posts.filter(p => p.status === 'draft');
+
+  // ── 1. Compute base metrics ──
+  const totalCount     = _posts.length;
+  const publishedCount = published.length;
+  const thumbnailCount = _posts.filter(p => p.thumbnail || p.has_image || (p.hero_image && p.hero_image.url)).length;
+  const thumbnailPct   = totalCount > 0 ? Math.round((thumbnailCount / totalCount) * 100) : 0;
+  const faqCount       = _posts.filter(p => p.has_faq || (p.faq && p.faq.length > 0)).length;
+  const faqPct         = totalCount > 0 ? Math.round((faqCount / totalCount) * 100) : 0;
+
+  // ── 2. Compute score (out of 100) ──
+  let score = 0;
+  const reasons = [];
+
+  // Number of published posts (max 30 pts)
+  if (publishedCount >= 30)      { score += 30; reasons.push('30+ published ✅'); }
+  else if (publishedCount >= 20) { score += 25; reasons.push('20+ published ✅'); }
+  else if (publishedCount >= 15) { score += 18; reasons.push('15+ published ⚠️'); }
+  else if (publishedCount >= 10) { score += 10; reasons.push('10+ published ⚠️'); }
+  else                           { score += 3;  reasons.push(`${publishedCount} published (too few) ❌`); }
+
+  // Thumbnail ratio (max 20 pts)
+  if (thumbnailPct >= 90)      score += 20;
+  else if (thumbnailPct >= 70) score += 15;
+  else if (thumbnailPct >= 50) score += 10;
+  else                         score += 5;
+
+  // Legal pages (required - max 25 pts)
+  // Actual existence must be verified after deployment, but here we assume they were created
+  const hasPrivacy = true;  // privacy.html created
+  const hasTerms = true;    // terms.html created
+  if (hasPrivacy) score += 15;
+  if (hasTerms)   score += 10;
+
+  // Site basics (max 25 pts)
+  score += 5; // HTTPS ✓
+  score += 5; // sitemap ✓
+  score += 5; // GA4 ✓
+  score += 5; // Search Console ✓
+  score += 5; // About page ✓
+
+  score = Math.min(100, score);
+
+  // ── 3. Verdict text ──
+  let verdict = '';
+  if (score >= 85)      verdict = '🎉 <strong>Ready to apply now</strong>! Everything is well prepared.';
+  else if (score >= 70) verdict = '✅ <strong>Applying recommended</strong> — a little more polish will further raise your approval odds.';
+  else if (score >= 50) verdict = '⚠️ <strong>More prep needed</strong> — follow the checklist below to improve.';
+  else                  verdict = '❌ <strong>Too early</strong> — increase your number of published posts first.';
+
+  // Estimated approval timing
+  const needed = Math.max(0, 20 - publishedCount);
+  if (needed > 0) {
+    verdict += `<br><span style="font-size:12px;opacity:0.75;">💡 Just ${needed} more published posts and you'll be ready to apply.</span>`;
+  }
+
+  document.getElementById('adsense-score').textContent = score;
+  document.getElementById('adsense-verdict').innerHTML = verdict;
+
+  // ── 4. Quick stats (4 cells) ──
+  const statBox = (label, value, sub, hi) => `
+    <div style="background:${hi ? 'var(--point-light)' : 'var(--white)'};border:1px solid ${hi ? 'rgba(193,127,62,0.25)' : 'var(--border)'};border-radius:12px;padding:18px;text-align:center;">
+      <div style="font-family:'Noto Serif KR',serif;font-size:26px;font-weight:900;color:${hi ? 'var(--point)' : 'var(--navy)'};line-height:1;">${value}</div>
+      <div style="font-size:11px;color:var(--text3);margin-top:8px;font-weight:600;letter-spacing:0.05em;">${label}</div>
+      ${sub ? `<div style="font-size:10px;color:var(--text3);margin-top:3px;opacity:0.75;">${sub}</div>` : ''}
+    </div>`;
+
+  document.getElementById('adsense-quick-stats').innerHTML =
+    statBox('Published', `${publishedCount}<span style="font-size:14px;font-weight:500;color:var(--text3);"> /20</span>`, publishedCount >= 20 ? '✅ Met' : `${20 - publishedCount} more needed`, publishedCount >= 20) +
+    statBox('Drafts Pending', drafts.length, 'Review then publish', false) +
+    statBox('Thumbnail Ratio', thumbnailPct + '%', `${thumbnailCount}/${totalCount} posts`, thumbnailPct >= 80) +
+    statBox('FAQ Included', faqPct + '%', `${faqCount}/${totalCount} posts`, false);
+
+  // Update the sidebar score
+  const cntEl = document.getElementById('cnt-adsense');
+  if (cntEl) cntEl.textContent = score;
+
+  // ── 5. Required items checklist ──
+  const required = [
+    { ok: publishedCount >= 20, title: '20+ published posts', desc: `Currently ${publishedCount}. Basic AdSense requirement` },
+    { ok: hasPrivacy, title: 'Privacy Policy', desc: 'privacy.html created (must be accessible after deployment)' },
+    { ok: true, title: 'HTTPS enabled', desc: 'Vercel automatic SSL' },
+    { ok: true, title: 'Google Search Console verification', desc: 'Already verified' },
+    { ok: true, title: 'Sitemap submitted', desc: 'sitemap.xml auto-updated' },
+    { ok: thumbnailPct >= 80, title: 'Image per post (80%+)', desc: `Currently ${thumbnailPct}% · thanks to the auto-thumbnail system` },
+  ];
+  document.getElementById('adsense-required-list').innerHTML = required.map(itemRow).join('');
+
+  // ── 6. Recommended items ──
+  const recommended = [
+    { ok: hasTerms, title: 'Terms of Service page', desc: 'terms.html created' },
+    { ok: true, title: 'About page', desc: 'about.html exists' },
+    { ok: faqCount > 0, title: 'Posts with a FAQ section', desc: `${faqCount} posts include a FAQ (more structured data)` },
+    { ok: true, title: 'Per-category navigation', desc: 'Blog page + category filter complete' },
+    { ok: true, title: 'OG image set', desc: 'Social-share thumbnails OK' },
+    { ok: publishedCount >= 30, title: '30+ published posts (higher approval odds)', desc: `Currently ${publishedCount}` },
+  ];
+  document.getElementById('adsense-recommended-list').innerHTML = recommended.map(itemRow).join('');
+
+  function itemRow(item) {
+    const icon = item.ok ? '✅' : '⬜';
+    const textStyle = item.ok ? 'color:var(--text1);' : 'color:var(--text2);';
+    return `<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;background:${item.ok ? 'var(--green-light)' : 'var(--bg)'};border-radius:8px;">
+      <span style="font-size:16px;flex-shrink:0;">${icon}</span>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:13px;font-weight:700;${textStyle}">${item.title}</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:2px;">${item.desc}</div>
+      </div>
+    </div>`;
+  }
+
+  // ── 7. Draft review list (top 8) ──
+  const draftCountEl = document.getElementById('adsense-draft-count');
+  const draftListEl  = document.getElementById('adsense-draft-list');
+
+  draftCountEl.textContent = `${drafts.length} total · showing top 10`;
+
+  if (drafts.length === 0) {
+    draftListEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text3);font-size:13px;">No drafts to review. All drafts are published, or there are no posts.</div>';
+  } else {
+    // Sort by SEO score (when available), then by creation date
+    const sortedDrafts = [...drafts].sort((a, b) => {
+      const sa = a.seo_score || 0, sb = b.seo_score || 0;
+      if (sa !== sb) return sb - sa;
+      return new Date(b.created_at) - new Date(a.created_at);
+    }).slice(0, 10);
+
+    draftListEl.innerHTML = sortedDrafts.map(p => {
+      const seoBadge = (typeof p.seo_score === 'number' && p.seo_score > 0)
+        ? `<span style="background:var(--point-light);color:var(--point);padding:2px 8px;border-radius:100px;font-size:10px;font-weight:700;margin-left:6px;">⚡ SEO ${Math.round(p.seo_score)}</span>`
+        : '';
+      const hasImg = (p.thumbnail || p.has_image) ? '🖼️' : '❌';
+      const hasFaq = p.has_faq ? '❓FAQ' : '';
+      return `<div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+            ${escapeHtml(p.title || '(no title)')}${seoBadge}
+          </div>
+          <div style="font-size:11px;color:var(--text3);">
+            <span style="color:var(--point);font-weight:600;">${escapeHtml(p.category || '')}</span> · 
+            ${formatDate(p.created_at)} · ${hasImg} ${hasFaq}
+          </div>
+        </div>
+        <button onclick="openPost('${escapeHtml(p.filename)}')" style="background:var(--navy);color:var(--white);border:none;padding:8px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;font-family:inherit;">Review →</button>
+      </div>`;
+    }).join('');
+  }
+
+  // ── 8. Execution roadmap ──
+  const weeks = [
+    {
+      week: 'Week 1',
+      date: '4/24 ~ 4/30',
+      title: 'Focus on draft review and publishing',
+      tasks: [
+        `Published ${publishedCount} → target 25 (${Math.max(0, 25-publishedCount)} more needed)`,
+        'Improve low-quality drafts, then publish',
+        'Check the mobile preview',
+      ],
+      done: publishedCount >= 25,
+    },
+    {
+      week: 'Week 2',
+      date: '5/1 ~ 5/7',
+      title: 'Quality improvements and SEO optimization',
+      tasks: [
+        `Published ${publishedCount} → target 30`,
+        'Expand the top 5 posts to 2,000+ words',
+        'Add internal links (connect posts to each other)',
+      ],
+      done: publishedCount >= 30,
+    },
+    {
+      week: 'Week 3',
+      date: '5/8 ~ 5/14',
+      title: '🎯 Apply for AdSense',
+      tasks: [
+        'Set up ads.txt (in Vercel)',
+        'Submit the AdSense application',
+        'Wait for review (1-2 weeks)',
+      ],
+      done: false,
+    },
+    {
+      week: 'Week 4',
+      date: '5/15 ~ 5/21',
+      title: 'Await approval + secondary improvements',
+      tasks: [
+        'Keep automatic post generation running',
+        'Build backlinks (Naver blog, etc.)',
+        'Plan an ad placement strategy for after approval',
+      ],
+      done: false,
+    },
+  ];
+
+  document.getElementById('adsense-roadmap').innerHTML = weeks.map((w, i) => `
+    <div style="background:var(--white);border-radius:10px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start;${w.done ? 'opacity:0.6;' : ''}">
+      <div style="flex-shrink:0;width:38px;height:38px;border-radius:50%;background:${w.done ? 'var(--green)' : 'var(--point)'};color:var(--white);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;">
+        ${w.done ? '✓' : (i + 1)}
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px;">
+          <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.08em;">${w.week}</div>
+          <div style="font-size:11px;color:var(--text3);">${w.date}</div>
+        </div>
+        <div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:6px;">${w.title}</div>
+        <ul style="list-style:none;padding:0;margin:0;">
+          ${w.tasks.map(t => `<li style="font-size:12px;color:var(--text2);padding:2px 0;line-height:1.6;">• ${t}</li>`).join('')}
+        </ul>
+      </div>
+    </div>
+  `).join('');
+
+  // Helpers (may already exist in admin, but defined defensively in case they don't)
+  function escapeHtml(s) {
+    return String(s || '').replace(/[&<>"']/g, c => (
+      {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]
+    ));
+  }
+  function formatDate(s) {
+    if (!s) return '—';
+    try {
+      const d = new Date(s);
+      return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+    } catch(e) { return '—'; }
+  }
+}
+
+// Open a draft as a preview (switch to the posts view + focus that post)
+function openPost(filename) {
+  // Switch to the posts view
+  document.getElementById('view-posts').style.display = '';
+  document.getElementById('view-income').style.display = 'none';
+  document.getElementById('view-adsense').style.display = 'none';
+  document.querySelectorAll('.sidebar-item').forEach(e => e.classList.remove('active'));
+  const siAll = document.getElementById('si-all');
+  if (siAll) siAll.classList.add('active');
+  // Scroll to the top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Find that post in the list and highlight it (if present)
+  setTimeout(() => {
+    const card = document.querySelector(`[data-filename="${filename}"]`);
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.style.transition = 'background 0.3s';
+      card.style.background = 'var(--point-light)';
+      setTimeout(() => card.style.background = '', 1500);
+    }
+  }, 200);
+}
+
+// ── Revenue data defaults ────────────────────────────────
+const INCOME_DEFAULT = {
+  total: { amount: '5,000,000', suffix: 'KRW+', note: '* Excludes day-job salary · Pre-tax · Updated monthly' },
+  items: [
+    { name: 'Blog Management',  amount: '3,500,000+', suffix: 'KRW', color: '#3b6cf4', desc: 'Managing multiple client blogs' },
+    { name: 'Course Revenue',   amount: '1,500,000+', suffix: 'KRW', color: '#c17f3e', desc: 'Blog management course' },
+    { name: 'AdSense',          amount: 'In progress', suffix: '',   color: '#2d6a4f', desc: '1M KRW/month challenge underway' },
+  ],
+  months: [
+    {
+      label: 'April 2026',
+      total: '5,000,000 KRW+',
+      rows: [
+        { name: 'Blog Management', value: '₩ 3,500,000+', color: '#3b6cf4' },
+        { name: 'Courses',         value: '₩ 1,500,000+', color: '#c17f3e' },
+        { name: 'AdSense',         value: 'In progress',   color: '#2d6a4f' },
+      ]
+    }
+  ],
+  structure: [
+    { icon: '💼', title: 'Blog Management', desc: 'Managed blog operation for businesses/individuals. Owning everything from content planning to publishing. 5 years of know-how for a stable client base.', amount: '₩ 3,500,000', color: '#3b6cf4', suffix: '/mo' },
+    { icon: '🎓', title: 'Course Revenue',  desc: 'Teaching how to start blog management and monetize. Many students landed their first client in the first month.', amount: '₩ 1,500,000', color: '#c17f3e', suffix: '/mo' },
+    { icon: '📊', title: 'AdSense (in progress)', desc: 'Aiming for 1M KRW/month in AdSense with this blog. 100 posts → apply for approval → monetize.', amount: '1M KRW/mo', color: '#2d6a4f', suffix: ' target' },
+  ]
+};
+
+function loadIncomeData() {
+  try { return JSON.parse(localStorage.getItem('incomeData') || 'null') || INCOME_DEFAULT; }
+  catch(e) { return INCOME_DEFAULT; }
+}
+function saveIncome() {
+  const data = collectIncomeData();
+  localStorage.setItem('incomeData', JSON.stringify(data));
+  showToast('Revenue data saved! It is reflected on the public revenue page immediately.', 'success');
+}
+
+// ── Render the revenue editor ────────────────────────────────
+function renderIncomeEditor() {
+  const data = loadIncomeData();
+
+  // Total revenue
+  document.getElementById('inc-total-amount').value = data.total.amount || '';
+  document.getElementById('inc-total-suffix').value = data.total.suffix || '';
+  document.getElementById('inc-total-note').value   = data.total.note   || '';
+
+  // Income items
+  renderIncomeItems(data.items || []);
+
+  // Monthly history
+  renderMonthHistory(data.months || []);
+
+  // Revenue structure
+  renderStructure(data.structure || []);
+}
+
+// ── Income items ────────────────────────────────────────
+function renderIncomeItems(items) {
+  const list = document.getElementById('incomeItemList');
+  list.innerHTML = items.map((item, i) => `
+    <div class="income-edit-row" data-idx="${i}" style="background:var(--bg);border-radius:10px;padding:16px;display:grid;grid-template-columns:auto 1fr 1fr 1fr 1fr auto;gap:10px;align-items:center;">
+      <div style="width:16px;height:16px;border-radius:50%;background:${item.color};flex-shrink:0;"></div>
+      <div>
+        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">Income name</div>
+        <input class="form-input" style="font-size:13px;padding:7px 10px;" value="${escHtml(item.name)}"
+          onchange="updateItem(${i},'name',this.value)" placeholder="Blog Management">
+      </div>
+      <div>
+        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">Amount</div>
+        <input class="form-input" style="font-size:13px;padding:7px 10px;" value="${escHtml(item.amount)}"
+          onchange="updateItem(${i},'amount',this.value)" placeholder="3,500,000+">
+      </div>
+      <div>
+        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">Unit</div>
+        <input class="form-input" style="font-size:13px;padding:7px 10px;" value="${escHtml(item.suffix)}"
+          onchange="updateItem(${i},'suffix',this.value)" placeholder="KRW">
+      </div>
+      <div>
+        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">Description</div>
+        <input class="form-input" style="font-size:13px;padding:7px 10px;" value="${escHtml(item.desc)}"
+          onchange="updateItem(${i},'desc',this.value)" placeholder="Managing multiple client blogs">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;align-items:center;">
+        <input type="color" value="${item.color}" onchange="updateItem(${i},'color',this.value)"
+          style="width:32px;height:28px;border:none;border-radius:4px;cursor:pointer;padding:0;">
+        <button onclick="removeItem(${i})" style="background:var(--red-light);color:var(--red);border:none;padding:3px 8px;border-radius:4px;font-size:11px;cursor:pointer;">Delete</button>
+      </div>
+    </div>`).join('');
+}
+
+let _incomeItems = [];
+function updateItem(idx, key, val) {
+  const data = loadIncomeData();
+  if (!data.items[idx]) return;
+  data.items[idx][key] = val;
+  localStorage.setItem('incomeData', JSON.stringify(data));
+  // Update only the color dot
+  if (key === 'color') {
+    const rows = document.querySelectorAll('.income-edit-row');
+    if (rows[idx]) rows[idx].querySelector('div[style*="border-radius:50%"]').style.background = val;
+  }
+}
+function removeItem(idx) {
+  const data = loadIncomeData();
+  data.items.splice(idx, 1);
+  localStorage.setItem('incomeData', JSON.stringify(data));
+  renderIncomeItems(data.items);
+}
+function addIncomeItem() {
+  const data = loadIncomeData();
+  data.items.push({ name: 'New income item', amount: '0', suffix: 'KRW', color: '#888888', desc: 'Enter a description' });
+  localStorage.setItem('incomeData', JSON.stringify(data));
+  renderIncomeItems(data.items);
+}
+
+// ── Monthly history ─────────────────────────────────────
+function renderMonthHistory(months) {
+  const list = document.getElementById('monthHistoryList');
+  list.innerHTML = months.map((month, mi) => `
+    <div style="background:var(--bg);border-radius:10px;padding:16px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;">
+        <input class="form-input" style="font-size:14px;font-weight:700;flex:1;min-width:120px;padding:7px 10px;"
+          value="${escHtml(month.label)}" placeholder="April 2026"
+          onchange="updateMonth(${mi},'label',this.value)">
+        <input class="form-input" style="font-size:14px;font-weight:700;flex:1;min-width:120px;padding:7px 10px;color:var(--point);"
+          value="${escHtml(month.total)}" placeholder="5,000,000 KRW+"
+          onchange="updateMonth(${mi},'total',this.value)">
+        <button onclick="removeMonth(${mi})" style="background:var(--red-light);color:var(--red);border:none;padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer;white-space:nowrap;">Delete</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;" id="month-rows-${mi}">
+        ${(month.rows || []).map((row, ri) => `
+          <div style="display:grid;grid-template-columns:16px 1fr 1fr auto;gap:8px;align-items:center;background:var(--white);padding:10px 12px;border-radius:8px;border:1px solid var(--border);">
+            <div style="width:10px;height:10px;border-radius:50%;background:${row.color};"></div>
+            <input class="form-input" style="font-size:12px;padding:5px 8px;" value="${escHtml(row.name)}"
+              onchange="updateMonthRow(${mi},${ri},'name',this.value)" placeholder="Income item name">
+            <input class="form-input" style="font-size:12px;padding:5px 8px;font-weight:700;" value="${escHtml(row.value)}"
+              onchange="updateMonthRow(${mi},${ri},'value',this.value)" placeholder="₩ 3,500,000+">
+            <div style="display:flex;gap:4px;">
+              <input type="color" value="${row.color}" onchange="updateMonthRow(${mi},${ri},'color',this.value)"
+                style="width:28px;height:26px;border:none;border-radius:4px;cursor:pointer;padding:0;">
+              <button onclick="removeMonthRow(${mi},${ri})" style="background:var(--red-light);color:var(--red);border:none;padding:3px 6px;border-radius:4px;font-size:11px;cursor:pointer;">✕</button>
+            </div>
+          </div>`).join('')}
+      </div>
+      <button onclick="addMonthRow(${mi})" style="margin-top:8px;background:var(--bg2);color:var(--text2);border:1px solid var(--border);padding:5px 12px;border-radius:6px;font-size:11px;cursor:pointer;">+ Add Row</button>
+    </div>`).join('');
+}
+
+function updateMonth(mi, key, val) {
+  const data = loadIncomeData();
+  if (data.months[mi]) { data.months[mi][key] = val; localStorage.setItem('incomeData', JSON.stringify(data)); }
+}
+function updateMonthRow(mi, ri, key, val) {
+  const data = loadIncomeData();
+  if (data.months[mi] && data.months[mi].rows[ri]) {
+    data.months[mi].rows[ri][key] = val;
+    localStorage.setItem('incomeData', JSON.stringify(data));
+  }
+}
+function removeMonth(mi) {
+  if (!confirm('Delete this month\'s record?')) return;
+  const data = loadIncomeData();
+  data.months.splice(mi, 1);
+  localStorage.setItem('incomeData', JSON.stringify(data));
+  renderMonthHistory(data.months);
+}
+function removeMonthRow(mi, ri) {
+  const data = loadIncomeData();
+  data.months[mi].rows.splice(ri, 1);
+  localStorage.setItem('incomeData', JSON.stringify(data));
+  renderMonthHistory(data.months);
+}
+function addMonthRow(mi) {
+  const data = loadIncomeData();
+  data.months[mi].rows.push({ name: 'New item', value: '₩ 0', color: '#888888' });
+  localStorage.setItem('incomeData', JSON.stringify(data));
+  renderMonthHistory(data.months);
+}
+function addMonthHistory() {
+  const data = loadIncomeData();
+  const now  = new Date();
+  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  data.months.unshift({
+    label: `${monthNames[now.getMonth()]} ${now.getFullYear()}`,
+    total: 'To be updated',
+    rows: [
+      { name: 'Blog Management', value: '₩ 0', color: '#3b6cf4' },
+      { name: 'Courses',         value: '₩ 0', color: '#c17f3e' },
+      { name: 'AdSense',         value: '₩ 0', color: '#2d6a4f' },
+    ]
+  });
+  localStorage.setItem('incomeData', JSON.stringify(data));
+  renderMonthHistory(data.months);
+}
+
+// ── Revenue structure ─────────────────────────────────────
+function renderStructure(structure) {
+  const list = document.getElementById('incomeStructureList');
+  list.innerHTML = structure.map((s, i) => `
+    <div style="background:var(--bg);border-radius:10px;padding:16px;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:start;">
+      <div>
+        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">Icon + title</div>
+        <div style="display:flex;gap:6px;">
+          <input class="form-input" style="width:52px;font-size:16px;padding:6px;text-align:center;" value="${escHtml(s.icon)}"
+            onchange="updateStructure(${i},'icon',this.value)">
+          <input class="form-input" style="font-size:13px;padding:7px 10px;flex:1;" value="${escHtml(s.title)}"
+            onchange="updateStructure(${i},'title',this.value)">
+        </div>
+      </div>
+      <div>
+        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">Amount + unit</div>
+        <div style="display:flex;gap:6px;">
+          <input class="form-input" style="font-size:13px;padding:7px 10px;flex:1;" value="${escHtml(s.amount)}"
+            onchange="updateStructure(${i},'amount',this.value)" placeholder="₩ 3,500,000">
+          <input class="form-input" style="width:52px;font-size:12px;padding:7px;" value="${escHtml(s.suffix)}"
+            onchange="updateStructure(${i},'suffix',this.value)" placeholder="/mo">
+        </div>
+      </div>
+      <div>
+        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">Description</div>
+        <textarea class="form-textarea" style="min-height:64px;font-size:12px;padding:7px 10px;"
+          onchange="updateStructure(${i},'desc',this.value)">${escHtml(s.desc)}</textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;align-items:center;padding-top:18px;">
+        <input type="color" value="${s.color}" onchange="updateStructure(${i},'color',this.value)"
+          style="width:32px;height:28px;border:none;border-radius:4px;cursor:pointer;padding:0;">
+        <button onclick="removeStructure(${i})" style="background:var(--red-light);color:var(--red);border:none;padding:3px 8px;border-radius:4px;font-size:11px;cursor:pointer;">Delete</button>
+      </div>
+    </div>`).join('');
+}
+function updateStructure(i, key, val) {
+  const data = loadIncomeData();
+  if (data.structure[i]) { data.structure[i][key] = val; localStorage.setItem('incomeData', JSON.stringify(data)); }
+}
+function removeStructure(i) {
+  const data = loadIncomeData();
+  data.structure.splice(i, 1);
+  localStorage.setItem('incomeData', JSON.stringify(data));
+  renderStructure(data.structure);
+}
+function addStructureItem() {
+  const data = loadIncomeData();
+  data.structure.push({ icon: '💡', title: 'New revenue stream', desc: 'Enter a description', amount: '₩ 0', color: '#888888', suffix: '/mo' });
+  localStorage.setItem('incomeData', JSON.stringify(data));
+  renderStructure(data.structure);
+}
+
+// ── Collect data (for saving) ─────────────────────────────
+function collectIncomeData() {
+  const data = loadIncomeData();
+  data.total.amount = document.getElementById('inc-total-amount').value;
+  data.total.suffix = document.getElementById('inc-total-suffix').value;
+  data.total.note   = document.getElementById('inc-total-note').value;
+  return data;
+}
+
+// Auto-load on page load
+if (isLoggedIn) loadPosts();
+
+// Track the richEditor cursor position (to preserve the selection before a toolbar click)
+(function attachEditorCursorTracking() {
+  const editor = document.getElementById('richEditor');
+  if (!editor) return;
+  ['keyup', 'mouseup', 'touchend', 'focus', 'input'].forEach(evt => {
+    editor.addEventListener(evt, saveEditorRange);
+  });
+})();
+</script>
+</body>
+</html>

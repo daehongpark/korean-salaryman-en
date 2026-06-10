@@ -1,0 +1,19 @@
+# ────────────────────────────────────────
+# 직장인 수익일기 - Python 의존성
+# 설치:
+#   pip install -r requirements.txt
+# ────────────────────────────────────────
+
+# automation.py + /api/finalize-post.py 핵심 의존성
+requests>=2.31.0
+python-dotenv>=1.0.0
+Pillow>=10.0.0
+
+# 트렌드 크롤러 (Google Trends + 네이버 DataLab)
+pytrends>=4.9.2
+beautifulsoup4>=4.12.0
+lxml>=4.9.3
+
+# pytrends 내부 의존성
+pandas>=2.0.0
+urllib3>=1.26.0

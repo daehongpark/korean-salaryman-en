@@ -1,0 +1,47 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "functions": {
+    "api/finalize-post.py": {
+      "maxDuration": 60
+    }
+  },
+  "redirects": [
+    {
+      "source": "/post.html",
+      "has": [{ "type": "query", "key": "id", "value": "(?<id>.+)\\.json" }],
+      "destination": "/p/:id.html",
+      "permanent": true
+    },
+    {
+      "source": "/post",
+      "has": [{ "type": "query", "key": "id", "value": "(?<id>.+)\\.json" }],
+      "destination": "/p/:id.html",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/posts/(.*)\\.json",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=60, stale-while-revalidate=300"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    }
+  ]
+}
