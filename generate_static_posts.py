@@ -232,7 +232,7 @@ def build_page(template, post, filename, slug, manifest_entry):
         },
         "keywords": ", ".join(tags),
         "articleSection": category,
-        "inLanguage": "ko-KR",
+        "inLanguage": "en-US",
         "mainEntityOfPage": {"@type": "WebPage", "@id": page_url},
     }
     ld_json = json.dumps(json_ld, ensure_ascii=False).replace("</", "<\\/")

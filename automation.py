@@ -14,9 +14,9 @@ load_dotenv()
 
 # ── 설정 ─────────────────────────────────────────────
 GEMINI_API_KEY  = os.getenv("GEMINI_API_KEY")
-BLOG_TITLE      = os.getenv("BLOG_TITLE", "직장인 수익일기")
+BLOG_TITLE      = os.getenv("BLOG_TITLE", "Korean Salaryman")
 AUTO_PUBLISH    = os.getenv("AUTO_PUBLISH", "false").lower() == "true"
-POSTS_PER_DAY   = int(os.getenv("POSTS_PER_DAY", "5"))
+POSTS_PER_DAY   = int(os.getenv("POSTS_PER_DAY", "1"))
 UNSPLASH_KEY    = os.getenv("UNSPLASH_ACCESS_KEY", "")   # 선택사항
 
 # ── 경로 설정 ─────────────────────────────────────────
@@ -56,12 +56,11 @@ except ImportError as _e:
     LEGACY_CATEGORY_MAP = {}
 
 
-# ── 자료조사 (필요 카테고리/키워드에만 발동) ───────
-RESEARCH_TRIGGER_CATS = {'money', 'finance', 'realestate', 'trending', 'ai'}
-RESEARCH_TRIGGER_PATTERNS = [
-    '2026', '2027', '정책', '제도', '법', '금리', '발표', '시행', '개정',
-    '신청', '지원금', '버전', '출시', '업데이트', '신기능',
-]
+# ── 사전 자료조사: EN판에서는 비활성화 ───────
+# (기존 자료조사 프롬프트가 한국어 기반이라 영어 글에 한글을 주입할 위험이 있어 끔.
+#  영어 트렌드 결합(trend_pipeline)이 시의성을 담당함.)
+RESEARCH_TRIGGER_CATS = set()
+RESEARCH_TRIGGER_PATTERNS = []
 
 
 def _should_do_research(category: str, keyword: str) -> bool:
@@ -135,27 +134,27 @@ def _research_keyword(category: str, keyword: str) -> str:
 
 # ── 박스 헤더 풀 (★ 매 글 다른 헤더 라운드로빈) ─────
 STEPS_HEADER_POOL = [
-    "단계별 가이드",
-    "이렇게 하면 됩니다",
-    "신청 흐름 정리",
-    "실제 진행 순서",
-    "차근차근 따라가 보세요",
+    "How it actually works",
+    "Here's the step-by-step",
+    "The real order of things",
+    "Walk through it with me",
+    "How to do it, step by step",
 ]
 
 FAQ_HEADER_POOL = [
-    "자주 묻는 질문",
-    "독자들이 많이 물어보는 거",
-    "Q&A 정리",
-    "이건 더 궁금하실 텐데",
-    "헷갈리는 부분 정리",
+    "Frequently asked questions",
+    "Questions people always ask",
+    "Quick Q&A",
+    "Stuff you're probably wondering",
+    "The things that trip people up",
 ]
 
 REFERENCES_HEADER_POOL = [
-    "참고자료",
-    "참고한 자료",
-    "공식 출처",
-    "더 깊이 보고 싶다면",
-    "근거 자료",
+    "References",
+    "Sources I used",
+    "Official sources",
+    "If you want to dig deeper",
+    "Where this comes from",
 ]
 
 
@@ -230,8 +229,8 @@ def _has_semantic_overlap(new_keyword: str, past_keywords) -> bool:
 
 
 # ── 카테고리 정규화 (한글 키 / 미지의 키 → 영문 7개 키로 매핑) ──
-VALID_CATEGORIES = {"money", "ai", "startup", "finance", "realestate", "trending", "book"}
-FALLBACK_CATEGORY = "trending"  # 알 수 없는 카테고리 도착 시 보낼 곳
+VALID_CATEGORIES = {"k-trends", "korean-life", "culture-explained", "essay"}
+FALLBACK_CATEGORY = "k-trends"  # 알 수 없는 카테고리 도착 시 보낼 곳
 
 
 def normalize_category(cat: str) -> str:
@@ -255,8 +254,8 @@ def _pick_balanced_categories(n: int) -> list:
     """
     import random
     import datetime
-    # ★ book은 자동 글 생성 제외 (박대홍 5/17 결정 - 박대홍 직접 작성)
-    cats    = [c for c in KEYWORD_POOL.keys() if c != 'book']
+    # ★ essay는 자동 글 생성 제외 (사람이 직접 작성하는 카테고리)
+    cats    = [c for c in KEYWORD_POOL.keys() if c != 'essay']
     weights = [CATEGORY_BALANCE.get(c, 1.0 / len(cats)) for c in cats]
 
     # 최근 7일(주간 쿼터) 카테고리 분포 확인
@@ -352,16 +351,16 @@ def get_seo_optimized_keywords():
 
     # 카테고리는 균형 발행 비율로 선택
     picked_cats   = _pick_balanced_categories(POSTS_PER_DAY)
-    # ★ 이중 안전망: book이 어떤 경로로든 섞이지 않게 (5/17 박대홍 결정)
-    picked_cats = [c for c in picked_cats if c != 'book']
+    # ★ 이중 안전망: essay가 어떤 경로로든 섞이지 않게 (사람이 직접 작성)
+    picked_cats = [c for c in picked_cats if c != 'essay']
     while len(picked_cats) < POSTS_PER_DAY:
-        other_cats = [c for c in KEYWORD_POOL.keys() if c != 'book']
+        other_cats = [c for c in KEYWORD_POOL.keys() if c != 'essay']
         picked_cats.append(random.choice(other_cats))
 
     # ── 트렌드 주제 사전 수집 (2-B) ──
     # 실패(503/빈배열/예외)해도 기존 시드→SEO 로직 100% 폴백
     trend_topics_by_cat = {}
-    TREND_CATS = {"finance", "ai", "money", "realestate", "trending"}
+    TREND_CATS = {"k-trends", "korean-life", "culture-explained"}
     try:
         needed = set(c for c in picked_cats if c in TREND_CATS)
         if needed:
@@ -641,11 +640,11 @@ def _create_gradient_background(width: int, height: int):
     return img
 
 
-def _wrap_korean_text(text: str, font, max_width: int) -> list:
+def _wrap_title_text(text: str, font, max_width: int) -> list:
     """
-    한글 텍스트를 이미지 폭에 맞춰 자동 줄바꿈.
-    - 1차: 공백(어절) 단위로 줄바꿈 시도
-    - 2차: 한 어절이 폭을 넘으면 글자 단위로 분할
+    Word-based line wrap for English titles, fit to the image width.
+    - primary: break on spaces (whole words stay intact)
+    - fallback: only if a single word is wider than the line, split by character
     """
     from PIL import ImageDraw, Image as PILImage
     dummy = PILImage.new("RGB", (10, 10))
@@ -758,19 +757,20 @@ def _compose_thumbnail(base_img, title: str, category: str) -> "Image.Image":
     )
 
     # ── 2. 제목 (중앙) ──
-    max_title_width = W - 120  # 좌우 여백 60px씩
-    lines = _wrap_korean_text(title, title_font, max_title_width)
+    max_title_width = W - 120  # 60px margin each side
+    lines = _wrap_title_text(title, title_font, max_title_width)
 
-    # 최대 3줄로 제한, 초과 시 말줄임표
+    # cap at 3 lines; truncate the last with an ellipsis (word-aware first)
     if len(lines) > 3:
         lines = lines[:3]
         last = lines[-1]
-        while len(last) > 1:
-            bbox = draw.textbbox((0, 0), last + "...", font=title_font)
-            if bbox[2] - bbox[0] <= max_title_width:
-                break
-            last = last[:-1]
-        lines[-1] = last + "..."
+        while last and draw.textbbox((0, 0), last + "…", font=title_font)[2] > max_title_width:
+            # drop a trailing word, then trailing chars if needed
+            if " " in last.rstrip():
+                last = last.rsplit(" ", 1)[0]
+            else:
+                last = last[:-1]
+        lines[-1] = last.rstrip() + "…"
 
     # 총 높이 계산해서 수직 중앙 정렬
     line_height = 82
@@ -1028,31 +1028,31 @@ def build_prompt(category: str, keyword: str, seo_meta: dict | None = None, tren
         monthly = seo_meta.get("monthly_total")
         comp    = seo_meta.get("competition")
         if monthly or comp:
-            seo_hint = "\n[키워드 SEO 데이터]\n"
+            seo_hint = "\n[Keyword SEO data]\n"
             if monthly:
-                seo_hint += f"- 월 검색량: {monthly}회 → 이 검색자들을 모두 만족시킬 수 있는 포괄적 내용 작성\n"
+                seo_hint += f"- Monthly search volume: {monthly} → cover the topic thoroughly enough to satisfy every one of these searchers\n"
             if comp:
-                seo_hint += f"- 경쟁 강도: {comp} → "
-                if comp == "낮음":
-                    seo_hint += "레드오션이 아니므로 정확한 정보와 깊이에 집중\n"
-                elif comp == "높음":
-                    seo_hint += "경쟁이 심하므로 차별화된 데이터/구조로 승부\n"
+                seo_hint += f"- Competition: {comp} → "
+                if comp in ("낮음", "low"):
+                    seo_hint += "not a red ocean, so win on accuracy and depth\n"
+                elif comp in ("높음", "high"):
+                    seo_hint += "crowded, so win with a differentiated angle and structure\n"
                 else:
-                    seo_hint += "적정 경쟁도 - 정보 + 사례 균형\n"
+                    seo_hint += "moderate — balance information with concrete examples\n"
 
     # ── 공식 링크 요청 ─────
     official_link_block = ""
     if needs_official_link:
         official_link_block = (
-            "\n[참고자료(references) 필수]\n"
-            "- 정부 공식 사이트 1~2개 URL을 references 필드에 포함\n"
-            "- 예: https://www.gov.kr , https://www.bokjiro.go.kr , "
-            "https://www.youthcenter.go.kr , https://www.bizinfo.go.kr\n"
-            "- 정확한 정책명·신청 페이지 URL을 모르면 도메인 루트만 명시 (가짜 URL 금지)\n"
+            "\n[references required]\n"
+            "- Include 1-2 trustworthy official URLs in the references field.\n"
+            "- e.g. https://english.visitkorea.or.kr , https://www.korea.net , "
+            "https://www.hikorea.go.kr\n"
+            "- If you don't know the exact page URL, give the domain root only (never a fake URL).\n"
         )
 
-    # ── 오늘 날짜 (업데이트 표기용) ─────
-    today_str = datetime.now().strftime("%Y년 %m월 %d일")
+    # ── today's date (for the freshness / updated stamp) ─────
+    today_str = datetime.now().strftime("%B %d, %Y")
 
     # ── 자료조사 (조건부 발동) ─────
     research_block = ""
@@ -1083,27 +1083,75 @@ def build_prompt(category: str, keyword: str, seo_meta: dict | None = None, tren
         .replace("<<TONE_EXAMPLES>>", T["tone_examples"])
         .replace("<<OFFICIAL_LINK_BLOCK>>", official_link_block)
     )
-    # ── 트렌드 맥락 + 2026 GEO 강화 블록 (2-B) ─────
+    # ── trend context + GEO reinforcement block ─────
     trend_block = ""
     if trend_source:
         trend_block = (
-            "\n[실시간 트렌드 맥락 — 지금 왜 화제인가]\n"
-            f"근거 뉴스: {trend_source}\n"
-            f"독자 가치: {trend_angle}\n"
-            "→ 도입부에서 시의성을 자연스럽게 녹일 것. 단 뉴스를 그대로 옮기지 말고 직장인 관점으로 재해석.\n"
+            "\n[Live trend context — why this is in the air right now]\n"
+            f"Source signal: {trend_source}\n"
+            f"Reader value: {trend_angle}\n"
+            "→ Hook the intro on the timeliness ('Lately in Korea...'). Don't copy the "
+            "news; reinterpret it through a Seoul salaryman's first-hand lens.\n"
         )
     geo_block = (
-        "\n[2026 검색최적화 필수 (SEO/GEO/AEO)]\n"
-        "1. 신선도: '2026년 기준' 등 최신 시점 명시 (GEO 핵심).\n"
-        "2. 패시지 최적화: 각 H2는 독립적으로 하나의 질문에 완결된 답. 섹션만 떼도 이해되게.\n"
-        "3. 답 먼저: 각 섹션은 결론을 먼저, 설명을 뒤에 (AI 인용 용이).\n"
-        "4. 구체 수치/출처: 막연한 표현 금지. 금액/비율/조건 구체적으로.\n"
-        "5. EEAT: 1인칭 경험으로 경험성, 정확한 정보로 신뢰성.\n"
+        "\n[Search optimization essentials (SEO/GEO/AEO)]\n"
+        f"1. Freshness: state the time frame ('as of {today_str}', 'right now in 2026') — GEO core.\n"
+        "2. Passage optimization: each H2 is a self-contained, complete answer to one question.\n"
+        "3. Answer-first: conclusion first, explanation after (easy for AI to quote).\n"
+        "4. Specific facts/numbers: no vague phrasing — costs, ratios, names; never invent a stat.\n"
+        "5. EEAT: first-person lived experience ('In my office...') for credibility.\n"
     )
 
     # 자료조사 블록은 본문 작성 지시 앞에 prepend (가장 먼저 참고하도록)
     final_prompt = research_block + rendered if research_block else rendered
     return final_prompt + trend_block + geo_block
+
+
+# ── ko_review: 박대홍 검수용 한글 전체 번역 (발행 HTML엔 절대 미포함) ──
+def _generate_ko_review(title: str, content_text: str) -> str:
+    """완성된 영어 글을 한국어로 충실히 번역해 검수본(ko_review)을 만든다.
+    - 자연스러움보다 원문 충실도 우선 (검수용)
+    - 제목 번역도 첫 줄에 포함
+    - 429/503 등 실패 시 "" 반환 (글 생성 자체는 계속)
+    """
+    if not GEMINI_API_KEY or not content_text:
+        return ""
+    prompt = (
+        "다음 영어 블로그 글을 한국어로 충실히 번역하세요. 검수용이므로 자연스러움보다 "
+        "원문 충실도를 우선합니다. 의역하지 말고 원문 내용을 빠짐없이 옮기세요. "
+        "HTML 태그는 무시하고 텍스트 의미만 번역합니다. 제목 번역도 맨 첫 줄에 넣으세요.\n\n"
+        f"[영어 제목]\n{title}\n\n[영어 본문]\n{content_text}"
+    )
+    url = (
+        "https://generativelanguage.googleapis.com/v1beta/models/"
+        f"gemini-2.5-flash:generateContent?key={GEMINI_API_KEY}"
+    )
+    payload = {
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {"temperature": 0.3, "topP": 0.9, "maxOutputTokens": 8192},
+    }
+    for attempt in range(3):
+        try:
+            r = requests.post(url, headers={"Content-Type": "application/json"},
+                              json=payload, timeout=60)
+            if r.status_code in (500, 503):
+                print(f"   [ko_review API {r.status_code}] 재시도 {attempt+1}/3")
+                time.sleep(8 * (attempt + 1))
+                continue
+            if r.status_code == 429:
+                print("   [ko_review] 429 rate/credit 제한 → 검수본 생략 (글은 계속)")
+                return ""
+            if r.status_code != 200:
+                print(f"   [ko_review API {r.status_code}] → 검수본 생략")
+                return ""
+            text = r.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
+            if text:
+                print(f"   [ko_review] 한글 검수본 생성 ({len(text)}자)")
+            return text
+        except Exception as e:
+            print(f"   [ko_review 실패] {e} → 검수본 생략")
+            time.sleep(3)
+    return ""
 
 
 # ── Gemini API 호출 ───────────────────────────────────
@@ -1186,6 +1234,11 @@ def generate_article(category: str, keyword: str, seo_meta: dict | None = None, 
             
             if article:
                 print(f"   글자수: {len(article.get('content',''))}자")
+                # ★ 영어 본문 완성 후 한글 검수본(ko_review) 1회 추가 생성
+                #   → post dict에 저장. 발행 HTML엔 절대 미포함 (검수 전용 필드).
+                article["ko_review"] = _generate_ko_review(
+                    article.get("title", keyword), article.get("content", "")
+                )
                 return article
 
         except json.JSONDecodeError as e:
@@ -1260,9 +1313,9 @@ def _extract_fields_manually(text: str, category: str, keyword: str) -> dict | N
         "category": category,
         "keyword":  keyword,
         "content":  content,
-        "summary":  summary or f"{keyword}에 대한 직장인 박대홍의 실전 경험을 공개합니다.",
-        "tags":     [keyword, category, "직장인", "부업"],
-        "faq":      [],  # 복구 모드에선 FAQ 없음
+        "summary":  summary or f"A first-hand look at {keyword}, from a salaryman in Seoul.",
+        "tags":     [keyword, category, "korea", "korean salaryman"],
+        "faq":      [],  # no FAQ in recovery mode
     }
 
 
@@ -1402,7 +1455,7 @@ def _build_tldr_html(tldr) -> str:
         'background:#f8f7f4;border-left:4px solid #c17f3e;'
         'padding:18px 22px;margin:0 0 28px;border-radius:0 8px 8px 0;">'
         '<div style="font-size:13px;font-weight:700;color:#c17f3e;'
-        'letter-spacing:0.05em;margin-bottom:8px;">한눈에 보기</div>'
+        'letter-spacing:0.05em;margin-bottom:8px;">Key takeaways</div>'
         f'<ul style="margin:0;padding-left:20px;color:#1a2640;font-size:15px;">{lis}</ul>'
         '</aside>'
     )
@@ -1431,7 +1484,7 @@ def _build_updated_badge(iso_date: str) -> str:
     return (
         '<div class="post-updated" style="'
         'text-align:right;font-size:12px;color:#999;margin:0 0 12px;">'
-        f'📅 {date_str} 업데이트'
+        f'📅 Updated {date_str}'
         '</div>'
     )
 
@@ -1464,7 +1517,7 @@ def _build_comparison_html(table) -> str:
 
     return (
         '<section class="post-comparison" style="margin:36px 0 24px;overflow-x:auto;">'
-        '<h2 style="margin-bottom:14px;">한눈에 비교</h2>'
+        '<h2 style="margin-bottom:14px;">Quick comparison</h2>'
         '<table style="width:100%;border-collapse:collapse;border-radius:8px;overflow:hidden;'
         'box-shadow:0 1px 3px rgba(0,0,0,0.06);">'
         f'<thead><tr>{th_html}</tr></thead>'
@@ -1670,7 +1723,7 @@ def _build_references_html(refs) -> str:
         f'<h2 style="margin-top:0;margin-bottom:10px;font-size:18px;">{refs_header}</h2>'
         f'<ul style="margin:0;padding-left:20px;">{"".join(items)}</ul>'
         '<div style="margin-top:10px;font-size:12px;color:#888;">'
-        '※ 외부 링크는 별도 창에서 열립니다. 정확한 정보는 공식 사이트에서 확인하세요.'
+        '※ External links open in a new tab. Always confirm details on the official site.'
         '</div>'
         '</section>'
     )
@@ -1788,16 +1841,16 @@ def finalize_article(article: dict, hero_image: dict | None = None, body_images:
     tags     = article.get("tags", [])
     faq      = article.get("faq", [])
 
-    # SEO 제목: 키워드 앞에, 브랜드 뒤에 (60자 제한 - 구글 스니펫 최적)
-    article["seo_title"] = f"{title} | 직장인 수익일기"[:60]
+    # SEO title: keyword first, brand after (≤70 chars for the Google snippet)
+    article["seo_title"] = f"{title} | Korean Salaryman"[:70]
 
-    # SEO 설명: 150~160자가 구글 스니펫 최적
-    base_desc = summary[:140] if summary else f"{keyword}에 대한 직장인의 실전 경험과 구체적 수치를 공개합니다."
-    article["seo_description"] = (base_desc + " | 직장인 수익일기")[:160]
+    # SEO description: ~150-160 chars is the Google snippet sweet spot
+    base_desc = summary[:150] if summary else f"An honest, first-hand look at {keyword} from a salaryman in Seoul."
+    article["seo_description"] = (base_desc + " | Korean Salaryman")[:160]
 
-    # SEO 키워드 (메인 키워드 앞쪽 배치)
+    # SEO keywords (main keyword front-loaded)
     seo_keywords = list(dict.fromkeys(
-        [keyword, category, f"{category} 추천", f"{keyword} 방법", "직장인 부업", "직장인 수익일기"] + tags
+        [keyword, category, f"{keyword} explained", f"{keyword} in korea", "korea", "korean salaryman"] + tags
     ))
     article["seo_keywords"] = ", ".join(seo_keywords[:12])
 
@@ -1841,10 +1894,10 @@ def finalize_article(article: dict, hero_image: dict | None = None, body_images:
             "description":    base_desc,
             "keywords":       article["seo_keywords"],
             "articleSection": category,
-            "author":         {"@type": "Person", "name": "박대홍"},
+            "author":         {"@type": "Person", "name": "Korean Salaryman"},
             "publisher":      {
                 "@type": "Organization",
-                "name":  "직장인 수익일기",
+                "name":  "Korean Salaryman",
                 "logo":  {"@type": "ImageObject", "url": "https://en.koreansalaryman.com/og-image.png"}
             },
             "datePublished":  article.get("created_at", ""),
@@ -2015,30 +2068,73 @@ except Exception as _e:
     TREND_CRAWLER_AVAILABLE = False
 
 def get_keywords_for_today_with_trends():
+    """
+    EN 양방향 트렌드 결합으로 오늘의 글 주제를 선택한다.
+      방향1: 외국인의 한국 관심사 (fetch_category_news — 뉴스+레딧+US트렌드)
+      방향2: 한국 실시간 트렌드 (fetch_korea_trends — Google Trends KR)
+      → convert_trends_to_topics_en 로 결합 → 클릭할 만한 주제
+    트렌드가 빈약하면 카테고리별 시드풀로 폴백.
+    반환 item에 trend_source/trend_angle을 실어 generate_article 도입부 훅에 사용.
+    """
     import random
-    base = get_keywords_for_today()
-    if not TREND_CRAWLER_AVAILABLE:
-        return base
+    selected   = []
+    recent_kws = _recent_keywords_from_manifest(days=14)
+    cats       = _pick_balanced_categories(POSTS_PER_DAY)  # essay 제외됨
+
     try:
-        base_keywords = [item["keyword"] for item in base]
-        raw_trends = get_keywords_with_trends(
-            base_pool=base_keywords, top_n_trend=50, max_total=100, trending_ratio=0.6,
+        from trend_pipeline import (
+            fetch_korea_trends, fetch_category_news, convert_trends_to_topics_en,
         )
-        filtered = [kw for kw in raw_trends if is_relevant_keyword(kw)]
-        print(f"   [트렌드] 원본 {len(raw_trends)}개 → 필터 후 {len(filtered)}개")
-        if not filtered:
-            print("   [트렌드] 관련 키워드 없음 → KEYWORD_POOL 사용")
-            return base
-        cats = list(KEYWORD_POOL.keys())
-        kw2cat = {item["keyword"]: item["category"] for item in base}
-        result = []
-        for kw in filtered[:POSTS_PER_DAY]:
-            cat = kw2cat.get(kw, random.choice(cats))
-            result.append({"category": cat, "keyword": kw})
-        return result if result else base
-    except Exception as _e:
-        print(f"[WARN] 트렌드 병합 실패 → KEYWORD_POOL 사용: {_e}")
-        return base
+    except Exception as e:
+        print(f"   [트렌드] 파이프라인 로드 실패 → 시드풀 사용: {e}")
+        return get_keywords_for_today()
+
+    # 방향2(한국 실시간 트렌드)는 한 번만 수집해 모든 카테고리에 공유
+    korea_trends = []
+    try:
+        korea_trends = fetch_korea_trends(limit=15)
+        print(f"   [트렌드] 방향2 한국 실시간 트렌드 {len(korea_trends)}개")
+    except Exception as e:
+        print(f"   [트렌드] 한국 트렌드 수집 실패: {e}")
+
+    for cat in cats:
+        topic = None
+        try:
+            foreign = fetch_category_news(cat, limit=12)
+            print(f"   [트렌드] 방향1 {cat} 외국인 관심사 {len(foreign)}건")
+            if foreign:
+                topics = convert_trends_to_topics_en(cat, foreign, korea_trends, max_topics=3)
+                fresh = [
+                    t for t in topics
+                    if t.get("topic")
+                    and t["topic"] not in recent_kws
+                    and not _has_semantic_overlap(t["topic"], recent_kws)
+                ]
+                if fresh:
+                    topic = fresh[0]
+        except Exception as e:
+            print(f"   [트렌드] {cat} 처리 실패 (시드풀 폴백): {e}")
+
+        if topic:
+            recent_kws.add(topic["topic"])
+            selected.append({
+                "category":     cat,
+                "keyword":      topic["topic"],
+                "trend_source": topic.get("source_news", ""),
+                "trend_angle":  topic.get("angle", ""),
+            })
+            print(f"   ✓ [트렌드 채택] {cat}: {topic['topic']}")
+        else:
+            seeds = KEYWORD_POOL.get(cat, [])
+            if not seeds:
+                continue
+            cool = [s for s in seeds if s not in recent_kws and not _has_semantic_overlap(s, recent_kws)]
+            kw = random.choice(cool if cool else seeds)
+            recent_kws.add(kw)
+            selected.append({"category": cat, "keyword": kw})
+            print(f"   ○ [시드풀 폴백] {cat}: {kw}")
+
+    return selected if selected else get_keywords_for_today()
 
 
 # ── 메인 실행 ─────────────────────────────────────────

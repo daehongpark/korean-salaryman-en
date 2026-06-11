@@ -2,8 +2,7 @@ name: 매일 자동 글 생성
 
 on:
   schedule:
-    - cron: '17 0 * * *'   # 09:17 KST 1차 시도 (정각 부하 회피)
-    - cron: '47 0 * * *'   # 09:47 KST 폴백 (1차 스킵 시)
+    - cron: '0 12 * * *'   # 12:00 UTC = 21:00 KST (하루 1편 draft)
   workflow_dispatch:
     inputs:
       auto_publish:
@@ -13,9 +12,9 @@ on:
         type: choice
         options: ['true', 'false']
       posts_per_day:
-        description: '오늘 생성할 글 수 (기본 5)'
+        description: '오늘 생성할 글 수 (기본 1)'
         required: false
-        default: '5'
+        default: '1'
 
 jobs:
   generate:
@@ -45,7 +44,7 @@ jobs:
         run: |
           # workflow_dispatch 수동 실행 시 입력값 우선, 없으면 Secrets 값 사용
           AUTO_PUBLISH_VAL="${{ github.event.inputs.auto_publish || secrets.AUTO_PUBLISH || 'false' }}"
-          POSTS_PER_DAY_VAL="${{ github.event.inputs.posts_per_day || secrets.POSTS_PER_DAY || '5' }}"
+          POSTS_PER_DAY_VAL="${{ github.event.inputs.posts_per_day || secrets.POSTS_PER_DAY || '1' }}"
 
           # 기본 설정
           echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}"           >> .env
