@@ -171,13 +171,14 @@ def build_page(template, post, filename, slug, manifest_entry):
     else:
         page_desc = "An honest look at %s in Korea, from a salaryman in Seoul. Read it on Korean Salaryman." % (category or "Korea")
 
-    # ── og:image (manifest thumbnail → hero_image.url) ──
+    # ── og:image (manifest thumbnail → hero_image.url → brand OG fallback) ──
     thumb = (manifest_entry or {}).get("thumbnail")
     if not thumb:
         hero = post.get("hero_image")
         if isinstance(hero, dict):
             thumb = hero.get("url")
-    og_image = (SITE + thumb) if thumb else None
+    # No post thumbnail → fall back to the branded default OG card.
+    og_image = (SITE + thumb) if thumb else (SITE + "/assets/og-default.png")
 
     doc = template
 

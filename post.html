@@ -18,10 +18,10 @@
 <meta property="og:description" content="" id="ogDesc">
 <meta property="og:url" content="https://en.koreansalaryman.com/post.html" id="ogUrl">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://en.koreansalaryman.com/og-image.png" id="ogImage">
+<meta property="og:image" content="https://en.koreansalaryman.com/assets/og-default.png" id="ogImage">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta name="twitter:image" content="https://en.koreansalaryman.com/og-image.png" id="twImage">
+<meta name="twitter:image" content="https://en.koreansalaryman.com/assets/og-default.png" id="twImage">
 <meta property="article:author" content="Korean Salaryman">
 <meta property="article:published_time" content="" id="ogPublished">
 <meta property="article:section" content="" id="ogSection">
@@ -126,6 +126,18 @@ header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backd
 .share-btn{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;cursor:pointer;border:1px solid var(--ink);background:none;color:var(--ink);font-family:inherit;transition:all 0.15s;}
 .share-btn:hover{background:var(--ink);color:var(--paper);}
 .share-btn.twitter:hover{background:var(--accent);border-color:var(--accent);}
+.share-btn.copied{background:var(--accent);color:var(--paper);border-color:var(--accent);}
+.share-native{display:none;}
+
+/* ── End-of-post share CTA ── */
+.share-cta{background:var(--surface);text-align:center;padding:40px 28px;margin:52px 0 8px;}
+.share-cta h3{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:1.15rem;color:var(--ink);letter-spacing:0.02em;margin-bottom:12px;}
+.share-cta p{font-size:15px;color:var(--gray);max-width:440px;margin:0 auto 22px;line-height:1.6;}
+.share-cta .share-btns{justify-content:center;flex-wrap:wrap;gap:8px;}
+
+/* ── Quote-share floating tooltip ── */
+#quoteShare{position:absolute;z-index:200;display:none;background:var(--ink);color:var(--paper);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:8px 14px;border-radius:100px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.28);white-space:nowrap;user-select:none;}
+#quoteShare:hover{background:var(--accent);}
 
 /* ── Comments ── */
 .comments-section{margin-top:56px;padding-top:44px;border-top:1px solid var(--ink);}
@@ -307,13 +319,30 @@ footer{background:var(--paper);border-top:1px solid var(--ink);padding:58px 28px
         <span id="viewCount">Loading views...</span>
       </div>
       <div class="share-btns">
-        <span class="share-label">Share</span>
-        <button class="share-btn twitter" onclick="shareTwitter()">Twitter</button>
-        <button class="share-btn copy" onclick="copyLink()">Copy link</button>
+        <button class="share-btn share-native" onclick="nativeShare()">Share</button>
+        <button class="share-btn" onclick="shareTo('x')">X</button>
+        <button class="share-btn" onclick="shareTo('reddit')">Reddit</button>
+        <button class="share-btn" onclick="shareTo('facebook')">Facebook</button>
+        <button class="share-btn" onclick="shareTo('whatsapp')">WhatsApp</button>
+        <button class="share-btn copy" onclick="copyLink(this)">Copy link</button>
       </div>
     </div>
 
     <div class="article-tags" id="articleTags"></div>
+
+    <!-- End-of-post share CTA -->
+    <div class="share-cta">
+      <h3>ENJOYED THIS?</h3>
+      <p>Share it with someone curious about Korea — it helps this little blog a lot.</p>
+      <div class="share-btns">
+        <button class="share-btn share-native" onclick="nativeShare()">Share</button>
+        <button class="share-btn" onclick="shareTo('x')">X</button>
+        <button class="share-btn" onclick="shareTo('reddit')">Reddit</button>
+        <button class="share-btn" onclick="shareTo('facebook')">Facebook</button>
+        <button class="share-btn" onclick="shareTo('whatsapp')">WhatsApp</button>
+        <button class="share-btn copy" onclick="copyLink(this)">Copy link</button>
+      </div>
+    </div>
 
     <!-- Previous / Next post -->
     <div class="post-nav" id="postNav"></div>
@@ -378,6 +407,9 @@ footer{background:var(--paper);border-top:1px solid var(--ink);padding:58px 28px
   </div>
 </div>
 
+<!-- Quote-share floating tooltip -->
+<div id="quoteShare">𝕏 Share quote</div>
+
 <footer>
   <div class="ft">
     <div class="ft-brand">
@@ -421,22 +453,89 @@ function updateViewCount(postId) {
   document.getElementById('viewCount').textContent = count.toLocaleString() + ' views';
 }
 
-// ── Share buttons ──────────────────────────────────────────
-function shareTwitter() {
-  const title = encodeURIComponent(document.title);
-  const url = encodeURIComponent(window.location.href);
-  window.open('https://twitter.com/intent/tweet?text=' + title + '&url=' + url, '_blank', 'width=600,height=400');
+// ── Share system (canonical URL + post title) ───────────────
+// Works on both the static /p/ pages (canonical href + prerendered h1)
+// and the live post.html?id= page (JS-filled).
+function shareUrl() {
+  const c = document.getElementById('canonicalTag');
+  return (c && c.getAttribute('href')) || window.location.href;
 }
-function copyLink() {
-  navigator.clipboard.writeText(window.location.href).then(() => {
-    const btn = document.querySelector('.share-btn.copy');
-    const orig = btn.textContent;
-    btn.textContent = 'Copied ✓';
-    btn.style.background = 'var(--green)';
-    btn.style.color = '#fff';
-    setTimeout(() => { btn.textContent = orig; btn.style.background = ''; btn.style.color = ''; }, 2000);
+function shareTitle() {
+  const h = document.getElementById('heroTitle');
+  let t = (h && h.textContent.trim()) || document.title || '';
+  return t.replace(/\s*\|\s*Korean Salaryman\s*$/, '');
+}
+function shareTo(net) {
+  const u = encodeURIComponent(shareUrl());
+  const t = encodeURIComponent(shareTitle());
+  const map = {
+    x:        'https://x.com/intent/tweet?text=' + t + '&url=' + u,
+    reddit:   'https://www.reddit.com/submit?url=' + u + '&title=' + t,
+    facebook: 'https://www.facebook.com/sharer/sharer.php?u=' + u,
+    whatsapp: 'https://wa.me/?text=' + t + '%20' + u
+  };
+  if (map[net]) window.open(map[net], '_blank', 'width=600,height=500,noopener');
+}
+function nativeShare() {
+  if (navigator.share) {
+    navigator.share({ title: shareTitle(), url: shareUrl() }).catch(function(){});
+  }
+}
+function copyLink(btn) {
+  navigator.clipboard.writeText(shareUrl()).then(function() {
+    const b = btn || document.querySelector('.share-btn.copy');
+    if (!b) return;
+    const orig = b.textContent;
+    b.textContent = 'Copied!';
+    b.classList.add('copied');
+    setTimeout(function() { b.textContent = orig; b.classList.remove('copied'); }, 1800);
   });
 }
+
+// ── Native share: reveal the "Share" button only where supported (mobile) ──
+if (navigator.share) {
+  document.querySelectorAll('.share-native').forEach(function(b){ b.style.display = ''; });
+}
+
+// ── Quote share: select text in the article → floating "Share quote" pill ──
+(function() {
+  const tip = document.getElementById('quoteShare');
+  const body = document.getElementById('articleBody');
+  if (!tip || !body) return;
+
+  function selInBody(sel) {
+    if (!sel.anchorNode) return false;
+    const n = sel.anchorNode.nodeType === 3 ? sel.anchorNode.parentNode : sel.anchorNode;
+    return body.contains(n);
+  }
+  function showTip() {
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed) { tip.style.display = 'none'; return; }
+    const txt = sel.toString().trim();
+    if (txt.length < 10 || txt.length > 280 || !selInBody(sel)) { tip.style.display = 'none'; return; }
+    let rect;
+    try { rect = sel.getRangeAt(0).getBoundingClientRect(); } catch(e) { return; }
+    if (!rect || !rect.width) return;
+    tip.dataset.q = txt;
+    tip.style.display = 'block';
+    tip.style.top  = (window.scrollY + rect.top - tip.offsetHeight - 8) + 'px';
+    tip.style.left = (window.scrollX + rect.left + rect.width / 2 - tip.offsetWidth / 2) + 'px';
+  }
+  document.addEventListener('mouseup', function(){ setTimeout(showTip, 10); });
+  document.addEventListener('selectionchange', function() {
+    const s = window.getSelection();
+    if (!s || s.isCollapsed) tip.style.display = 'none';
+  });
+  window.addEventListener('scroll', function(){ tip.style.display = 'none'; });
+  tip.addEventListener('click', function() {
+    const q = tip.dataset.q || '';
+    const u = encodeURIComponent(shareUrl());
+    const t = encodeURIComponent('"' + q + '"');
+    window.open('https://x.com/intent/tweet?text=' + t + '&url=' + u, '_blank', 'width=600,height=500,noopener');
+    tip.style.display = 'none';
+    const s = window.getSelection(); if (s) s.removeAllRanges();
+  });
+})();
 
 // ── Comments (localStorage-based) ──────────────────────────
 function getComments(postId) {
