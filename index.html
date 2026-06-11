@@ -81,365 +81,151 @@
 }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=Noto+Serif+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@700;900&display=swap" rel="stylesheet">
 <style>
+/* ═══ Korean Salaryman — design system (Pudding minimal × Dazed type + Hangul signature) ═══ */
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --white:#ffffff;
-  --bg:#f8f7f4;
-  --bg2:#f0ede8;
-  --navy:#1a2640;
-  --navy2:#253352;
-  --navy3:#0f1824;
-  --point:#c17f3e;
-  --point2:#d4924e;
-  --point-light:#f5ead8;
-  --green:#2d6a4f;
-  --green-light:#d8f0e5;
-  --text1:#1a1a1a;
-  --text2:#444444;
-  --text3:#888888;
-  --border:#e8e4de;
-  --border2:#d4cfc8;
-  --gold:#c8a96e;
+  --paper:#FFFFFF;
+  --ink:#0A0A0A;
+  --accent:#FF3D00;
+  --gray:#6B6B6B;
+  --surface:#F6F5F2;
 }
 html{scroll-behavior:smooth;}
-body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text1);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+img{display:block;max-width:100%;}
+
+/* Display + Korean accent utilities */
+.display{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:-0.01em;line-height:0.98;}
+.kr{font-family:'Noto Sans KR',sans-serif;font-weight:900;color:var(--accent);}
 
 /* ── Header ── */
-header{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
-.hd{max-width:1080px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px;}
-.logo{display:flex;flex-direction:column;text-decoration:none;}
-.logo-kr{font-family:'Noto Serif KR',serif;font-size:17px;font-weight:700;color:var(--navy);letter-spacing:-0.02em;}
-.logo-kr span{color:var(--point);}
-.logo-en{font-size:8px;color:var(--text3);letter-spacing:0.25em;margin-top:1px;}
-.desktop-nav{display:flex;align-items:center;gap:2px;}
-.desktop-nav a{color:var(--text2);text-decoration:none;font-size:13px;font-weight:500;padding:6px 14px;border-radius:6px;transition:all 0.15s;}
-.desktop-nav a:hover{color:var(--navy);background:var(--bg);}
-.nav-divider{width:1px;height:14px;background:var(--border2);margin:0 6px;}
-.btn-cta{display:inline-flex;align-items:center;gap:6px;background:var(--point);color:var(--white);font-size:12px;font-weight:700;padding:8px 18px;border-radius:6px;text-decoration:none;letter-spacing:0.02em;transition:all 0.15s;}
-.btn-cta:hover{background:var(--point2);transform:translateY(-1px);}
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;}
-.hamburger span{display:block;width:20px;height:1.5px;background:var(--navy);border-radius:2px;}
-.mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);padding:12px 20px 20px;flex-direction:column;gap:2px;z-index:99;box-shadow:0 8px 24px rgba(0,0,0,0.08);}
-.mobile-menu a{color:var(--text2);text-decoration:none;font-size:15px;font-weight:500;padding:12px 16px;border-radius:8px;display:block;}
-.mobile-menu a:hover{background:var(--bg);color:var(--navy);}
-.mobile-menu .btn-cta{margin-top:8px;justify-content:center;border-radius:8px;}
-.mobile-menu.open{display:flex!important;}
+header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--ink);}
+.hd{max-width:1240px;margin:0 auto;padding:0 28px;height:68px;display:flex;align-items:center;justify-content:space-between;}
+.logo{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:16px;letter-spacing:-0.01em;color:var(--ink);}
+.logo .dot{color:var(--accent);}
+.desktop-nav{display:flex;align-items:center;gap:26px;}
+.desktop-nav a{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink);transition:color 0.15s;}
+.desktop-nav a:hover{color:var(--accent);}
+.btn-sub{background:var(--ink);color:var(--paper);padding:10px 18px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;transition:background 0.15s;}
+.btn-sub:hover{background:var(--accent);color:var(--paper);}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
+.hamburger span{display:block;width:22px;height:2px;background:var(--ink);}
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:var(--paper);border-bottom:1px solid var(--ink);padding:14px 28px 24px;flex-direction:column;gap:2px;z-index:99;}
+.mobile-menu a{padding:13px 4px;font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--surface);}
+.mobile-menu a:hover{color:var(--accent);}
+.mobile-menu.open{display:flex;}
+
+/* ── Bilingual category label ── */
+.cat-label{display:inline-flex;align-items:baseline;gap:8px;line-height:1;}
+.cat-label .kr{font-size:0.95em;}
+.cat-label .en{font-size:0.7em;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--ink);}
+
+/* ── Section heading (bilingual) ── */
+.sec-head{display:flex;align-items:baseline;gap:14px;margin:0 0 30px;padding-bottom:14px;border-bottom:2px solid var(--ink);}
+.sec-head .kr{font-size:1.5rem;line-height:1;}
+.sec-head .en{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:1.05rem;color:var(--ink);}
 
 /* ── Hero ── */
-.hero{background:var(--navy3);padding:80px 24px 88px;position:relative;overflow:hidden;}
-.hero-texture{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.03) 1px,transparent 1px);background-size:28px 28px;}
-.hero-glow{position:absolute;right:-150px;top:-100px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(193,127,62,0.15),transparent 65%);}
-.hero-glow2{position:absolute;left:-100px;bottom:-100px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(45,106,79,0.08),transparent 65%);}
-.hero-inner{max-width:780px;margin:0 auto;position:relative;z-index:1;}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(193,127,62,0.15);border:1px solid rgba(193,127,62,0.3);padding:6px 16px;border-radius:100px;margin-bottom:28px;}
-.hero-badge span{font-size:11px;color:var(--gold);letter-spacing:0.2em;font-weight:600;}
-.hero h1{font-family:'Noto Serif KR',serif;font-size:46px;font-weight:900;color:var(--white);line-height:1.2;letter-spacing:-0.03em;margin-bottom:10px;}
-.hero h1 em{color:var(--point);font-style:normal;display:block;}
-.hero-sub{font-size:18px;font-weight:700;color:rgba(255,255,255,0.85);margin-bottom:20px;line-height:1.5;}
-.hero-desc{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.9;font-weight:300;margin-bottom:40px;max-width:560px;text-align:left;}
-.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:52px;}
-.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--point);color:var(--white);font-size:14px;font-weight:700;padding:14px 28px;border-radius:8px;text-decoration:none;transition:all 0.2s;letter-spacing:0.02em;}
-.btn-primary:hover{background:var(--point2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(193,127,62,0.3);}
-.btn-secondary{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.8);font-size:14px;font-weight:600;padding:14px 24px;border-radius:8px;text-decoration:none;border:1px solid rgba(255,255,255,0.15);transition:all 0.2s;}
-.btn-secondary:hover{background:rgba(255,255,255,0.12);color:var(--white);}
-.hero-divider{height:1px;background:rgba(255,255,255,0.08);margin-bottom:40px;}
-.hero-profile{display:flex;align-items:center;gap:16px;margin-bottom:40px;}
-.profile-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--point),var(--gold));display:flex;align-items:center;justify-content:center;font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;color:var(--white);flex-shrink:0;border:2px solid rgba(193,127,62,0.4);}
-.profile-name{font-size:15px;font-weight:700;color:var(--white);}
-.profile-desc{font-size:12px;color:rgba(255,255,255,0.45);margin-top:3px;line-height:1.5;}
-.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;}
-.stat-item{background:rgba(255,255,255,0.04);padding:20px;text-align:center;}
-.stat-num{font-family:'Noto Serif KR',serif;font-size:24px;font-weight:700;color:var(--white);}
-.stat-num em{font-size:13px;color:var(--point);font-style:normal;font-weight:600;}
-.stat-label{font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px;letter-spacing:0.05em;}
+.hero{position:relative;max-width:1240px;margin:0 auto;padding:96px 28px 72px;overflow:hidden;}
+.hero-ko{position:absolute;top:52%;left:50%;transform:translate(-50%,-50%);font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:clamp(7rem,23vw,19rem);color:transparent;-webkit-text-stroke:1.5px #ECEAE5;text-stroke:1.5px #ECEAE5;white-space:nowrap;z-index:0;pointer-events:none;user-select:none;}
+.hero-inner{position:relative;z-index:1;}
+.hero-eyebrow{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;color:var(--accent);margin-bottom:24px;}
+.hero h1{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:-0.01em;font-size:clamp(2.8rem,7vw,5.5rem);line-height:0.98;color:var(--ink);margin-bottom:28px;}
+.hero h1 .accent{color:var(--accent);}
+.hero-sub{font-size:clamp(1.05rem,2vw,1.35rem);line-height:1.55;color:var(--gray);max-width:640px;font-weight:400;}
+.hero-sub b{color:var(--ink);font-weight:600;}
 
-/* ── Category tabs ── */
-.cat-wrap{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:60px;z-index:90;}
-.cat-inner{max-width:1080px;margin:0 auto;padding:0 16px;display:flex;overflow-x:auto;scrollbar-width:none;gap:2px;}
-.cat-inner::-webkit-scrollbar{display:none;}
-.cat-item{display:flex;align-items:center;gap:6px;padding:14px 16px;font-size:13px;font-weight:500;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all 0.15s;flex-shrink:0;}
-.cat-item:hover{color:var(--navy);}
-.cat-item.active{color:var(--navy);border-bottom-color:var(--point);font-weight:700;}
-.cat-item .cat-icon{font-size:14px;}
-.cat-item .cat-count{font-size:10px;background:var(--bg2);color:var(--text3);padding:1px 6px;border-radius:10px;font-weight:600;}
-.cat-item.active .cat-count{background:var(--point-light);color:var(--point);}
+/* ── Category nav strip ── */
+.catnav{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);}
+.catnav-inner{max-width:1240px;margin:0 auto;padding:0 28px;display:flex;overflow-x:auto;scrollbar-width:none;}
+.catnav-inner::-webkit-scrollbar{display:none;}
+.catnav-item{padding:18px 0;margin-right:30px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray);white-space:nowrap;cursor:pointer;border:none;border-bottom:3px solid transparent;background:none;font-family:inherit;display:flex;align-items:baseline;gap:7px;}
+.catnav-item .kr{font-size:14px;color:var(--gray);transition:color 0.15s;}
+.catnav-item:hover,.catnav-item:hover .kr{color:var(--ink);}
+.catnav-item.active{color:var(--ink);border-bottom-color:var(--accent);}
+.catnav-item.active .kr{color:var(--accent);}
+.catnav-item .cnt{font-size:11px;color:var(--gray);font-weight:700;}
 
-/* ── Category header banner ── */
-.cat-header{border-radius:16px;padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:20px;}
-.cat-header-left{display:flex;align-items:center;gap:20px;position:relative;z-index:1;}
-.cat-header-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
-.cat-header-title{font-family:'Noto Serif KR',serif;font-size:24px;font-weight:700;margin-bottom:6px;}
-.cat-header-desc{font-size:13px;line-height:1.7;max-width:400px;}
-.cat-header-right{position:relative;z-index:1;text-align:right;flex-shrink:0;}
-.cat-header-count{font-family:'Noto Serif KR',serif;font-size:36px;font-weight:900;line-height:1;}
-.cat-header-count-label{font-size:11px;margin-top:4px;opacity:0.6;}
-.cat-header-glow{position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;}
-.cat-header-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
-.cat-header-tag{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:500;}
+/* ── Feature card ── */
+.feature{max-width:1240px;margin:0 auto;padding:56px 28px 8px;}
+.feature-card{display:grid;grid-template-columns:1.12fr 1fr;gap:44px;align-items:center;}
+.feature-media{aspect-ratio:16/11;background:var(--surface);overflow:hidden;position:relative;}
+.feature-media img{width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;}
+.feature-card:hover .feature-media img{transform:scale(1.04);}
+.feature-media .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:4rem;color:#E2DFD8;}
+.feature-cat{margin-bottom:18px;font-size:1.05rem;}
+.feature h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:-0.01em;font-size:clamp(1.8rem,3.3vw,2.9rem);line-height:1.02;color:var(--ink);transition:color 0.2s;}
+.feature-card:hover h2{color:var(--accent);}
+.feature-sum{margin-top:18px;font-size:1.05rem;color:var(--gray);line-height:1.6;max-width:520px;}
+.feature-meta{margin-top:22px;font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray);}
 
-/* ── Post card (enhanced) ── */
-.post-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px 22px;display:flex;gap:16px;align-items:flex-start;cursor:pointer;transition:all 0.15s;text-decoration:none;color:inherit;}
-.post-card:hover{border-color:var(--border2);box-shadow:0 4px 20px rgba(0,0,0,0.07);transform:translateY(-2px);}
-.post-body{flex:1;min-width:0;}
-.post-cat-badge{font-size:10px;font-weight:700;color:var(--point);letter-spacing:0.1em;margin-bottom:6px;display:block;}
-.post-card h3{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:600;color:var(--text1);line-height:1.55;margin-bottom:7px;}
-.post-summary-preview{font-size:12px;color:var(--text3);line-height:1.6;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.post-meta-row{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text3);}
-.dot{width:3px;height:3px;border-radius:50%;background:var(--border2);}
-.post-thumb{width:80px;height:80px;border-radius:10px;background:var(--navy);flex-shrink:0;border:1px solid var(--border);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
-.post-thumb-inner{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.05) 1px,transparent 1px);background-size:12px 12px;}
-.post-thumb-glow{position:absolute;right:-20px;top:-20px;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,rgba(193,127,62,0.3),transparent 65%);}
-.post-thumb-emoji{position:relative;z-index:1;font-size:24px;}
-
-/* ── Layout ── */
-.layout{max-width:1080px;margin:0 auto;padding:52px 24px;display:grid;grid-template-columns:1fr 300px;gap:52px;}
-
-/* ── Section label ── */
-.sec-label{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
-.sec-label-text{font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.2em;}
-.sec-label-line{flex:1;height:1px;background:var(--border);}
-
-/* ── Story banner ── */
-.story-banner{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);border-radius:16px;padding:32px 36px;margin-bottom:36px;position:relative;overflow:hidden;cursor:pointer;text-decoration:none;display:block;transition:transform 0.2s;}
-.story-banner:hover{transform:translateY(-2px);}
-.story-banner-glow{position:absolute;right:-60px;top:-60px;width:250px;height:250px;border-radius:50%;background:radial-gradient(circle,rgba(193,127,62,0.2),transparent 65%);}
-.story-tag{display:inline-block;background:var(--point);color:var(--white);font-size:10px;font-weight:700;padding:4px 12px;border-radius:4px;letter-spacing:0.1em;margin-bottom:16px;position:relative;z-index:1;}
-.story-banner h2{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:700;color:var(--white);line-height:1.5;margin-bottom:10px;position:relative;z-index:1;}
-.story-banner p{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.85;position:relative;z-index:1;margin-bottom:20px;}
-.story-banner-footer{display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1;padding-top:16px;border-top:1px solid rgba(255,255,255,0.1);}
-.story-meta{font-size:12px;color:rgba(255,255,255,0.4);}
-.story-arrow{font-size:12px;font-weight:700;color:var(--point);}
-
-/* ── Post card ── */
-.post-list{display:flex;flex-direction:column;gap:10px;margin-bottom:36px;}
-.post-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:18px 22px;display:flex;gap:16px;align-items:flex-start;cursor:pointer;transition:all 0.15s;text-decoration:none;color:inherit;}
-.post-card:hover{border-color:var(--border2);box-shadow:0 4px 16px rgba(0,0,0,0.06);transform:translateY(-1px);}
-.post-body{flex:1;min-width:0;}
-.post-cat-badge{font-size:10px;font-weight:700;color:var(--point);letter-spacing:0.1em;margin-bottom:6px;display:block;}
-.post-card h3{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:600;color:var(--text1);line-height:1.55;margin-bottom:8px;}
-.post-meta-row{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text3);}
-.dot{width:3px;height:3px;border-radius:50%;background:var(--border2);}
-.post-thumb{width:72px;height:72px;border-radius:10px;background:var(--navy);flex-shrink:0;border:1px solid var(--border);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
-.post-thumb-inner{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.05) 1px,transparent 1px);background-size:12px 12px;}
-.post-thumb-glow{position:absolute;right:-20px;top:-20px;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,rgba(193,127,62,0.3),transparent 65%);}
-
-/* ── Empty state ── */
-.empty-state{text-align:center;padding:60px 24px;color:var(--text3);}
-.empty-state-icon{font-size:48px;margin-bottom:16px;opacity:0.4;}
-.empty-state h3{font-size:16px;color:var(--text2);margin-bottom:8px;}
-.empty-state p{font-size:14px;}
-
-/* ── Sidebar ── */
-.sidebar{display:flex;flex-direction:column;gap:20px;}
-.widget{background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
-.wg-top{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.wg-top h3{font-size:12px;font-weight:700;color:var(--text1);letter-spacing:0.08em;}
-.wg-top span{font-size:11px;color:var(--text3);}
-.wg-body{padding:16px 18px;}
-.about-msg{font-size:13px;color:var(--text2);line-height:1.85;font-weight:300;margin-bottom:14px;}
-.chips{display:flex;flex-wrap:wrap;gap:6px;}
-.chip{font-size:11px;background:var(--bg);color:var(--text2);border:1px solid var(--border);padding:4px 10px;border-radius:20px;font-weight:500;}
+/* ── Card grid ── */
+.grid-wrap{max-width:1240px;margin:0 auto;padding:60px 28px 90px;}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px 36px;}
+.card{display:block;cursor:pointer;}
+.card-media{aspect-ratio:3/2;background:var(--surface);overflow:hidden;position:relative;margin-bottom:16px;}
+.card-media img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;}
+.card:hover .card-media img{transform:scale(1.05);}
+.card-media .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:2.6rem;color:#E2DFD8;}
+.card-cat{margin-bottom:11px;font-size:0.92rem;}
+.card h3{font-family:'Inter',sans-serif;font-weight:700;font-size:1.28rem;line-height:1.25;letter-spacing:-0.01em;color:var(--ink);transition:color 0.2s;}
+.card:hover h3{color:var(--accent);}
+.card-meta{margin-top:13px;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray);}
 
 /* ── Newsletter ── */
-.nl-desc{font-size:13px;color:var(--text2);line-height:1.7;font-weight:300;margin-bottom:12px;}
-.nl-input{width:100%;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:13px;font-family:inherit;outline:none;color:var(--text1);background:var(--bg);transition:border 0.15s;margin-bottom:8px;}
-.nl-input:focus{border-color:var(--navy);background:var(--white);}
-.nl-btn{width:100%;background:var(--navy);color:var(--white);border:none;padding:10px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:background 0.15s;}
-.nl-btn:hover{background:var(--navy2);}
-
-/* ── Popular posts ── */
-.pop-item{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--border);}
-.pop-item:last-child{border-bottom:none;}
-.pop-num{font-family:'Noto Serif KR',serif;font-size:17px;font-weight:700;color:var(--border2);min-width:22px;line-height:1;}
-.pop-title{font-size:12.5px;color:var(--text1);font-weight:500;line-height:1.55;cursor:pointer;transition:color 0.15s;}
-.pop-title:hover{color:var(--point);}
-.pop-views{font-size:10px;color:var(--text3);margin-top:3px;}
-
-/* ── Tags ── */
-.tags{display:flex;flex-wrap:wrap;gap:6px;}
-.tag{font-size:11px;background:var(--bg);border:1px solid var(--border);color:var(--text2);padding:5px 11px;border-radius:20px;cursor:pointer;font-weight:500;transition:all 0.15s;}
-.tag:hover{background:var(--navy);color:var(--white);border-color:var(--navy);}
-
-/* ── Skeleton ── */
-
-
-.info-row-card{
-  display:flex;
-  align-items:center;
-  gap:0;
-  padding:20px 16px;
-  cursor:pointer;
-  transition:background 0.15s;
-  position:relative;
-  background:var(--white);
-}
-.info-row-card:hover{background:var(--bg);}
-.info-row-bar{
-  width:3px;
-  height:36px;
-  border-radius:2px;
-  flex-shrink:0;
-  margin-right:14px;
-}
-.info-row-body{flex:1;min-width:0;}
-.info-row-title{
-  font-size:13px;
-  font-weight:700;
-  color:var(--navy);
-  margin-bottom:4px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-.info-row-desc{
-  font-size:10px;
-  color:var(--text3);
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-.info-row-arrow{
-  font-size:13px;
-  color:var(--border2);
-  flex-shrink:0;
-  margin-left:8px;
-  transition:color 0.15s;
-}
-.info-row-card:hover .info-row-arrow{color:var(--point);}
-@media(max-width:768px){
-  .info-row-card{border-left:none!important;border-top:1px solid var(--border);}
-  section > div > div[style*="repeat(5"]{grid-template-columns:1fr!important;}
-}
-.info-card{
-  text-align:center;
-  padding:24px 12px;
-  border:1px solid var(--border);
-  border-radius:14px;
-  cursor:pointer;
-  transition:all 0.2s;
-  background:var(--white);
-}
-.info-card:hover{
-  border-color:var(--point);
-  background:var(--point-light);
-  transform:translateY(-3px);
-  box-shadow:0 8px 24px rgba(193,127,62,0.12);
-}
-.info-icon-wrap{
-  width:48px;
-  height:48px;
-  margin:0 auto 14px;
-  background:var(--navy);
-  border-radius:12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#c17f3e;
-  transition:all 0.2s;
-}
-.info-card:hover .info-icon-wrap{
-  background:var(--navy2);
-}
-.info-title{
-  font-size:13px;
-  font-weight:700;
-  color:var(--navy);
-  margin-bottom:6px;
-  letter-spacing:-0.01em;
-}
-.info-desc{
-  font-size:11px;
-  color:var(--text3);
-  line-height:1.65;
-}
-@media(max-width:768px){
-  
-.info-row-card{
-  display:flex;
-  align-items:center;
-  gap:0;
-  padding:20px 16px;
-  cursor:pointer;
-  transition:background 0.15s;
-  position:relative;
-  background:var(--white);
-}
-.info-row-card:hover{background:var(--bg);}
-.info-row-bar{
-  width:3px;
-  height:36px;
-  border-radius:2px;
-  flex-shrink:0;
-  margin-right:14px;
-}
-.info-row-body{flex:1;min-width:0;}
-.info-row-title{
-  font-size:13px;
-  font-weight:700;
-  color:var(--navy);
-  margin-bottom:4px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-.info-row-desc{
-  font-size:10px;
-  color:var(--text3);
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-.info-row-arrow{
-  font-size:13px;
-  color:var(--border2);
-  flex-shrink:0;
-  margin-left:8px;
-  transition:color 0.15s;
-}
-.info-row-card:hover .info-row-arrow{color:var(--point);}
-@media(max-width:768px){
-  .info-row-card{border-left:none!important;border-top:1px solid var(--border);}
-  section > div > div[style*="repeat(5"]{grid-template-columns:1fr!important;}
-}
-.info-card{padding:18px 8px;}
-  section > div > div[style*="repeat(5"]{grid-template-columns:repeat(3,1fr)!important;}
-}
-.skeleton{background:linear-gradient(90deg,var(--bg2) 25%,var(--border) 50%,var(--bg2) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:6px;}
-@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-.skel-feat{height:220px;border-radius:16px;margin-bottom:36px;}
-.skel-card{height:90px;border-radius:12px;margin-bottom:10px;}
+.newsletter{background:var(--ink);color:var(--paper);padding:80px 28px;}
+.nl-inner{max-width:720px;margin:0 auto;text-align:center;}
+.nl-inner .kr{color:var(--accent);font-size:1.4rem;display:block;margin-bottom:12px;}
+.nl-inner h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:clamp(1.8rem,4vw,3rem);line-height:1;margin-bottom:18px;}
+.nl-inner p{color:rgba(255,255,255,0.6);margin-bottom:30px;font-size:1.05rem;}
+.nl-form{display:flex;max-width:480px;margin:0 auto;}
+.nl-form input{flex:1;padding:16px 18px;border:none;font-size:15px;font-family:inherit;background:var(--paper);color:var(--ink);outline:none;}
+.nl-form button{background:var(--accent);color:var(--paper);border:none;padding:16px 26px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer;font-family:inherit;transition:opacity 0.15s;}
+.nl-form button:hover{opacity:0.85;}
 
 /* ── Footer ── */
-footer{background:var(--navy3);padding:52px 24px;}
-.ft{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;}
-.ft-logo{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;color:var(--white);margin-bottom:8px;}
-.ft-logo span{color:var(--point);}
-.ft-tagline{font-size:12px;color:rgba(255,255,255,0.3);line-height:1.8;max-width:220px;}
-.ft-col h4{font-size:12px;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:0.15em;margin-bottom:14px;}
-.ft-col a{display:block;font-size:13px;color:rgba(255,255,255,0.35);text-decoration:none;margin-bottom:8px;transition:color 0.15s;}
-.ft-col a:hover{color:rgba(255,255,255,0.7);}
-.ft-bottom{max-width:1080px;margin:36px auto 0;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;font-size:11px;color:rgba(255,255,255,0.2);}
+footer{background:var(--paper);border-top:1px solid var(--ink);padding:58px 28px 40px;}
+.ft{max-width:1240px;margin:0 auto;display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;}
+.ft-brand .logo{font-size:20px;}
+.ft-brand p{margin-top:14px;font-size:13px;color:var(--gray);max-width:300px;line-height:1.7;}
+.ft-links{display:flex;gap:54px;flex-wrap:wrap;}
+.ft-col h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--gray);margin-bottom:15px;}
+.ft-col a{display:block;font-size:14px;font-weight:500;margin-bottom:9px;color:var(--ink);transition:color 0.15s;}
+.ft-col a:hover{color:var(--accent);}
+.ft-bottom{max-width:1240px;margin:42px auto 0;padding-top:24px;border-top:1px solid var(--surface);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--gray);text-transform:uppercase;letter-spacing:0.06em;}
+
+/* ── Skeleton / empty ── */
+.skeleton{background:linear-gradient(90deg,var(--surface) 25%,#ECEAE5 50%,var(--surface) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel-feat{aspect-ratio:16/11;margin-bottom:0;}
+.skel-card{aspect-ratio:3/2;margin-bottom:16px;}
+.empty{text-align:center;padding:90px 24px;color:var(--gray);}
+.empty .kr{font-size:3rem;display:block;margin-bottom:14px;}
 
 /* ── Responsive ── */
-@media(max-width:768px){
-  section > div > div[style*="grid-template-columns:repeat(5"]{grid-template-columns:repeat(2,1fr)!important;}
-  section > div > div[style*="grid-template-columns:repeat(5"] > div:last-child{grid-column:1/-1;}
-  .desktop-nav{display:none!important;}
-  .hamburger{display:flex!important;}
-  .hd{padding:0 16px;}
-  .hero{padding:52px 16px 64px;}
-  .hero h1{font-size:32px;}
-  .hero-sub{font-size:16px;}
-  .hero-stats{grid-template-columns:repeat(2,1fr);}
-  .hero-btns{flex-direction:column;}
-  .btn-primary,.btn-secondary{justify-content:center;}
-  .cat-inner{padding:0 12px;}
-  .cat-item{padding:12px 14px;font-size:12px;}
-  .layout{grid-template-columns:1fr!important;padding:28px 16px;gap:32px;}
-  .ft{grid-template-columns:1fr!important;gap:32px;}
-  .ft-bottom{flex-direction:column;gap:8px;text-align:center;}
+@media(max-width:900px){
+  .grid{grid-template-columns:repeat(2,1fr);gap:40px 28px;}
+  .feature-card{grid-template-columns:1fr;gap:24px;}
+  .feature h2{font-size:2rem;}
+}
+@media(max-width:680px){
+  body{font-size:17px;}
+  .desktop-nav{display:none;}
+  .hamburger{display:flex;}
+  .hd{padding:0 18px;}
+  .hero{padding:60px 20px 48px;}
+  .hero-ko{font-size:clamp(5rem,32vw,9rem);}
+  .catnav-inner{padding:0 18px;}
+  .feature,.grid-wrap{padding-left:18px;padding-right:18px;}
+  .grid{grid-template-columns:1fr;gap:44px;}
+  .nl-form{flex-direction:column;gap:10px;}
+  .nl-form button{padding:15px;}
+  .ft{flex-direction:column;}
+  .ft-bottom{flex-direction:column;gap:8px;}
 }
 </style>
 <!-- ── Google Analytics 4 ── -->
@@ -458,20 +244,16 @@ footer{background:var(--navy3);padding:52px 24px;}
 
 <header>
   <div class="hd">
-    <a href="/" class="logo">
-      <div class="logo-kr">Korean <span>Salaryman</span></div>
-      <div class="logo-en">KOREA, AS WE ACTUALLY LIVE IT</div>
-    </a>
+    <a href="/" class="logo">KOREAN<span class="dot">.</span>SALARYMAN</a>
     <nav class="desktop-nav">
       <a href="blog.html">Blog</a>
       <a href="category-k-trends.html">K-Trends</a>
       <a href="category-korean-life.html">Korean Life</a>
       <a href="category-culture-explained.html">Culture</a>
       <a href="about.html">About</a>
-      <div class="nav-divider"></div>
-      <a href="#newsletter" class="btn-cta">Subscribe</a>
+      <a href="#newsletter" class="btn-sub">Subscribe</a>
     </nav>
-    <button class="hamburger" onclick="toggleMenu()">
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -483,204 +265,75 @@ footer{background:var(--navy3);padding:52px 24px;}
   <a href="category-korean-life.html">Korean Life</a>
   <a href="category-culture-explained.html">Culture</a>
   <a href="about.html">About</a>
-  <a href="#newsletter" class="btn-cta">Subscribe</a>
+  <a href="#newsletter">Subscribe</a>
 </div>
 
-<!-- Hero -->
+<!-- ── Hero (manifesto) ── -->
 <section class="hero">
-  <div class="hero-texture"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-glow2"></div>
+  <div class="hero-ko" aria-hidden="true">월급쟁이</div>
   <div class="hero-inner">
-    <div class="hero-badge">
-      <span>KOREA · FROM THE INSIDE · BY A SEOUL SALARYMAN</span>
-    </div>
-    <h1><span style="font-size:0.62em;font-weight:600;color:rgba(255,255,255,0.75);letter-spacing:0.01em;display:block;margin-bottom:6px;">I'm a salaryman in Seoul.</span><em>Korea, as we<br>actually live it</em></h1>
-    <p class="hero-sub">The real Korea behind the headlines — written by someone who lives here.</p>
-    <p class="hero-desc">
-      Not a tour guide. Not a travel vlog.<br>
-      I'm an ordinary office worker riding the subway every morning,<br>
-      and I write about what's trending, how daily life really works,<br>
-      and the culture underneath it all — in plain English, for the rest of the world.
-    </p>
-    <div class="hero-btns">
-      <a href="about.html" class="btn-primary">Who I am →</a>
-      <a href="#posts" class="btn-secondary">Read the blog</a>
-    </div>
-    <div class="hero-divider"></div>
-    <div class="hero-profile">
-      <div class="profile-avatar">KS</div>
-      <div>
-        <div class="profile-name">Korean Salaryman · Seoul</div>
-        <div class="profile-desc">An anonymous office worker writing about Korea for a global audience.<br>No filters, no tourist gloss — just how it actually is.</div>
-      </div>
-    </div>
-    <div class="hero-stats">
-      <div class="stat-item">
-        <div class="stat-num" id="statPosts">—<em>posts</em></div>
-        <div class="stat-label">Published</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">4<em>topics</em></div>
-        <div class="stat-label">Categories</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">1<em>POV</em></div>
-        <div class="stat-label">From the inside</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">∞<em>curiosity</em></div>
-        <div class="stat-label">About Korea</div>
-      </div>
-    </div>
+    <div class="hero-eyebrow">From the inside · by a Seoul salaryman</div>
+    <h1>Korea,<br>as we <span class="accent">actually</span><br>live it</h1>
+    <p class="hero-sub"><b>Trends, daily life, and culture</b> — explained by an actual salaryman in Seoul. Not a tour guide, not a travel vlog. Just how it really is.</p>
   </div>
 </section>
 
-<!-- Category tabs -->
-<div class="cat-wrap">
-  <div class="cat-inner">
-    <div class="cat-item active" data-cat="all">
-      <span class="cat-icon">📋</span>All
-      <span class="cat-count" id="countAll">0</span>
-    </div>
-    <div id="dynamicCatTabs" style="display:contents;"></div>
+<!-- ── Category nav ── -->
+<div class="catnav">
+  <div class="catnav-inner" id="catnav">
+    <button class="catnav-item active" data-cat="all"><span class="kr">전체</span> All <span class="cnt" id="countAll">0</span></button>
   </div>
 </div>
 
+<!-- ── Feed (feature + grid, filled via JS) ── -->
+<div id="feed">
+  <div class="feature">
+    <div class="skeleton skel-feat"></div>
+  </div>
+  <div class="grid-wrap">
+    <div class="grid">
+      <div><div class="skeleton skel-card"></div></div>
+      <div><div class="skeleton skel-card"></div></div>
+      <div><div class="skeleton skel-card"></div></div>
+    </div>
+  </div>
+</div>
 
-<!-- Category intro section -->
-<section style="background:var(--white);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:36px 24px;">
-  <div style="max-width:1080px;margin:0 auto;">
-    <p style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.25em;text-align:center;margin-bottom:28px;">WHAT YOU'LL FIND HERE</p>
-    <div style="border:1px solid var(--border);border-radius:14px;overflow:hidden;">
-
-      <div class="info-row-card" onclick="applyFilter('k-trends');window.scrollTo({top:document.getElementById('posts').offsetTop,behavior:'smooth'})">
-        <div class="info-row-bar" style="background:#ef4444;"></div>
-        <div class="info-row-body">
-          <div class="info-row-title">🔥 K-Trends</div>
-          <div class="info-row-desc">What's trending in Korea right now</div>
-        </div>
-        <div class="info-row-arrow">→</div>
-      </div>
-
-      <div class="info-row-card" style="border-top:1px solid var(--border);" onclick="applyFilter('korean-life');window.scrollTo({top:document.getElementById('posts').offsetTop,behavior:'smooth'})">
-        <div class="info-row-bar" style="background:#c17f3e;"></div>
-        <div class="info-row-body">
-          <div class="info-row-title">🍚 Korean Life</div>
-          <div class="info-row-desc">Real daily life in Korea</div>
-        </div>
-        <div class="info-row-arrow">→</div>
-      </div>
-
-      <div class="info-row-card" style="border-top:1px solid var(--border);" onclick="applyFilter('culture-explained');window.scrollTo({top:document.getElementById('posts').offsetTop,behavior:'smooth'})">
-        <div class="info-row-bar" style="background:#0ea5e9;"></div>
-        <div class="info-row-body">
-          <div class="info-row-title">🧭 Culture</div>
-          <div class="info-row-desc">The culture behind it</div>
-        </div>
-        <div class="info-row-arrow">→</div>
-      </div>
-
-      <div class="info-row-card" style="border-top:1px solid var(--border);" onclick="applyFilter('essay');window.scrollTo({top:document.getElementById('posts').offsetTop,behavior:'smooth'})">
-        <div class="info-row-bar" style="background:#7e3af2;"></div>
-        <div class="info-row-body">
-          <div class="info-row-title">✍️ Essays</div>
-          <div class="info-row-desc">Personal essays</div>
-        </div>
-        <div class="info-row-arrow">→</div>
-      </div>
-
+<!-- ── Newsletter ── -->
+<section class="newsletter" id="newsletter">
+  <div class="nl-inner">
+    <span class="kr">뉴스레터</span>
+    <h2>Korea, in your inbox</h2>
+    <p>The most interesting things happening in Korea right now — one email, no spam, just Korea explained.</p>
+    <div class="nl-form">
+      <input type="email" id="nlEmail" placeholder="Enter your email address">
+      <button onclick="handleSubscribe()">Subscribe</button>
     </div>
   </div>
 </section>
-
-<div class="layout" id="posts">
-  <main id="mainContent">
-    <!-- Skeleton -->
-    <div id="skeleton">
-      <div class="skeleton skel-feat"></div>
-      <div class="skeleton skel-card"></div>
-      <div class="skeleton skel-card"></div>
-      <div class="skeleton skel-card"></div>
-    </div>
-    <!-- Dynamic content -->
-    <div id="dynamicContent" style="display:none"></div>
-  </main>
-
-  <aside class="sidebar">
-
-    <!-- ABOUT -->
-    <div class="widget">
-      <div class="wg-top"><h3>ABOUT</h3></div>
-      <div class="wg-body">
-        <p class="about-msg">Hi, I'm the Korean Salaryman. I'm an ordinary office worker living in Seoul, writing about Korea the way it actually feels from the inside — the trends, the daily routines, and the unspoken rules behind them — for anyone curious about this country.</p>
-        <div class="chips">
-          <span class="chip">Seoul-based</span>
-          <span class="chip">Office worker</span>
-          <span class="chip">Written from the inside</span>
-          <span class="chip">For a global audience</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Newsletter -->
-    <div class="widget" id="newsletter">
-      <div class="wg-top"><h3>FREE NEWSLETTER</h3></div>
-      <div class="wg-body">
-        <p class="nl-desc">Get the most interesting things happening in Korea, straight to your inbox. One email, no spam — just Korea, explained.</p>
-        <input class="nl-input" type="email" placeholder="Enter your email address">
-        <button class="nl-btn" onclick="handleSubscribe()">Subscribe for free →</button>
-      </div>
-    </div>
-
-    <!-- Popular posts -->
-    <div class="widget">
-      <div class="wg-top"><h3>POPULAR POSTS</h3><span>Most read</span></div>
-      <div class="wg-body" id="popularList">
-        <p style="font-size:13px;color:var(--text3);">Loading posts...</p>
-      </div>
-    </div>
-
-    <!-- Tags -->
-    <div class="widget">
-      <div class="wg-top"><h3>TAGS</h3></div>
-      <div class="wg-body">
-        <div class="tags">
-          <span class="tag" onclick="filterByTag('Seoul')">Seoul</span>
-          <span class="tag" onclick="filterByTag('K-pop')">K-pop</span>
-          <span class="tag" onclick="filterByTag('food')">Food</span>
-          <span class="tag" onclick="filterByTag('work')">Work life</span>
-          <span class="tag" onclick="filterByTag('subway')">Subway</span>
-          <span class="tag" onclick="filterByTag('cafe')">Cafe culture</span>
-          <span class="tag" onclick="filterByTag('trends')">Trends</span>
-          <span class="tag" onclick="filterByTag('etiquette')">Etiquette</span>
-        </div>
-      </div>
-    </div>
-
-  </aside>
-</div>
 
 <footer>
   <div class="ft">
-    <div>
-      <div class="ft-logo">Korean <span>Salaryman</span></div>
-      <p class="ft-tagline">Korea, as we actually live it.<br>What's trending, real daily life,<br>and the culture behind it — from the inside.</p>
+    <div class="ft-brand">
+      <a href="/" class="logo">KOREAN<span class="dot">.</span>SALARYMAN</a>
+      <p>Korea, as we actually live it. What's trending, real daily life, and the culture behind it — from the inside.</p>
     </div>
-    <div class="ft-col">
-      <h4>CATEGORIES</h4>
-      <a href="category-k-trends.html">🔥 K-Trends</a>
-      <a href="category-korean-life.html">🍚 Korean Life</a>
-      <a href="category-culture-explained.html">🧭 Culture</a>
-      <a href="category-essay.html">✍️ Essays</a>
-    </div>
-    <div class="ft-col">
-      <h4>SITE</h4>
-      <a href="about.html">About</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-      <a href="mailto:pride93d@gmail.com">Contact</a>
-      <a href="https://koreansalaryman.com">한국어판</a>
+    <div class="ft-links">
+      <div class="ft-col">
+        <h4>Categories</h4>
+        <a href="category-k-trends.html">K-Trends</a>
+        <a href="category-korean-life.html">Korean Life</a>
+        <a href="category-culture-explained.html">Culture</a>
+        <a href="category-essay.html">Essays</a>
+      </div>
+      <div class="ft-col">
+        <h4>Site</h4>
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="mailto:pride93d@gmail.com">Contact</a>
+        <a href="https://koreansalaryman.com">한국어판</a>
+      </div>
     </div>
   </div>
   <div class="ft-bottom">
@@ -694,285 +347,109 @@ footer{background:var(--navy3);padding:52px 24px;}
 let allPosts = [];
 let currentCat = 'all';
 
-// ── Date format ──
-function formatDate(iso) {
-  if (!iso) return '—';
-  return iso.slice(0,10).replace(/-/g,'.');
-}
-function readTime(text) {
-  const words = (text||'').length;
-  return Math.max(1, Math.round(words / 500)) + ' min read';
-}
-
-// ── Go to post ──
-function goToPost(slug) {
-  window.location.href = `/p/${encodeURIComponent(slug)}.html`;
-}
-
-// ── Category metadata (4 English keys) ──
+// ── Category metadata (bilingual labels: 한글 + EN) ──
 const CAT_META = {
-  'all':               { icon:'📋', label:'All',         color:'#c17f3e', bg:'var(--point-light)', desc:'Every post, newest first.' },
-  'k-trends':          { icon:'🔥', label:'K-Trends',    color:'#ef4444', bg:'#fee2e2',            desc:"What's trending in Korea right now — the moments, fads, and stories everyone here is talking about.", tags:['#trending','#viral','#nowinkorea'] },
-  'korean-life':       { icon:'🍚', label:'Korean Life', color:'#c17f3e', bg:'#fdf3e7',            desc:'Real daily life in Korea — the routines, food, commutes, and small habits that make up an ordinary day.', tags:['#dailylife','#food','#seoul'] },
-  'culture-explained': { icon:'🧭', label:'Culture',     color:'#0ea5e9', bg:'#e0f2fe',            desc:'The culture behind it — the unwritten rules, history, and context that explain why Korea works the way it does.', tags:['#culture','#etiquette','#context'] },
-  'essay':             { icon:'✍️', label:'Essays',      color:'#7e3af2', bg:'#f3e8ff',            desc:'Personal essays — slower, more reflective takes on living and working in Korea.', tags:['#essay','#reflection','#personal'] },
+  'all':               { kr:'전체', en:'All' },
+  'k-trends':          { kr:'트렌드', en:'K-Trends' },
+  'korean-life':       { kr:'일상',   en:'Korean Life' },
+  'culture-explained': { kr:'문화',   en:'Culture Explained' },
+  'essay':             { kr:'에세이', en:'Essay' },
 };
+const CAT_ORDER = ['k-trends','korean-life','culture-explained','essay'];
 
-// ── Render posts ──
-function renderPosts(posts, cat) {
-  const container = document.getElementById('dynamicContent');
-  document.getElementById('skeleton').style.display = 'none';
-  container.style.display = 'block';
+// ── Helpers ──
+function formatDate(iso){ if(!iso) return ''; const d=new Date(iso); const m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return `${m[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`; }
+function readTime(text){ return Math.max(1, Math.round((text||'').length/500)) + ' min'; }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function slugOf(p){ return p.slug || p.filename.replace(/\.json$/,''); }
+function catLabel(cat){ const m=CAT_META[cat]; if(!m) return `<span class="cat-label"><span class="en">${esc(cat||'')}</span></span>`; return `<span class="cat-label"><span class="kr">${m.kr}</span><span class="en">${m.en}</span></span>`; }
+function thumbOf(p, glyph){ const t=p.thumbnail; if(t) return `<img src="${esc(t)}" alt="${esc(p.title)}" loading="lazy">`; return `<div class="ph">${glyph||'월'}</div>`; }
+function toggleMenu(){ document.getElementById('mobileMenu').classList.toggle('open'); }
 
-  const activeCat = cat || currentCat;
-  const meta = CAT_META[activeCat] || CAT_META['all'];
-
-  if (posts.length === 0) {
-    container.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-state-icon">${meta.icon}</div>
-        <h3>No posts in ${meta.label} yet</h3>
-        <p>New posts are on the way. In the meantime, explore another category.</p>
-      </div>`;
+// ── Render feed: large feature + 3-col grid ──
+function renderFeed(posts){
+  const feed = document.getElementById('feed');
+  if(!posts.length){
+    feed.innerHTML = `<div class="empty"><span class="kr">텅</span><div style="font-family:'Archivo Black';text-transform:uppercase;font-size:1.4rem;margin-bottom:8px;">Nothing here yet</div><p>New posts are on the way. Try another category.</p></div>`;
     return;
   }
+  const feat = posts[0];
+  const rest = posts.slice(1);
+  const glyphs = ['월','급','쟁','이','한','국'];
 
-  let html = '';
+  let html = `
+    <div class="feature">
+      <a class="feature-card" href="/p/${encodeURIComponent(slugOf(feat))}.html">
+        <div class="feature-media">${thumbOf(feat,'월')}</div>
+        <div class="feature-text">
+          <div class="feature-cat">${catLabel(feat.category)}</div>
+          <h2>${esc(feat.title)}</h2>
+          ${feat.summary ? `<p class="feature-sum">${esc(feat.summary.slice(0,150))}${feat.summary.length>150?'…':''}</p>`:''}
+          <div class="feature-meta">${formatDate(feat.created_at)} &nbsp;·&nbsp; ${readTime(feat.summary)}</div>
+        </div>
+      </a>
+    </div>`;
 
-  if (activeCat === 'all' || !activeCat) {
-    // ── "All" tab ──────────────────────────────────────────
-    const featuredId = localStorage.getItem('featured_post');
-    const featuredPost = featuredId ? allPosts.find(p => p.filename === featuredId) : null;
-    const bannerPost = featuredPost || allPosts[0];
-
-    if (bannerPost) {
-      const _bnMeta = CAT_META[bannerPost.category];
-      const _bnLabel = _bnMeta ? _bnMeta.label : (bannerPost.category || 'FEATURED');
+  if(rest.length){
+    html += `<div class="grid-wrap">
+      <div class="sec-head"><span class="kr">최신</span><span class="en">Latest</span></div>
+      <div class="grid">`;
+    rest.forEach((p,i)=>{
       html += `
-        <a href="/p/${encodeURIComponent(bannerPost.slug || bannerPost.filename.replace(/\.json$/,''))}.html" class="story-banner" id="story">
-          <div class="story-banner-glow"></div>
-          <div class="story-tag">✦ ${_bnLabel}</div>
-          <h2>${bannerPost.title}</h2>
-          <p>${bannerPost.summary ? bannerPost.summary.slice(0,90)+'...' : 'Give it a read.'}</p>
-          <div class="story-banner-footer">
-            <span class="story-meta">${formatDate(bannerPost.created_at)} · ${readTime(bannerPost.summary||'')}</span>
-            <span class="story-arrow">Read more →</span>
-          </div>
+        <a class="card" href="/p/${encodeURIComponent(slugOf(p))}.html">
+          <div class="card-media">${thumbOf(p, glyphs[i%glyphs.length])}</div>
+          <div class="card-cat">${catLabel(p.category)}</div>
+          <h3>${esc(p.title)}</h3>
+          <div class="card-meta">${formatDate(p.created_at)} &nbsp;·&nbsp; ${readTime(p.summary)}</div>
         </a>`;
-    }
-    html += `
-      <div class="sec-label">
-        <span class="sec-label-text">LATEST POSTS</span>
-        <div class="sec-label-line"></div>
-      </div>
-      <div class="post-list">`;
-
+    });
+    html += `</div></div>`;
   } else {
-    // ── Category tab — rich header ───────────────────────
-    const color = meta.color;
-    const bg    = meta.bg;
-    const tags  = (meta.tags || []).map(t =>
-      `<span class="cat-header-tag" style="background:${color}22;color:${color};">${t}</span>`
-    ).join('');
-
-    html += `
-      <div class="cat-header" style="background:${bg};border:1px solid ${color}33;">
-        <div class="cat-header-glow" style="background:radial-gradient(circle,${color}22,transparent 70%);"></div>
-        <div class="cat-header-left">
-          <div class="cat-header-icon" style="background:${color}18;">${meta.icon}</div>
-          <div>
-            <div style="font-size:11px;font-weight:700;color:${color};letter-spacing:0.15em;margin-bottom:4px;">CATEGORY</div>
-            <div class="cat-header-title" style="color:var(--navy);">${meta.label}</div>
-            <div class="cat-header-desc" style="color:var(--text2);">${meta.desc}</div>
-            ${tags ? `<div class="cat-header-tags">${tags}</div>` : ''}
-          </div>
-        </div>
-        <div class="cat-header-right">
-          <div class="cat-header-count" style="color:${color};">${posts.length}</div>
-          <div class="cat-header-count-label" style="color:var(--text3);">posts</div>
-        </div>
-      </div>
-      <div class="sec-label">
-        <span class="sec-label-text" style="color:${color};">${meta.label.toUpperCase()}</span>
-        <div class="sec-label-line"></div>
-      </div>
-      <div class="post-list">`;
+    html += `<div class="grid-wrap"></div>`;
   }
-
-  // ── Post cards (with summary preview) ──
-  posts.forEach(p => {
-    const _meta = CAT_META[p.category];
-    const emoji = (_meta && _meta.icon) || '📝';
-    const _label = (_meta && _meta.label) || (p.category || '');
-    const summary = p.summary ? p.summary.slice(0, 60) + '...' : '';
-    html += `
-      <a class="post-card" href="/p/${encodeURIComponent(p.slug || p.filename.replace(/\.json$/,''))}.html">
-        <div class="post-body">
-          <span class="post-cat-badge">${_label}</span>
-          <h3>${p.title||''}</h3>
-          ${summary ? `<div class="post-summary-preview">${summary}</div>` : ''}
-          <div class="post-meta-row">
-            <span>${formatDate(p.created_at)}</span>
-            <div class="dot"></div>
-            <span>${readTime(p.summary||'')}</span>
-          </div>
-        </div>
-        <div class="post-thumb">
-          <div class="post-thumb-inner"></div>
-          <div class="post-thumb-glow"></div>
-          <span class="post-thumb-emoji">${emoji}</span>
-        </div>
-      </a>`;
-  });
-  html += `</div>`;
-
-  container.innerHTML = html;
-}
-
-// ── Render popular posts ──
-function renderPopular(posts) {
-  const list = document.getElementById('popularList');
-  const top5 = posts.slice(0,5);
-  if (top5.length === 0) {
-    list.innerHTML = '<p style="font-size:13px;color:var(--text3);">No posts published yet.</p>';
-    return;
-  }
-  list.innerHTML = top5.map((p,i) => `
-    <div class="pop-item">
-      <div class="pop-num">0${i+1}</div>
-      <div>
-        <div class="pop-title" onclick="goToPost('${p.slug || p.filename.replace(/\.json$/,'')}')">${p.title}</div>
-        <div class="pop-views">${formatDate(p.created_at)}</div>
-      </div>
-    </div>`).join('');
+  feed.innerHTML = html;
 }
 
 // ── Category filter ──
-function applyFilter(cat) {
+function applyFilter(cat){
   currentCat = cat;
-  document.querySelectorAll('.cat-item').forEach(el => {
-    el.classList.toggle('active', el.dataset.cat === cat);
-  });
-  const filtered = cat === 'all'
-    ? allPosts
-    : allPosts.filter(p => p.category === cat);
-  renderPosts(filtered, cat);
-
-  // Smoothly scroll to the post list when a category tab is clicked
-  const postsEl = document.getElementById('posts');
-  if (postsEl) {
-    const y = postsEl.getBoundingClientRect().top + window.scrollY - 120;
-    window.scrollTo({ top: y, behavior: 'smooth' });
-  }
+  document.querySelectorAll('.catnav-item').forEach(el=>el.classList.toggle('active', el.dataset.cat===cat));
+  const filtered = cat==='all' ? allPosts : allPosts.filter(p=>p.category===cat);
+  renderFeed(filtered);
+  const y = document.querySelector('.catnav').getBoundingClientRect().bottom + window.scrollY - 68;
+  window.scrollTo({top:y, behavior:'smooth'});
 }
 
-function filterByNav(el) {
-  const cat = el.dataset.cat;
-  if (cat) applyFilter(cat);
-  document.getElementById('mobileMenu').classList.remove('open');
+// ── Newsletter ──
+function handleSubscribe(){
+  const input = document.getElementById('nlEmail');
+  if(!input.value || !input.value.includes('@')){ alert('Please enter a valid email address.'); return; }
+  alert("Thanks for subscribing! You'll hear from me soon."); input.value='';
 }
 
-function filterByTag(tag) {
-  const filtered = allPosts.filter(p =>
-    p.tags && p.tags.some(t => t.includes(tag) || tag.includes(t.replace(/\s/g,'')))
-  );
-  renderPosts(filtered.length ? filtered : allPosts);
-}
-
-// ── Newsletter subscribe ──
-function handleSubscribe() {
-  const input = document.querySelector('.nl-input');
-  if (!input.value || !input.value.includes('@')) {
-    alert('Please enter a valid email address.');
-    return;
-  }
-  alert("Thanks for subscribing! You'll hear from me soon 😊");
-  input.value = '';
-}
-
-// ── Load manifest.json ──
+// ── Load manifest ──
 fetch('./posts/manifest.json')
-  .then(r => {
-    if (!r.ok) throw new Error('Failed to load manifest.json');
-    return r.json();
-  })
-  .then(posts => {
-    allPosts = posts
-      .filter(p => p.status === 'published')
-      .sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
-    document.getElementById('statPosts').innerHTML = `${allPosts.length}<em>posts</em>`;
-
-    // Build category tabs automatically from the actual post data
-    const catOrder = ['k-trends','korean-life','culture-explained','essay'];
-    const catLabels = {
-      'k-trends':'K-Trends', 'korean-life':'Korean Life',
-      'culture-explained':'Culture', 'essay':'Essays'
-    };
-    const existingCats = [...new Set(allPosts.map(p => p.category).filter(Boolean))];
-    const orderedCats = [
-      ...catOrder.filter(c => existingCats.includes(c)),
-      ...existingCats.filter(c => !catOrder.includes(c))
-    ];
-    const tabContainer = document.getElementById('dynamicCatTabs');
-    const catIcons = {
-      'k-trends':'🔥','korean-life':'🍚','culture-explained':'🧭','essay':'✍️'
-    };
-    if (tabContainer) {
-      tabContainer.innerHTML = orderedCats.map(cat => {
-        const count = allPosts.filter(p => p.category === cat).length;
-        const icon = catIcons[cat] || '📝';
-        const label = catLabels[cat] || (CAT_META[cat] && CAT_META[cat].label) || cat;
-        return `<div class="cat-item" data-cat="${cat}">
-          <span class="cat-icon">${icon}</span>${label}
-          <span class="cat-count">${count}</span>
-        </div>`;
-      }).join('');
-      tabContainer.querySelectorAll('.cat-item').forEach(el => {
-        el.addEventListener('click', function() { applyFilter(this.dataset.cat); });
-      });
-    }
-    // Update the "All" count
+  .then(r=>{ if(!r.ok) throw new Error('manifest'); return r.json(); })
+  .then(posts=>{
+    allPosts = posts.filter(p=>p.status==='published').sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+    // Build category nav from real data
+    const existing = [...new Set(allPosts.map(p=>p.category).filter(Boolean))];
+    const ordered = [...CAT_ORDER.filter(c=>existing.includes(c)), ...existing.filter(c=>!CAT_ORDER.includes(c))];
+    const nav = document.getElementById('catnav');
     document.getElementById('countAll').textContent = allPosts.length;
-
-    renderPosts(allPosts, 'all');
-    renderPopular(allPosts);
+    ordered.forEach(cat=>{
+      const m = CAT_META[cat] || {kr:'', en:cat};
+      const count = allPosts.filter(p=>p.category===cat).length;
+      const btn = document.createElement('button');
+      btn.className='catnav-item'; btn.dataset.cat=cat;
+      btn.innerHTML = `<span class="kr">${m.kr}</span> ${m.en} <span class="cnt">${count}</span>`;
+      btn.addEventListener('click', ()=>applyFilter(cat));
+      nav.appendChild(btn);
+    });
+    document.querySelector('.catnav-item[data-cat="all"]').addEventListener('click', ()=>applyFilter('all'));
+    renderFeed(allPosts);
   })
-  .catch(err => {
-    console.warn('Failed to load manifest.json:', err);
-    document.getElementById('skeleton').style.display = 'none';
-    document.getElementById('dynamicContent').style.display = 'block';
-    renderPosts([]);
-  });
-
-// ── Category tab click ──
-document.querySelectorAll('.cat-item').forEach(el => {
-  el.addEventListener('click', function() {
-    applyFilter(this.dataset.cat);
-  });
-});
-
-// ── Nav category links ──
-document.querySelectorAll('.desktop-nav a[data-cat]').forEach(el => {
-  el.addEventListener('click', function(e) {
-    e.preventDefault();
-    applyFilter(this.dataset.cat);
-    window.scrollTo({top:0,behavior:'smooth'});
-  });
-});
-
-// Footer category links
-document.querySelectorAll('footer a[data-cat]').forEach(el => {
-  el.addEventListener('click', function(e) {
-    e.preventDefault();
-    applyFilter(this.dataset.cat);
-    window.scrollTo({top:0,behavior:'smooth'});
-  });
-});
-
-// ── Hamburger ──
-function toggleMenu() {
-  document.getElementById('mobileMenu').classList.toggle('open');
-}
+  .catch(err=>{ console.warn('manifest load failed:', err); renderFeed([]); });
 </script>
 </body>
 </html>

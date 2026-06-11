@@ -36,108 +36,132 @@
 <meta name="naver-site-verification" content="ad5bce9f4de14cbe7ccf111ca46b1114e52a25ff">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=Noto+Serif+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@700;900&display=swap" rel="stylesheet">
 <style>
+/* ═══ Korean Salaryman — design system (Pudding minimal × Dazed type + Hangul signature) ═══ */
 *{box-sizing:border-box;margin:0;padding:0;}
-:root{--white:#fff;--bg:#f8f7f4;--bg2:#f0ede8;--navy:#1a2640;--navy2:#253352;--navy3:#0f1824;--point:#c17f3e;--point2:#d4924e;--point-light:#f5ead8;--green:#2d6a4f;--green-light:#d8f0e5;--text1:#1a1a1a;--text2:#444;--text3:#888;--border:#e8e4de;--border2:#d4cfc8;--gold:#c8a96e;}
+:root{
+  --paper:#FFFFFF;
+  --ink:#0A0A0A;
+  --accent:#FF3D00;
+  --gray:#6B6B6B;
+  --surface:#F6F5F2;
+}
 html{scroll-behavior:smooth;}
-body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text1);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
-header{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
-.hd{max-width:1080px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px;}
-.logo{display:flex;flex-direction:column;text-decoration:none;}
-.logo-kr{font-family:'Noto Serif KR',serif;font-size:17px;font-weight:700;color:var(--navy);letter-spacing:-0.02em;}
-.logo-kr span{color:var(--point);}
-.logo-en{font-size:8px;color:var(--text3);letter-spacing:0.25em;margin-top:1px;}
-.desktop-nav{display:flex;align-items:center;gap:2px;}
-.desktop-nav a{color:var(--text2);text-decoration:none;font-size:13px;font-weight:500;padding:6px 14px;border-radius:6px;transition:all 0.15s;}
-.desktop-nav a:hover,.desktop-nav a.active{color:var(--navy);font-weight:700;}
-.nav-divider{width:1px;height:14px;background:var(--border2);margin:0 6px;}
-.btn-cta{display:inline-flex;align-items:center;background:var(--point);color:var(--white);font-size:12px;font-weight:700;padding:8px 18px;border-radius:6px;text-decoration:none;transition:all 0.15s;}
-.btn-cta:hover{background:var(--point2);transform:translateY(-1px);}
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;}
-.hamburger span{display:block;width:20px;height:1.5px;background:var(--navy);border-radius:2px;}
-.mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);padding:12px 20px 20px;flex-direction:column;gap:2px;z-index:99;box-shadow:0 8px 24px rgba(0,0,0,0.08);}
-.mobile-menu a{color:var(--text2);text-decoration:none;font-size:15px;font-weight:500;padding:12px 16px;border-radius:8px;display:block;}
-.mobile-menu .btn-cta{margin-top:8px;justify-content:center;border-radius:8px;}
-.mobile-menu.open{display:flex!important;}
+body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+img{display:block;max-width:100%;}
 
-.hero{background:var(--navy3);padding:72px 24px 80px;position:relative;overflow:hidden;}
-.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.03) 1px,transparent 1px);background-size:28px 28px;}
-.hero-glow{position:absolute;right:-150px;top:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(193,127,62,0.18),transparent 65%);}
-.hero-inner{max-width:760px;margin:0 auto;position:relative;z-index:1;display:flex;gap:48px;align-items:center;}
-.hero-avatar{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,var(--point),var(--gold));display:flex;align-items:center;justify-content:center;font-family:'Noto Serif KR',serif;font-size:48px;font-weight:700;color:var(--white);flex-shrink:0;border:3px solid rgba(193,127,62,0.4);}
-.hero-text{}
-.hero-badge{display:inline-flex;align-items:center;background:rgba(193,127,62,0.15);border:1px solid rgba(193,127,62,0.3);padding:4px 12px;border-radius:100px;margin-bottom:16px;}
-.hero-badge span{font-size:11px;color:var(--gold);letter-spacing:0.15em;font-weight:600;}
-.hero h1{font-family:'Noto Serif KR',serif;font-size:32px;font-weight:900;color:var(--white);line-height:1.3;letter-spacing:-0.02em;margin-bottom:10px;}
-.hero h1 em{color:var(--point);font-style:normal;}
-.hero-sub{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.8;}
+/* Display + Korean accent utilities */
+.display{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:-0.01em;line-height:0.98;}
+.kr{font-family:'Noto Sans KR',sans-serif;font-weight:900;color:var(--accent);}
 
-.wrap{max-width:860px;margin:0 auto;padding:52px 24px;}
-.sec-label{display:flex;align-items:center;gap:12px;margin-bottom:28px;}
-.sec-label-text{font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.2em;}
-.sec-label-line{flex:1;height:1px;background:var(--border);}
+/* ── Header ── */
+header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--ink);}
+.hd{max-width:1240px;margin:0 auto;padding:0 28px;height:68px;display:flex;align-items:center;justify-content:space-between;}
+.logo{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:16px;letter-spacing:-0.01em;color:var(--ink);}
+.logo .dot{color:var(--accent);}
+.desktop-nav{display:flex;align-items:center;gap:26px;}
+.desktop-nav a{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink);transition:color 0.15s;}
+.desktop-nav a:hover{color:var(--accent);}
+.btn-sub{background:var(--ink);color:var(--paper);padding:10px 18px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;transition:background 0.15s;}
+.btn-sub:hover{background:var(--accent);color:var(--paper);}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
+.hamburger span{display:block;width:22px;height:2px;background:var(--ink);}
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:var(--paper);border-bottom:1px solid var(--ink);padding:14px 28px 24px;flex-direction:column;gap:2px;z-index:99;}
+.mobile-menu a{padding:13px 4px;font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--surface);}
+.mobile-menu a:hover{color:var(--accent);}
+.mobile-menu.open{display:flex;}
 
-/* Story */
-.story{margin-bottom:52px;}
-.story-block{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:32px 36px;margin-bottom:20px;position:relative;}
-.story-block::before{content:'';position:absolute;left:0;top:24px;bottom:24px;width:4px;border-radius:0 2px 2px 0;}
-.story-block.fail::before{background:var(--point);}
-.story-block.turn::before{background:#3b6cf4;}
-.story-block.now::before{background:var(--green);}
-.story-year{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:0.15em;margin-bottom:10px;}
-.story-title{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:700;color:var(--navy);margin-bottom:14px;line-height:1.4;}
-.story-text{font-size:14px;color:var(--text2);line-height:2;font-weight:300;}
-.story-text strong{color:var(--point);font-weight:700;}
+/* ── Bilingual category label ── */
+.cat-label{display:inline-flex;align-items:baseline;gap:8px;line-height:1;}
+.cat-label .kr{font-size:0.95em;}
+.cat-label .en{font-size:0.7em;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--ink);}
 
-/* Stats / numbers */
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:52px;}
-.stat-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center;}
-.stat-num{font-family:'Noto Serif KR',serif;font-size:26px;font-weight:700;color:var(--navy);}
-.stat-num em{font-size:14px;color:var(--point);font-style:normal;}
-.stat-label{font-size:11px;color:var(--text3);margin-top:5px;letter-spacing:0.05em;}
+/* ── Section heading (bilingual) ── */
+.sec-head{display:flex;align-items:baseline;gap:14px;margin:0 0 30px;padding-bottom:14px;border-bottom:2px solid var(--ink);}
+.sec-head .kr{font-size:1.5rem;line-height:1;}
+.sec-head .en{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:1.05rem;color:var(--ink);}
 
-/* Timeline */
-.timeline{margin-bottom:52px;position:relative;}
-.timeline::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:2px;background:var(--border);}
-.tl-item{display:flex;gap:20px;margin-bottom:28px;position:relative;}
-.tl-dot{width:40px;height:40px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:16px;position:relative;z-index:1;}
-.tl-dot.done{background:var(--green);border:2px solid var(--green);}
-.tl-dot.active{background:var(--point);border:2px solid var(--point);}
-.tl-dot.future{background:var(--white);border:2px solid var(--border);}
-.tl-content{flex:1;padding-top:6px;}
-.tl-year{font-size:11px;color:var(--text3);font-weight:600;letter-spacing:0.1em;margin-bottom:4px;}
-.tl-title{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:4px;}
-.tl-desc{font-size:13px;color:var(--text2);line-height:1.7;}
+/* ── Hero ── */
+.hero{position:relative;max-width:1240px;margin:0 auto;padding:96px 28px 72px;overflow:hidden;}
+.hero-ko{position:absolute;top:52%;left:50%;transform:translate(-50%,-50%);font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:clamp(7rem,23vw,19rem);color:transparent;-webkit-text-stroke:1.5px #ECEAE5;text-stroke:1.5px #ECEAE5;white-space:nowrap;z-index:0;pointer-events:none;user-select:none;}
+.hero-inner{position:relative;z-index:1;}
+.hero-eyebrow{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;color:var(--accent);margin-bottom:24px;}
+.hero h1{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:-0.01em;font-size:clamp(2.8rem,7vw,5.5rem);line-height:0.98;color:var(--ink);margin-bottom:28px;}
+.hero h1 .accent{color:var(--accent);}
+.hero-sub{font-size:clamp(1.05rem,2vw,1.35rem);line-height:1.55;color:var(--gray);max-width:640px;font-weight:400;}
+.hero-sub b{color:var(--ink);font-weight:600;}
 
-/* CTA */
-.cta-box{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:20px;padding:40px;text-align:center;margin-bottom:52px;}
-.cta-title{font-family:'Noto Serif KR',serif;font-size:24px;font-weight:700;color:var(--white);margin-bottom:12px;}
-.cta-desc{font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:28px;line-height:1.8;}
-.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
-.btn-primary{display:inline-flex;align-items:center;background:var(--point);color:var(--white);font-size:14px;font-weight:700;padding:13px 28px;border-radius:8px;text-decoration:none;transition:all 0.2s;}
-.btn-primary:hover{background:var(--point2);transform:translateY(-2px);}
-.btn-outline{display:inline-flex;align-items:center;background:transparent;color:rgba(255,255,255,0.7);font-size:14px;font-weight:600;padding:13px 24px;border-radius:8px;text-decoration:none;border:1px solid rgba(255,255,255,0.2);transition:all 0.2s;}
-.btn-outline:hover{background:rgba(255,255,255,0.08);color:var(--white);}
+/* ── About reading column ── */
+.about{max-width:720px;margin:0 auto;padding:24px 28px 40px;}
+.about-section{margin-bottom:64px;}
+.about-section:last-child{margin-bottom:24px;}
+.about-lead{font-size:clamp(1.2rem,2.4vw,1.5rem);line-height:1.5;color:var(--ink);font-weight:500;margin-bottom:24px;}
+.about p{font-size:19px;line-height:1.7;color:var(--gray);margin-bottom:22px;}
+.about p:last-child{margin-bottom:0;}
+.about p b{color:var(--ink);font-weight:600;}
+.about p .em{color:var(--accent);font-weight:600;}
+.about a.link{color:var(--accent);font-weight:600;border-bottom:1px solid transparent;transition:border-color 0.15s;}
+.about a.link:hover{border-bottom-color:var(--accent);}
 
-footer{background:var(--navy3);padding:48px 24px;}
-.ft{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;}
-.ft-logo{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;color:var(--white);margin-bottom:8px;}
-.ft-logo span{color:var(--point);}
-.ft-tagline{font-size:12px;color:rgba(255,255,255,0.3);line-height:1.8;}
-.ft-col h4{font-size:12px;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:0.15em;margin-bottom:14px;}
-.ft-col a{display:block;font-size:13px;color:rgba(255,255,255,0.35);text-decoration:none;margin-bottom:8px;transition:color 0.15s;}
-.ft-col a:hover{color:rgba(255,255,255,0.7);}
-.ft-bottom{max-width:1080px;margin:36px auto 0;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,0.2);}
+/* ── What you'll find list ── */
+.find-list{list-style:none;margin:8px 0 0;padding:0;}
+.find-item{display:block;border-top:1px solid var(--ink);padding:24px 4px;transition:padding-left 0.2s;}
+.find-item:last-child{border-bottom:1px solid var(--ink);}
+.find-item:hover{padding-left:14px;}
+.find-item .find-label{display:inline-flex;align-items:baseline;gap:10px;margin-bottom:8px;}
+.find-item .find-label .kr{font-size:1.35rem;line-height:1;transition:color 0.15s;}
+.find-item .find-label .en{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:-0.01em;font-size:1.1rem;color:var(--ink);transition:color 0.15s;}
+.find-item:hover .find-label .en{color:var(--accent);}
+.find-item .find-desc{font-size:16px;color:var(--gray);line-height:1.55;}
 
-@media(max-width:768px){
-  .desktop-nav{display:none!important;}.hamburger{display:flex!important;}
-  .hero-inner{flex-direction:column;gap:24px;text-align:center;}.hero h1{font-size:26px;}
-  .hero-avatar{width:80px;height:80px;font-size:32px;}
-  .wrap{padding:36px 16px;}.stats-grid{grid-template-columns:repeat(2,1fr);}
-  .story-block{padding:22px 20px 22px 24px;}.timeline::before{left:16px;}
-  .tl-dot{width:32px;height:32px;font-size:13px;}
-  .cta-box{padding:28px 20px;}.ft{grid-template-columns:1fr!important;gap:28px;}
+/* ── Signature ── */
+.signature{max-width:720px;margin:0 auto;padding:0 28px 100px;}
+.sig-rule{border:none;border-top:2px solid var(--ink);margin-bottom:28px;}
+.sig-mark{display:inline-flex;align-items:baseline;gap:12px;}
+.sig-mark .kr{font-size:1.6rem;line-height:1;}
+.sig-mark .en{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:-0.01em;font-size:1.15rem;color:var(--ink);}
+.sig-name{margin-top:18px;font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:-0.01em;font-size:1.5rem;color:var(--ink);}
+.sig-note{margin-top:10px;font-size:15px;color:var(--gray);}
+
+/* ── CTA strip ── */
+.cta{background:var(--ink);color:var(--paper);padding:80px 28px;}
+.cta-inner{max-width:720px;margin:0 auto;text-align:center;}
+.cta-inner .kr{color:var(--accent);font-size:1.4rem;display:block;margin-bottom:12px;}
+.cta-inner h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:clamp(1.8rem,4vw,3rem);line-height:1;margin-bottom:18px;}
+.cta-inner p{color:rgba(255,255,255,0.6);margin-bottom:30px;font-size:1.05rem;}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.cta-btns a{padding:16px 26px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;transition:opacity 0.15s,background 0.15s,color 0.15s;}
+.cta-fill{background:var(--accent);color:var(--paper);}
+.cta-fill:hover{opacity:0.85;}
+.cta-ghost{border:1px solid rgba(255,255,255,0.3);color:var(--paper);}
+.cta-ghost:hover{border-color:var(--paper);background:rgba(255,255,255,0.08);}
+
+/* ── Footer ── */
+footer{background:var(--paper);border-top:1px solid var(--ink);padding:58px 28px 40px;}
+.ft{max-width:1240px;margin:0 auto;display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;}
+.ft-brand .logo{font-size:20px;}
+.ft-brand p{margin-top:14px;font-size:13px;color:var(--gray);max-width:300px;line-height:1.7;}
+.ft-links{display:flex;gap:54px;flex-wrap:wrap;}
+.ft-col h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--gray);margin-bottom:15px;}
+.ft-col a{display:block;font-size:14px;font-weight:500;margin-bottom:9px;color:var(--ink);transition:color 0.15s;}
+.ft-col a:hover{color:var(--accent);}
+.ft-bottom{max-width:1240px;margin:42px auto 0;padding-top:24px;border-top:1px solid var(--surface);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--gray);text-transform:uppercase;letter-spacing:0.06em;}
+
+/* ── Responsive ── */
+@media(max-width:680px){
+  body{font-size:17px;}
+  .desktop-nav{display:none;}
+  .hamburger{display:flex;}
+  .hd{padding:0 18px;}
+  .hero{padding:60px 20px 48px;}
+  .hero-ko{font-size:clamp(5rem,32vw,9rem);}
+  .about,.signature{padding-left:20px;padding-right:20px;}
+  .about p{font-size:17px;}
+  .cta-btns{flex-direction:column;}
+  .ft{flex-direction:column;}
   .ft-bottom{flex-direction:column;gap:8px;}
 }
 </style>
@@ -154,131 +178,151 @@ footer{background:var(--navy3);padding:48px 24px;}
 </script>
 </head>
 <body>
+
 <header>
   <div class="hd">
-    <a href="index.html" class="logo">
-      <div class="logo-kr">Korean <span>Salaryman</span></div>
-      <div class="logo-en">KOREA, AS WE ACTUALLY LIVE IT</div>
-    </a>
+    <a href="/" class="logo">KOREAN<span class="dot">.</span>SALARYMAN</a>
     <nav class="desktop-nav">
       <a href="blog.html">Blog</a>
       <a href="category-k-trends.html">K-Trends</a>
       <a href="category-korean-life.html">Korean Life</a>
       <a href="category-culture-explained.html">Culture</a>
-      <a href="about.html" class="active">About</a>
-      <div class="nav-divider"></div>
-      <a href="index.html#newsletter" class="btn-cta">Subscribe</a>
+      <a href="about.html">About</a>
+      <a href="index.html#newsletter" class="btn-sub">Subscribe</a>
     </nav>
-    <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
+
 <div class="mobile-menu" id="mobileMenu">
   <a href="blog.html">Blog</a>
-  <a href="category-k-trends.html">K-Trends</a><a href="category-korean-life.html">Korean Life</a>
-  <a href="category-culture-explained.html">Culture</a><a href="about.html">About</a>
-  <a href="index.html#newsletter" class="btn-cta">Subscribe</a>
+  <a href="category-k-trends.html">K-Trends</a>
+  <a href="category-korean-life.html">Korean Life</a>
+  <a href="category-culture-explained.html">Culture</a>
+  <a href="about.html">About</a>
+  <a href="index.html#newsletter">Subscribe</a>
 </div>
 
+<!-- ── Hero ── -->
 <section class="hero">
-  <div class="hero-glow"></div>
+  <div class="hero-ko" aria-hidden="true">월급쟁이</div>
   <div class="hero-inner">
-    <div class="hero-avatar">KS</div>
-    <div class="hero-text">
-      <div class="hero-badge"><span>ABOUT</span></div>
-      <h1>Korea, explained from<br><em>the inside</em></h1>
-      <div class="hero-sub">Written by an anonymous office worker in Seoul<br>Korea, as we actually live it — for readers around the world</div>
+    <div class="hero-eyebrow">About · by a Seoul salaryman</div>
+    <h1>The<br><span class="accent">Salaryman</span></h1>
+    <p class="hero-sub"><b>An anonymous office worker in Seoul</b>, writing about Korea — what's trending, real daily life, and the culture behind it all — from the inside, for readers around the world.</p>
+  </div>
+</section>
+
+<!-- ── Reading column ── -->
+<article class="about">
+
+  <!-- Who I am -->
+  <section class="about-section">
+    <div class="sec-head"><span class="kr">소개</span><span class="en">Who I Am</span></div>
+    <p class="about-lead">I'm a salaryman in Seoul. You can call me Korean Salaryman.</p>
+    <p>I won't tell you my real name, where I work, or what I earn — and honestly, none of that is the point. I'm an ordinary office worker: I take the packed subway every morning, sit through the same meetings you'd recognize anywhere, and grab dinner with coworkers after a long day.</p>
+    <p>What makes me a little different is that I write all of it down — <b>in English</b> — for people outside Korea who are curious about what this country is actually like beyond the headlines and the highlight reels.</p>
+  </section>
+
+  <!-- Why this exists -->
+  <section class="about-section">
+    <div class="sec-head"><span class="kr">이유</span><span class="en">Why This Exists</span></div>
+    <p>Most of what the world sees about Korea is the polished version. K-pop, K-dramas, glossy travel videos — they're real, but they're the surface. Behind them is a country of long commutes, strong coffee, fierce trends that come and go in a week, and small everyday rituals that say a lot about how people here actually think.</p>
+    <p>I wanted a place that explains the <span class="em">why</span> behind all of it — not as a tourist guide, but as someone who lives it every single day.</p>
+  </section>
+
+  <!-- What you'll find -->
+  <section class="about-section">
+    <div class="sec-head"><span class="kr">콘텐츠</span><span class="en">What You'll Find</span></div>
+    <p>No sugarcoating, no clickbait. Just Korea, as we actually live it — told honestly and from experience, across four things I keep coming back to.</p>
+    <ul class="find-list">
+      <li class="find-item">
+        <a href="category-k-trends.html">
+          <span class="find-label"><span class="kr">트렌드</span><span class="en">K-Trends</span></span>
+          <div class="find-desc">What's trending in Korea right now — the apps, foods, slang, and obsessions everyone here is talking about.</div>
+        </a>
+      </li>
+      <li class="find-item">
+        <a href="category-korean-life.html">
+          <span class="find-label"><span class="kr">일상</span><span class="en">Korean Life</span></span>
+          <div class="find-desc">Real daily life — work, money, apartments, relationships, and the small frustrations and joys of living in Seoul.</div>
+        </a>
+      </li>
+      <li class="find-item">
+        <a href="category-culture-explained.html">
+          <span class="find-label"><span class="kr">문화</span><span class="en">Culture Explained</span></span>
+          <div class="find-desc">The culture behind it all — the context that makes Korea make sense once you understand it.</div>
+        </a>
+      </li>
+      <li class="find-item">
+        <a href="category-essay.html">
+          <span class="find-label"><span class="kr">에세이</span><span class="en">Essay</span></span>
+          <div class="find-desc">Honest first-person notes — the good and the awkward, written about what genuinely surprises or moves me here.</div>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- How I write -->
+  <section class="about-section">
+    <div class="sec-head"><span class="kr">방식</span><span class="en">How I Write</span></div>
+    <p>Everything here is <b>lived, not researched</b> — it comes from my own day-to-day experience of living and working in Korea. It's written in plain English with no assumed background knowledge; if a Korean concept needs context, I explain it.</p>
+    <p>And it stays honest — the good and the awkward both. I stay anonymous on purpose, so the writing stays about Korea, not about me. A voice, not a personality. Korea changes fast, and I keep writing as it does.</p>
+  </section>
+
+</article>
+
+<!-- ── Signature ── -->
+<section class="signature">
+  <hr class="sig-rule">
+  <span class="sig-mark"><span class="kr">소개</span><span class="en">About</span></span>
+  <div class="sig-name">Korean Salaryman</div>
+  <p class="sig-note">An anonymous office worker writing Korea, as we actually live it.</p>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta">
+  <div class="cta-inner">
+    <span class="kr">뉴스레터</span>
+    <h2>Want Korea in your inbox?</h2>
+    <p>Subscribe and be the first to get new posts on what's trending, daily life, and the culture behind it.</p>
+    <div class="cta-btns">
+      <a href="index.html#newsletter" class="cta-fill">Subscribe — it's free</a>
+      <a href="blog.html" class="cta-ghost">Read the blog</a>
     </div>
   </div>
 </section>
 
-<div class="wrap">
-
-  <!-- Intro -->
-  <div class="sec-label"><span class="sec-label-text">WHO I AM</span><div class="sec-label-line"></div></div>
-  <div class="story">
-
-    <div class="story-block turn">
-      <div class="story-year">HELLO</div>
-      <div class="story-title">I'm a salaryman in Seoul. You can call me Korean Salaryman.</div>
-      <div class="story-text">
-        I won't tell you my real name, where I work, or what I earn — and honestly, none of that is the point. I'm an ordinary office worker: I take the packed subway every morning, sit through the same meetings you'd recognize anywhere, and grab dinner with coworkers after a long day.<br><br>
-        What makes me a little different is that I write all of it down — <strong>in English</strong> — for people outside Korea who are curious about what this country is actually like beyond the headlines and the highlight reels.
-      </div>
-    </div>
-
-    <div class="story-block fail">
-      <div class="story-year">WHY THIS BLOG EXISTS</div>
-      <div class="story-title">Most of what the world sees about Korea is the polished version.</div>
-      <div class="story-text">
-        K-pop, K-dramas, glossy travel videos — they're real, but they're the surface. Behind them is a country of long commutes, strong coffee, fierce trends that come and go in a week, and small everyday rituals that say a lot about how people here actually think.<br><br>
-        I wanted a place that explains the <strong>why</strong> behind all of it — not as a tourist guide, but as someone who lives it every single day.
-      </div>
-    </div>
-
-    <div class="story-block now">
-      <div class="story-year">WHAT YOU'LL FIND HERE</div>
-      <div class="story-title">Three things, told honestly and from experience.</div>
-      <div class="story-text">
-        <strong>What's trending in Korea</strong> right now — the apps, foods, slang, and obsessions everyone here is talking about. <strong>Real daily life</strong> — work, money, apartments, relationships, and the small frustrations and joys of living in Seoul. And <strong>the culture behind it all</strong> — the context that makes Korea make sense once you understand it.<br><br>
-        No sugarcoating, no clickbait. Just Korea, as we actually live it.
-      </div>
-    </div>
-
-  </div>
-
-  <!-- What I write about -->
-  <div class="sec-label"><span class="sec-label-text">WHAT I WRITE ABOUT</span><div class="sec-label-line"></div></div>
-  <div class="stats-grid" style="margin-bottom:52px;">
-    <div class="stat-card"><div class="stat-num">K<em>-Trends</em></div><div class="stat-label">What's hot in Korea now</div></div>
-    <div class="stat-card"><div class="stat-num">Real<em> life</em></div><div class="stat-label">Daily life in Seoul</div></div>
-    <div class="stat-card"><div class="stat-num">Culture<em> ↗</em></div><div class="stat-label">The why behind it all</div></div>
-    <div class="stat-card"><div class="stat-num">Essays<em> ✎</em></div><div class="stat-label">Honest first-person notes</div></div>
-  </div>
-
-  <!-- How I write -->
-  <div class="sec-label"><span class="sec-label-text">HOW I WRITE</span><div class="sec-label-line"></div></div>
-  <div class="timeline">
-    <div class="tl-item">
-      <div class="tl-dot done">✓</div>
-      <div class="tl-content"><div class="tl-year">FROM THE INSIDE</div><div class="tl-title">Lived, not researched</div><div class="tl-desc">Everything here comes from my own day-to-day experience as someone who lives and works in Korea.</div></div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-dot done">✓</div>
-      <div class="tl-content"><div class="tl-year">FOR GLOBAL READERS</div><div class="tl-title">Written in plain English</div><div class="tl-desc">No assumed background knowledge. If a Korean concept needs context, I explain it.</div></div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-dot done">✓</div>
-      <div class="tl-content"><div class="tl-year">HONEST</div><div class="tl-title">The good and the awkward</div><div class="tl-desc">I write about what genuinely surprises, frustrates, or delights people here — not just the flattering parts.</div></div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-dot active">★</div>
-      <div class="tl-content"><div class="tl-year">ANONYMOUS</div><div class="tl-title">A voice, not a personality</div><div class="tl-desc">I stay anonymous on purpose so the writing stays about Korea, not about me.</div></div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-dot future">→</div>
-      <div class="tl-content"><div class="tl-year">ONGOING</div><div class="tl-title">Always more to come</div><div class="tl-desc">Korea changes fast. I keep writing as it does.</div></div>
-    </div>
-  </div>
-
-  <!-- CTA -->
-  <div class="cta-box">
-    <div class="cta-title">Want Korea in your inbox?</div>
-    <div class="cta-desc">Subscribe to the newsletter and be the first to get<br>new posts on what's trending, daily life, and the culture behind it.</div>
-    <div class="cta-btns">
-      <a href="index.html#newsletter" class="btn-primary">Subscribe — it's free →</a>
-      <a href="blog.html" class="btn-outline">Read the blog</a>
-    </div>
-  </div>
-
-</div>
-
 <footer>
   <div class="ft">
-    <div><div class="ft-logo">Korean <span>Salaryman</span></div><p class="ft-tagline">Korea, as we actually live it.</p></div>
-    <div class="ft-col"><h4>EXPLORE</h4><a href="blog.html">Blog</a><a href="category-k-trends.html">K-Trends</a><a href="category-korean-life.html">Korean Life</a><a href="category-culture-explained.html">Culture</a></div>
-    <div class="ft-col"><h4>MORE</h4><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="mailto:pride93d@gmail.com">Contact</a><a href="https://koreansalaryman.com">한국어판</a></div>
+    <div class="ft-brand">
+      <a href="/" class="logo">KOREAN<span class="dot">.</span>SALARYMAN</a>
+      <p>Korea, as we actually live it. What's trending, real daily life, and the culture behind it — from the inside.</p>
+    </div>
+    <div class="ft-links">
+      <div class="ft-col">
+        <h4>Categories</h4>
+        <a href="category-k-trends.html">K-Trends</a>
+        <a href="category-korean-life.html">Korean Life</a>
+        <a href="category-culture-explained.html">Culture</a>
+        <a href="category-essay.html">Essays</a>
+      </div>
+      <div class="ft-col">
+        <h4>Site</h4>
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="mailto:pride93d@gmail.com">Contact</a>
+        <a href="https://koreansalaryman.com">한국어판</a>
+      </div>
+    </div>
   </div>
-  <div class="ft-bottom"><span>© 2026 Korean Salaryman. All rights reserved.</span><span>en.koreansalaryman.com</span></div>
+  <div class="ft-bottom">
+    <span>© 2026 Korean Salaryman. All rights reserved.</span>
+    <span>en.koreansalaryman.com</span>
+  </div>
 </footer>
 
 <script>

@@ -10,73 +10,98 @@
 <link rel="canonical" href="https://en.koreansalaryman.com/terms.html">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=Noto+Serif+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
-
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@700;900&display=swap" rel="stylesheet">
 <style>
+/* ═══ Korean Salaryman — design system (Pudding minimal × Dazed type + Hangul signature) ═══ */
 *{box-sizing:border-box;margin:0;padding:0;}
-:root{--white:#fff;--bg:#f8f7f4;--bg2:#f0ede8;--navy:#1a2640;--navy2:#253352;--navy3:#0f1824;--point:#c17f3e;--point2:#d4924e;--point-light:#f5ead8;--green:#2d6a4f;--text1:#1a1a1a;--text2:#444;--text3:#888;--border:#e8e4de;--border2:#d4cfc8;--gold:#c8a96e;}
-body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text1);font-size:15px;line-height:1.85;-webkit-font-smoothing:antialiased;}
+:root{
+  --paper:#FFFFFF;
+  --ink:#0A0A0A;
+  --accent:#FF3D00;
+  --gray:#6B6B6B;
+  --surface:#F6F5F2;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+img{display:block;max-width:100%;}
 
-header{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
-.hd{max-width:1080px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px;}
-.logo{display:flex;flex-direction:column;text-decoration:none;}
-.logo-kr{font-family:'Noto Serif KR',serif;font-size:17px;font-weight:700;color:var(--navy);letter-spacing:-0.02em;}
-.logo-kr span{color:var(--point);}
-.logo-en{font-size:8px;color:var(--text3);letter-spacing:0.25em;margin-top:1px;}
-.desktop-nav{display:flex;align-items:center;gap:2px;}
-.desktop-nav a{color:var(--text2);text-decoration:none;font-size:13px;font-weight:500;padding:6px 14px;border-radius:6px;transition:all 0.15s;}
-.desktop-nav a:hover{color:var(--navy);background:var(--bg);}
-.nav-divider{width:1px;height:14px;background:var(--border2);margin:0 6px;}
-.btn-cta{display:inline-flex;align-items:center;background:var(--point);color:var(--white);font-size:12px;font-weight:700;padding:8px 18px;border-radius:6px;text-decoration:none;}
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;}
-.hamburger span{display:block;width:20px;height:1.5px;background:var(--navy);border-radius:2px;}
-.mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);padding:12px 20px 20px;flex-direction:column;gap:2px;z-index:99;}
-.mobile-menu a{color:var(--text2);text-decoration:none;font-size:15px;font-weight:500;padding:12px 16px;border-radius:8px;display:block;}
-.mobile-menu.open{display:flex!important;}
+/* Display + Korean accent utilities */
+.display{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:-0.01em;line-height:0.98;}
+.kr{font-family:'Noto Sans KR',sans-serif;font-weight:900;color:var(--accent);}
 
-.hero{background:var(--navy3);padding:52px 24px 44px;position:relative;overflow:hidden;}
-.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.03) 1px,transparent 1px);background-size:28px 28px;}
-.hero-inner{max-width:800px;margin:0 auto;position:relative;z-index:1;text-align:center;}
-.hero h1{font-family:'Noto Serif KR',serif;font-size:32px;font-weight:700;color:var(--white);letter-spacing:-0.02em;margin-bottom:10px;}
-.hero-sub{font-size:13px;color:rgba(255,255,255,0.4);}
+/* ── Header ── */
+header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--ink);}
+.hd{max-width:1240px;margin:0 auto;padding:0 28px;height:68px;display:flex;align-items:center;justify-content:space-between;}
+.logo{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:16px;letter-spacing:-0.01em;color:var(--ink);}
+.logo .dot{color:var(--accent);}
+.desktop-nav{display:flex;align-items:center;gap:26px;}
+.desktop-nav a{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink);transition:color 0.15s;}
+.desktop-nav a:hover{color:var(--accent);}
+.btn-sub{background:var(--ink);color:var(--paper);padding:10px 18px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;transition:background 0.15s;}
+.btn-sub:hover{background:var(--accent);color:var(--paper);}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
+.hamburger span{display:block;width:22px;height:2px;background:var(--ink);}
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:var(--paper);border-bottom:1px solid var(--ink);padding:14px 28px 24px;flex-direction:column;gap:2px;z-index:99;}
+.mobile-menu a{padding:13px 4px;font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--surface);}
+.mobile-menu a:hover{color:var(--accent);}
+.mobile-menu.open{display:flex;}
 
-.wrap{max-width:800px;margin:0 auto;padding:48px 24px 60px;}
-.toc{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:24px 28px;margin-bottom:36px;}
-.toc h4{font-family:'Noto Serif KR',serif;font-size:14px;font-weight:700;color:var(--navy);margin-bottom:14px;letter-spacing:0.05em;}
+/* ── Page header (legal) ── */
+.page-head{max-width:760px;margin:0 auto;padding:72px 28px 40px;}
+.page-head .kr{font-size:1.3rem;display:block;margin-bottom:14px;}
+.page-head h1{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:-0.01em;line-height:0.98;font-size:clamp(2.4rem,6vw,4rem);color:var(--ink);}
+.page-head .updated{margin-top:18px;font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray);}
+
+/* ── Legal reading column ── */
+.legal{max-width:760px;margin:0 auto;padding:0 28px 96px;}
+.toc{border:1px solid var(--ink);padding:24px 28px;margin-bottom:48px;}
+.toc h4{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:0.02em;font-size:0.85rem;margin-bottom:14px;}
 .toc ol{padding-left:20px;}
-.toc ol li{font-size:13px;color:var(--text2);padding:4px 0;}
-.toc ol li a{color:var(--text2);text-decoration:none;}
-.toc ol li a:hover{color:var(--point);}
+.toc ol li{font-size:0.95rem;color:var(--gray);padding:5px 0;}
+.toc ol li a{color:var(--gray);transition:color 0.15s;}
+.toc ol li a:hover{color:var(--accent);}
 
-article section{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:28px 32px;margin-bottom:20px;scroll-margin-top:80px;}
-article h2{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:700;color:var(--navy);margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--point-light);}
-article h2 .num{color:var(--point);margin-right:8px;}
-article p{font-size:14px;color:var(--text2);margin-bottom:12px;line-height:1.85;}
-article ul,article ol{padding-left:22px;margin:12px 0;}
-article li{font-size:14px;color:var(--text2);margin:6px 0;line-height:1.8;}
-article strong{color:var(--navy);font-weight:700;}
-article .hi{background:var(--point-light);padding:2px 6px;border-radius:4px;color:var(--navy);font-weight:600;}
+.legal section{margin-bottom:48px;scroll-margin-top:88px;}
+.legal h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:-0.01em;font-size:clamp(1.3rem,2.6vw,1.7rem);line-height:1.1;color:var(--ink);margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid var(--ink);}
+.legal h2 .num{color:var(--accent);margin-right:10px;}
+.legal h3{font-family:'Inter',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:-0.01em;color:var(--ink);margin:28px 0 10px;}
+.legal p{font-size:1.0625rem;color:var(--ink);margin-bottom:14px;line-height:1.7;}
+.legal ul,.legal ol{padding-left:24px;margin:14px 0;}
+.legal li{font-size:1.0625rem;color:var(--ink);margin:8px 0;line-height:1.65;}
+.legal a{color:var(--accent);}
+.legal a:hover{text-decoration:underline;}
+.legal strong{font-weight:700;color:var(--ink);}
+.legal .hi{background:var(--surface);padding:2px 6px;color:var(--ink);font-weight:600;}
+.legal table{width:100%;border-collapse:collapse;margin:18px 0;font-size:0.95rem;}
+.legal th,.legal td{border:1px solid var(--ink);padding:11px 14px;text-align:left;}
+.legal th{background:var(--surface);font-weight:700;color:var(--ink);}
+.effective{background:var(--surface);border-left:4px solid var(--accent);padding:18px 22px;margin-top:28px;font-size:0.95rem;color:var(--ink);line-height:1.9;}
+.effective strong{color:var(--accent);}
 
-.effective{background:var(--point-light);border-left:4px solid var(--point);border-radius:0 8px 8px 0;padding:16px 20px;margin-top:24px;font-size:13px;color:var(--navy);}
-.effective strong{color:var(--point);}
+/* ── Footer ── */
+footer{background:var(--paper);border-top:1px solid var(--ink);padding:58px 28px 40px;}
+.ft{max-width:1240px;margin:0 auto;display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;}
+.ft-brand .logo{font-size:20px;}
+.ft-brand p{margin-top:14px;font-size:13px;color:var(--gray);max-width:300px;line-height:1.7;}
+.ft-links{display:flex;gap:54px;flex-wrap:wrap;}
+.ft-col h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--gray);margin-bottom:15px;}
+.ft-col a{display:block;font-size:14px;font-weight:500;margin-bottom:9px;color:var(--ink);transition:color 0.15s;}
+.ft-col a:hover{color:var(--accent);}
+.ft-bottom{max-width:1240px;margin:42px auto 0;padding-top:24px;border-top:1px solid var(--surface);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--gray);text-transform:uppercase;letter-spacing:0.06em;}
 
-footer{background:var(--navy3);padding:40px 24px;}
-.ft{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;}
-.ft-logo{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;color:var(--white);margin-bottom:8px;}
-.ft-logo span{color:var(--point);}
-.ft-tagline{font-size:12px;color:rgba(255,255,255,0.3);line-height:1.8;}
-.ft-col h4{font-size:12px;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:0.15em;margin-bottom:14px;}
-.ft-col a{display:block;font-size:13px;color:rgba(255,255,255,0.35);text-decoration:none;margin-bottom:8px;}
-.ft-col a:hover{color:rgba(255,255,255,0.7);}
-.ft-bottom{max-width:1080px;margin:32px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,0.2);}
-
-@media(max-width:768px){
-  .desktop-nav{display:none!important;}
-  .hamburger{display:flex!important;}
-  .hero h1{font-size:24px;}
-  .wrap{padding:28px 16px 40px;}
-  article section{padding:20px;}
-  .ft{grid-template-columns:1fr!important;gap:24px;}
+/* ── Responsive ── */
+@media(max-width:680px){
+  body{font-size:17px;}
+  .desktop-nav{display:none;}
+  .hamburger{display:flex;}
+  .hd{padding:0 18px;}
+  .page-head{padding:48px 20px 32px;}
+  .legal{padding:0 20px 64px;}
+  .legal table{font-size:0.85rem;}
+  .legal th,.legal td{padding:8px 10px;}
+  .ft{flex-direction:column;}
   .ft-bottom{flex-direction:column;gap:8px;}
 }
 </style>
@@ -85,20 +110,16 @@ footer{background:var(--navy3);padding:40px 24px;}
 
 <header>
   <div class="hd">
-    <a href="/" class="logo">
-      <div class="logo-kr">Korean <span>Salaryman</span></div>
-      <div class="logo-en">KOREA, AS WE ACTUALLY LIVE IT</div>
-    </a>
+    <a href="/" class="logo">KOREAN<span class="dot">.</span>SALARYMAN</a>
     <nav class="desktop-nav">
       <a href="blog.html">Blog</a>
       <a href="category-k-trends.html">K-Trends</a>
       <a href="category-korean-life.html">Korean Life</a>
       <a href="category-culture-explained.html">Culture</a>
       <a href="about.html">About</a>
-      <div class="nav-divider"></div>
-      <a href="index.html#newsletter" class="btn-cta">Subscribe</a>
+      <a href="index.html#newsletter" class="btn-sub">Subscribe</a>
     </nav>
-    <button class="hamburger" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -110,17 +131,16 @@ footer{background:var(--navy3);padding:40px 24px;}
   <a href="category-korean-life.html">Korean Life</a>
   <a href="category-culture-explained.html">Culture</a>
   <a href="about.html">About</a>
-  <a href="index.html#newsletter" class="btn-cta">Subscribe</a>
+  <a href="index.html#newsletter">Subscribe</a>
 </div>
 
-<section class="hero">
-  <div class="hero-inner">
-    <h1>Terms of Service</h1>
-    <div class="hero-sub">Last updated: April 24, 2026</div>
-  </div>
+<section class="page-head">
+  <span class="kr">이용약관</span>
+  <h1>Terms of Service</h1>
+  <div class="updated">Last updated: April 24, 2026</div>
 </section>
 
-<div class="wrap">
+<div class="legal">
 
   <div class="toc">
     <h4>Contents</h4>
@@ -147,21 +167,21 @@ footer{background:var(--navy3);padding:40px 24px;}
       <h2><span class="num">02.</span>Content and Copyright</h2>
       <p>All content on the Site (text, images, design, and code) is the property of <span class="hi">Korean Salaryman</span> and is protected by copyright law.</p>
 
-      <h3 style="font-family:'Noto Serif KR',serif;font-size:16px;font-weight:700;color:var(--navy);margin:20px 0 8px;">Permitted Use</h3>
+      <h3>Permitted Use</h3>
       <ul>
         <li>Reading and referencing content for personal, non-commercial use</li>
         <li>Quoting a limited portion <strong>with clear attribution (including the URL)</strong>, provided it is not for commercial purposes</li>
         <li>Sharing links on social media (copying full articles is not allowed)</li>
       </ul>
 
-      <h3 style="font-family:'Noto Serif KR',serif;font-size:16px;font-weight:700;color:var(--navy);margin:20px 0 8px;">Prohibited Use</h3>
+      <h3>Prohibited Use</h3>
       <ul>
         <li>Reproducing or redistributing all or a substantial part of the content without permission</li>
         <li>Collecting or using the content as AI training data without permission</li>
         <li>Editing or modifying the content to create and distribute derivative works without permission</li>
         <li>Using the content for commercial purposes (advertising, resale, etc.) without permission</li>
       </ul>
-      <p style="font-size:12px;color:var(--text3);margin-top:12px;">For permission to quote or reuse content, please contact pride93d@gmail.com.</p>
+      <p style="font-size:0.9rem;color:var(--gray);margin-top:12px;">For permission to quote or reuse content, please contact pride93d@gmail.com.</p>
     </section>
 
     <section id="s3">
@@ -182,20 +202,20 @@ footer{background:var(--navy3);padding:40px 24px;}
       <h2><span class="num">04.</span>Limitation of Liability (Disclaimer)</h2>
       <p>The Site is operated as a <strong>personal blog</strong>, and we are not responsible for the following:</p>
 
-      <h3 style="font-family:'Noto Serif KR',serif;font-size:16px;font-weight:700;color:var(--navy);margin:20px 0 8px;">Accuracy of Information</h3>
+      <h3>Accuracy of Information</h3>
       <ul>
         <li>Content reflects <span class="hi">the author's personal experience and opinion at the time of writing</span></li>
         <li>Any information about life in Korea, culture, or related topics is provided for general informational purposes only and <strong>does not constitute professional advice</strong></li>
         <li>We are not responsible for any decisions or actions you take based on the content of the Site</li>
       </ul>
 
-      <h3 style="font-family:'Noto Serif KR',serif;font-size:16px;font-weight:700;color:var(--navy);margin:20px 0 8px;">External Links</h3>
+      <h3>External Links</h3>
       <ul>
         <li>We are not responsible for issues that arise after you follow an external link from the Site</li>
         <li>Content and privacy practices of linked external sites are governed by those sites' own policies</li>
       </ul>
 
-      <h3 style="font-family:'Noto Serif KR',serif;font-size:16px;font-weight:700;color:var(--navy);margin:20px 0 8px;">Service Interruptions</h3>
+      <h3>Service Interruptions</h3>
       <ul>
         <li>We are not responsible for service interruptions caused by maintenance, network failures, or other circumstances beyond our control</li>
       </ul>
@@ -210,7 +230,7 @@ footer{background:var(--navy3);padding:40px 24px;}
         <li>This <strong>does not add any extra cost to you</strong></li>
         <li>Any products or services we recommend are reviewed by the author, and we share honest opinions regardless of affiliate status</li>
       </ul>
-      <p style="font-size:12px;color:var(--text3);margin-top:12px;">Note: Responsibility for advertising content lies with the advertiser, and the Site is not involved in transactions that result from ads.</p>
+      <p style="font-size:0.9rem;color:var(--gray);margin-top:12px;">Note: Responsibility for advertising content lies with the advertiser, and the Site is not involved in transactions that result from ads.</p>
     </section>
 
     <section id="s6">
@@ -252,23 +272,26 @@ footer{background:var(--navy3);padding:40px 24px;}
 
 <footer>
   <div class="ft">
-    <div>
-      <div class="ft-logo">Korean <span>Salaryman</span></div>
-      <p class="ft-tagline">Korea, as we actually live it.</p>
+    <div class="ft-brand">
+      <a href="/" class="logo">KOREAN<span class="dot">.</span>SALARYMAN</a>
+      <p>Korea, as we actually live it. What's trending, real daily life, and the culture behind it — from the inside.</p>
     </div>
-    <div class="ft-col">
-      <h4>EXPLORE</h4>
-      <a href="category-k-trends.html">K-Trends</a>
-      <a href="category-korean-life.html">Korean Life</a>
-      <a href="category-culture-explained.html">Culture</a>
-      <a href="blog.html">Blog</a>
-    </div>
-    <div class="ft-col">
-      <h4>MORE</h4>
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-      <a href="mailto:pride93d@gmail.com">Contact</a>
-      <a href="https://koreansalaryman.com">한국어판</a>
+    <div class="ft-links">
+      <div class="ft-col">
+        <h4>Categories</h4>
+        <a href="category-k-trends.html">K-Trends</a>
+        <a href="category-korean-life.html">Korean Life</a>
+        <a href="category-culture-explained.html">Culture</a>
+        <a href="category-essay.html">Essays</a>
+      </div>
+      <div class="ft-col">
+        <h4>Site</h4>
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="mailto:pride93d@gmail.com">Contact</a>
+        <a href="https://koreansalaryman.com">한국어판</a>
+      </div>
     </div>
   </div>
   <div class="ft-bottom">
@@ -277,5 +300,8 @@ footer{background:var(--navy3);padding:40px 24px;}
   </div>
 </footer>
 
+<script>
+function toggleMenu(){ document.getElementById('mobileMenu').classList.toggle('open'); }
+</script>
 </body>
 </html>

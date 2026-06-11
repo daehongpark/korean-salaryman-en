@@ -33,131 +33,159 @@
 <meta name="naver-site-verification" content="ad5bce9f4de14cbe7ccf111ca46b1114e52a25ff">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=Noto+Serif+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@700;900&display=swap" rel="stylesheet">
 
 <style>
+/* ═══ Korean Salaryman — design system (Pudding minimal × Dazed type + Hangul signature) ═══ */
 *{box-sizing:border-box;margin:0;padding:0;}
-:root{--white:#fff;--bg:#f8f7f4;--bg2:#f0ede8;--navy:#1a2640;--navy2:#253352;--navy3:#0f1824;--point:#c17f3e;--point2:#d4924e;--point-light:#f5ead8;--green:#2d6a4f;--green-light:#d8f0e5;--text1:#1a1a1a;--text2:#444;--text3:#888;--border:#e8e4de;--border2:#d4cfc8;--gold:#c8a96e;}
+:root{
+  --paper:#FFFFFF;
+  --ink:#0A0A0A;
+  --accent:#FF3D00;
+  --gray:#6B6B6B;
+  --surface:#F6F5F2;
+}
 html{scroll-behavior:smooth;}
-body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text1);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+img{display:block;max-width:100%;}
 
-/* ── Nav (kept consistent with home) ── */
-header{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
-.hd{max-width:1080px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px;}
-.logo{display:flex;flex-direction:column;text-decoration:none;}
-.logo-kr{font-family:'Noto Serif KR',serif;font-size:17px;font-weight:700;color:var(--navy);letter-spacing:-0.02em;}
-.logo-kr span{color:var(--point);}
-.logo-en{font-size:8px;color:var(--text3);letter-spacing:0.25em;margin-top:1px;}
-.desktop-nav{display:flex;align-items:center;gap:2px;}
-.desktop-nav a{color:var(--text2);text-decoration:none;font-size:13px;font-weight:500;padding:6px 14px;border-radius:6px;transition:all 0.15s;}
-.desktop-nav a:hover,.desktop-nav a.active{color:var(--navy);font-weight:700;}
-.nav-divider{width:1px;height:14px;background:var(--border2);margin:0 6px;}
-.btn-cta{display:inline-flex;align-items:center;background:var(--point);color:var(--white);font-size:12px;font-weight:700;padding:8px 18px;border-radius:6px;text-decoration:none;transition:all 0.15s;}
-.btn-cta:hover{background:var(--point2);transform:translateY(-1px);}
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;}
-.hamburger span{display:block;width:20px;height:1.5px;background:var(--navy);border-radius:2px;}
-.mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);padding:12px 20px 20px;flex-direction:column;gap:2px;z-index:99;box-shadow:0 8px 24px rgba(0,0,0,0.08);}
-.mobile-menu a{color:var(--text2);text-decoration:none;font-size:15px;font-weight:500;padding:12px 16px;border-radius:8px;display:block;}
-.mobile-menu .btn-cta{margin-top:8px;justify-content:center;border-radius:8px;}
-.mobile-menu.open{display:flex!important;}
+/* Display + Korean accent utilities */
+.display{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:-0.01em;line-height:0.98;}
+.kr{font-family:'Noto Sans KR',sans-serif;font-weight:900;color:var(--accent);}
+
+/* ── Header ── */
+header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--ink);}
+.hd{max-width:1240px;margin:0 auto;padding:0 28px;height:68px;display:flex;align-items:center;justify-content:space-between;}
+.logo{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:16px;letter-spacing:-0.01em;color:var(--ink);}
+.logo .dot{color:var(--accent);}
+.desktop-nav{display:flex;align-items:center;gap:26px;}
+.desktop-nav a{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink);transition:color 0.15s;}
+.desktop-nav a:hover,.desktop-nav a.active{color:var(--accent);}
+.btn-sub{background:var(--ink);color:var(--paper);padding:10px 18px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;transition:background 0.15s;}
+.btn-sub:hover{background:var(--accent);color:var(--paper);}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
+.hamburger span{display:block;width:22px;height:2px;background:var(--ink);}
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:var(--paper);border-bottom:1px solid var(--ink);padding:14px 28px 24px;flex-direction:column;gap:2px;z-index:99;}
+.mobile-menu a{padding:13px 4px;font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--surface);}
+.mobile-menu a:hover{color:var(--accent);}
+.mobile-menu.open{display:flex;}
+
+/* ── Bilingual category label ── */
+.cat-label{display:inline-flex;align-items:baseline;gap:8px;line-height:1;}
+.cat-label .kr{font-size:0.95em;}
+.cat-label .en{font-size:0.7em;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--ink);}
+
+/* ── Section heading (bilingual) ── */
+.sec-head{display:flex;align-items:baseline;gap:14px;margin:0 0 30px;padding-bottom:14px;border-bottom:2px solid var(--ink);}
+.sec-head .kr{font-size:1.5rem;line-height:1;}
+.sec-head .en{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:1.05rem;color:var(--ink);}
 
 /* ── Hero ── */
-.hero{background:var(--navy3);padding:60px 24px 52px;position:relative;overflow:hidden;}
-.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.03) 1px,transparent 1px);background-size:28px 28px;}
-.hero-glow{position:absolute;right:-150px;top:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(193,127,62,0.18),transparent 65%);}
-.hero-inner{max-width:760px;margin:0 auto;position:relative;z-index:1;}
-.hero-badge{display:inline-flex;align-items:center;background:rgba(193,127,62,0.15);border:1px solid rgba(193,127,62,0.3);padding:5px 14px;border-radius:100px;margin-bottom:20px;}
-.hero-badge span{font-size:11px;color:var(--gold);letter-spacing:0.15em;font-weight:600;}
-.hero h1{font-family:'Noto Serif KR',serif;font-size:36px;font-weight:900;color:var(--white);line-height:1.25;letter-spacing:-0.03em;margin-bottom:14px;}
-.hero h1 em{color:var(--point);font-style:normal;}
-.hero-desc{font-size:14px;color:rgba(255,255,255,0.55);line-height:1.85;max-width:520px;}
+.hero{position:relative;max-width:1240px;margin:0 auto;padding:96px 28px 60px;overflow:hidden;}
+.hero-ko{position:absolute;top:52%;left:50%;transform:translate(-50%,-50%);font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:clamp(7rem,23vw,19rem);color:transparent;-webkit-text-stroke:1.5px #ECEAE5;text-stroke:1.5px #ECEAE5;white-space:nowrap;z-index:0;pointer-events:none;user-select:none;}
+.hero-inner{position:relative;z-index:1;}
+.hero-eyebrow{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;color:var(--accent);margin-bottom:22px;}
+.hero h1{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:-0.01em;font-size:clamp(2.6rem,6.5vw,5rem);line-height:0.98;color:var(--ink);margin-bottom:24px;}
+.hero h1 em,.hero h1 .accent{color:var(--accent);font-style:normal;}
+.hero-sub{font-size:clamp(1.05rem,2vw,1.3rem);line-height:1.55;color:var(--gray);max-width:640px;font-weight:400;}
+.hero-sub b{color:var(--ink);font-weight:600;}
 
-.wrap{max-width:1080px;margin:0 auto;padding:40px 24px 60px;}
+/* ── Category nav strip ── */
+.catnav{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);}
+.catnav-inner{max-width:1240px;margin:0 auto;padding:0 28px;display:flex;overflow-x:auto;scrollbar-width:none;}
+.catnav-inner::-webkit-scrollbar{display:none;}
+.catnav-item{padding:18px 0;margin-right:30px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray);white-space:nowrap;cursor:pointer;border:none;border-bottom:3px solid transparent;background:none;font-family:inherit;display:flex;align-items:baseline;gap:7px;text-decoration:none;}
+.catnav-item .kr{font-size:14px;color:var(--gray);transition:color 0.15s;}
+.catnav-item:hover,.catnav-item:hover .kr{color:var(--ink);}
+.catnav-item.active{color:var(--ink);border-bottom-color:var(--accent);}
+.catnav-item.active .kr{color:var(--accent);}
+.catnav-item .cnt{font-size:11px;color:var(--gray);font-weight:700;}
 
-/* ── Category tabs ── */
-.cat-tabs{display:flex;gap:8px;margin-bottom:28px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin;}
-.cat-tabs::-webkit-scrollbar{height:4px;}
-.cat-tabs::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
-.cat-tab{flex-shrink:0;background:var(--white);border:1px solid var(--border);color:var(--text2);font-size:13px;font-weight:500;padding:10px 18px;border-radius:100px;cursor:pointer;transition:all 0.15s;display:inline-flex;align-items:center;gap:6px;text-decoration:none;}
-.cat-tab:hover{border-color:var(--point);color:var(--navy);}
-.cat-tab.active{background:var(--navy);color:var(--white);border-color:var(--navy);font-weight:700;}
-.cat-tab .count{font-size:11px;opacity:0.7;font-weight:500;}
-.cat-tab.active .count{opacity:0.9;}
-
-/* ── Search + sort ── */
-.controls{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;}
+/* ── Controls (search + sort) ── */
+.controls{display:flex;gap:14px;margin:0 0 26px;flex-wrap:wrap;}
 .search-wrap{flex:1;min-width:240px;position:relative;}
-.search-input{width:100%;background:var(--white);border:1px solid var(--border);border-radius:10px;padding:12px 42px 12px 44px;font-size:14px;color:var(--text1);font-family:inherit;transition:border-color 0.15s;}
-.search-input:focus{outline:none;border-color:var(--point);}
-.search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--text3);}
-.search-clear{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:var(--bg2);border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;color:var(--text3);font-size:14px;display:none;align-items:center;justify-content:center;}
+.search-input{width:100%;background:var(--paper);border:1px solid var(--ink);border-radius:0;padding:14px 42px 14px 44px;font-size:15px;color:var(--ink);font-family:inherit;transition:border-color 0.15s;}
+.search-input:focus{outline:none;border-color:var(--accent);}
+.search-input::placeholder{color:var(--gray);}
+.search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--gray);font-weight:700;}
+.search-clear{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:var(--surface);border:none;border-radius:50%;width:24px;height:24px;cursor:pointer;color:var(--gray);font-size:13px;display:none;align-items:center;justify-content:center;}
 .search-clear.show{display:flex;}
-.search-clear:hover{background:var(--border);}
-.sort-select{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:12px 16px;font-size:14px;color:var(--text2);font-family:inherit;cursor:pointer;}
-.sort-select:focus{outline:none;border-color:var(--point);}
+.search-clear:hover{background:var(--accent);color:var(--paper);}
+.sort-select{background:var(--paper);border:1px solid var(--ink);border-radius:0;padding:14px 16px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink);font-family:inherit;cursor:pointer;}
+.sort-select:focus{outline:none;border-color:var(--accent);}
 
-/* ── Result count ── */
-.result-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
-.result-count{font-size:13px;color:var(--text3);}
-.result-count strong{color:var(--navy);font-weight:700;}
-.result-tag{font-size:11px;padding:4px 10px;background:var(--point-light);color:var(--point);border-radius:100px;font-weight:700;}
+/* ── Result meta ── */
+.result-meta{display:flex;align-items:center;justify-content:space-between;margin:0 0 30px;padding-bottom:14px;border-bottom:2px solid var(--ink);}
+.result-count{font-size:13px;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray);font-weight:600;}
+.result-count strong{color:var(--ink);font-weight:700;}
+.result-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);}
 
-/* ── Post cards (with thumbnail) ── */
-.post-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:40px;}
-.post-card{background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:all 0.2s;text-decoration:none;color:inherit;display:flex;flex-direction:column;}
-.post-card:hover{border-color:var(--border2);box-shadow:0 6px 24px rgba(0,0,0,0.08);transform:translateY(-2px);}
-.post-thumb-box{width:100%;aspect-ratio:1200/630;background:linear-gradient(135deg,var(--navy),var(--navy2));position:relative;overflow:hidden;}
-.post-thumb-box img{width:100%;height:100%;object-fit:cover;display:block;}
-.post-thumb-box .fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:48px;}
-.post-thumb-box .fallback-glow{position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(193,127,62,0.3),transparent 65%);}
-.post-body{padding:16px 18px 18px;flex:1;display:flex;flex-direction:column;}
-.post-cat-badge{font-size:10px;font-weight:700;color:var(--point);letter-spacing:0.1em;margin-bottom:6px;display:block;}
-.post-card h3{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:600;color:var(--text1);line-height:1.5;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.post-summary{font-size:12px;color:var(--text3);line-height:1.6;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1;}
-.post-meta-row{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text3);margin-top:auto;padding-top:10px;border-top:1px solid var(--border);}
-.dot{width:3px;height:3px;border-radius:50%;background:var(--border2);}
-.seo-badge{margin-left:auto;background:var(--point-light);color:var(--point);padding:2px 8px;border-radius:100px;font-size:10px;font-weight:700;}
-
-/* ── Empty state ── */
-.empty-state{text-align:center;padding:60px 24px;background:var(--white);border:1px dashed var(--border2);border-radius:14px;}
-.empty-icon{font-size:44px;margin-bottom:16px;opacity:0.3;}
-.empty-title{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:8px;}
-.empty-desc{font-size:13px;color:var(--text3);line-height:1.6;}
-.empty-desc a{color:var(--point);font-weight:600;text-decoration:none;}
+/* ── Card grid ── */
+.grid-wrap{max-width:1240px;margin:0 auto;padding:40px 28px 90px;}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px 36px;}
+.card{display:block;cursor:pointer;}
+.card-media{aspect-ratio:3/2;background:var(--surface);overflow:hidden;position:relative;margin-bottom:16px;}
+.card-media img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;}
+.card:hover .card-media img{transform:scale(1.05);}
+.card-media .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:2.6rem;color:#E2DFD8;}
+.card-cat{margin-bottom:11px;font-size:0.92rem;}
+.card h3{font-family:'Inter',sans-serif;font-weight:700;font-size:1.28rem;line-height:1.25;letter-spacing:-0.01em;color:var(--ink);transition:color 0.2s;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.card:hover h3{color:var(--accent);}
+.card-sum{margin-top:10px;font-size:0.95rem;line-height:1.55;color:var(--gray);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.card-meta{margin-top:13px;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray);display:flex;align-items:center;gap:8px;}
+.card-meta .seo-badge{color:var(--accent);font-weight:700;}
 
 /* ── Pagination ── */
-.pagination{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:36px;}
-.page-btn{background:var(--white);border:1px solid var(--border);color:var(--text2);font-size:13px;font-weight:500;width:36px;height:36px;border-radius:8px;cursor:pointer;transition:all 0.15s;display:inline-flex;align-items:center;justify-content:center;font-family:inherit;}
-.page-btn:hover:not(:disabled){border-color:var(--point);color:var(--navy);}
-.page-btn.active{background:var(--navy);color:var(--white);border-color:var(--navy);font-weight:700;}
-.page-btn:disabled{opacity:0.35;cursor:not-allowed;}
-.page-btn.arrow{width:auto;padding:0 12px;}
-.page-ellipsis{color:var(--text3);padding:0 4px;}
+.pagination{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:54px;}
+.page-btn{background:var(--paper);border:1px solid var(--ink);color:var(--ink);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;min-width:40px;height:40px;border-radius:0;cursor:pointer;transition:all 0.15s;display:inline-flex;align-items:center;justify-content:center;font-family:inherit;padding:0 12px;}
+.page-btn:hover:not(:disabled){background:var(--ink);color:var(--paper);}
+.page-btn.active{background:var(--accent);color:var(--paper);border-color:var(--accent);}
+.page-btn:disabled{opacity:0.3;cursor:not-allowed;}
+.page-ellipsis{color:var(--gray);padding:0 4px;}
+
+/* ── Empty / error state ── */
+.empty{text-align:center;padding:90px 24px;color:var(--gray);}
+.empty .kr{font-size:3rem;display:block;margin-bottom:14px;}
+.empty .empty-title{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:1.4rem;color:var(--ink);margin-bottom:10px;}
+.empty a{color:var(--accent);font-weight:700;}
+
+/* ── Skeleton ── */
+.skeleton{background:linear-gradient(90deg,var(--surface) 25%,#ECEAE5 50%,var(--surface) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel-card{aspect-ratio:3/2;margin-bottom:16px;}
 
 /* ── Footer ── */
-footer{background:var(--navy3);padding:48px 24px;}
-.ft{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;}
-.ft-logo{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;color:var(--white);margin-bottom:8px;}
-.ft-logo span{color:var(--point);}
-.ft-tagline{font-size:12px;color:rgba(255,255,255,0.3);line-height:1.8;}
-.ft-col h4{font-size:12px;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:0.15em;margin-bottom:14px;}
-.ft-col a{display:block;font-size:13px;color:rgba(255,255,255,0.35);text-decoration:none;margin-bottom:8px;transition:color 0.15s;}
-.ft-col a:hover{color:rgba(255,255,255,0.7);}
-.ft-bottom{max-width:1080px;margin:36px auto 0;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,0.2);}
+footer{background:var(--paper);border-top:1px solid var(--ink);padding:58px 28px 40px;}
+.ft{max-width:1240px;margin:0 auto;display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;}
+.ft-brand .logo{font-size:20px;}
+.ft-brand p{margin-top:14px;font-size:13px;color:var(--gray);max-width:300px;line-height:1.7;}
+.ft-links{display:flex;gap:54px;flex-wrap:wrap;}
+.ft-col h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--gray);margin-bottom:15px;}
+.ft-col a{display:block;font-size:14px;font-weight:500;margin-bottom:9px;color:var(--ink);transition:color 0.15s;}
+.ft-col a:hover{color:var(--accent);}
+.ft-bottom{max-width:1240px;margin:42px auto 0;padding-top:24px;border-top:1px solid var(--surface);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--gray);text-transform:uppercase;letter-spacing:0.06em;}
 
 /* ── Responsive ── */
-@media(max-width:768px){
-  .desktop-nav{display:none!important;}
-  .hamburger{display:flex!important;}
-  .hero h1{font-size:26px;}
-  .hero{padding:44px 24px 40px;}
-  .wrap{padding:28px 16px 44px;}
-  .post-grid{grid-template-columns:1fr;gap:14px;}
-  .ft{grid-template-columns:1fr!important;gap:28px;}
-  .ft-bottom{flex-direction:column;gap:8px;}
+@media(max-width:900px){
+  .grid{grid-template-columns:repeat(2,1fr);gap:40px 28px;}
+}
+@media(max-width:680px){
+  body{font-size:17px;}
+  .desktop-nav{display:none;}
+  .hamburger{display:flex;}
+  .hd{padding:0 18px;}
+  .hero{padding:60px 20px 44px;}
+  .hero-ko{font-size:clamp(5rem,32vw,9rem);}
+  .catnav-inner{padding:0 18px;}
+  .grid-wrap{padding-left:18px;padding-right:18px;padding-top:28px;}
+  .grid{grid-template-columns:1fr;gap:44px;}
   .controls{flex-direction:column;}
   .search-wrap{min-width:100%;}
   .result-meta{flex-direction:column;align-items:flex-start;gap:10px;}
+  .ft{flex-direction:column;}
+  .ft-bottom{flex-direction:column;gap:8px;}
 }
 </style>
 
@@ -177,20 +205,16 @@ footer{background:var(--navy3);padding:48px 24px;}
 
 <header>
   <div class="hd">
-    <a href="/" class="logo">
-      <div class="logo-kr">Korean <span>Salaryman</span></div>
-      <div class="logo-en">KOREA, AS WE ACTUALLY LIVE IT</div>
-    </a>
+    <a href="/" class="logo">KOREAN<span class="dot">.</span>SALARYMAN</a>
     <nav class="desktop-nav">
       <a href="blog.html" class="active">Blog</a>
       <a href="category-k-trends.html">K-Trends</a>
       <a href="category-korean-life.html">Korean Life</a>
       <a href="category-culture-explained.html">Culture</a>
       <a href="about.html">About</a>
-      <div class="nav-divider"></div>
-      <a href="#newsletter" class="btn-cta">Subscribe</a>
+      <a href="#newsletter" class="btn-sub">Subscribe</a>
     </nav>
-    <button class="hamburger" onclick="toggleMenu()">
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -202,31 +226,33 @@ footer{background:var(--navy3);padding:48px 24px;}
   <a href="category-korean-life.html">Korean Life</a>
   <a href="category-culture-explained.html">Culture</a>
   <a href="about.html">About</a>
-  <a href="#newsletter" class="btn-cta">Subscribe</a>
+  <a href="#newsletter">Subscribe</a>
 </div>
 
 <!-- ── Hero ── -->
 <section class="hero">
-  <div class="hero-glow"></div>
+  <div class="hero-ko" aria-hidden="true">블로그</div>
   <div class="hero-inner">
-    <div class="hero-badge"><span id="hero-badge-text">ALL POSTS</span></div>
+    <div class="hero-eyebrow"><span class="kr">블로그</span> &nbsp;·&nbsp; <span id="hero-badge-text">ALL POSTS</span></div>
     <h1 id="hero-title">Korea, <em>as we actually</em> live it</h1>
-    <p class="hero-desc" id="hero-desc">Trends, daily life, and the culture behind it — every post written from the inside by an anonymous Seoul salaryman, for a global audience.</p>
+    <p class="hero-sub" id="hero-desc">Trends, daily life, and the culture behind it — every post written from the inside by an anonymous Seoul salaryman, for a global audience.</p>
   </div>
 </section>
 
-<div class="wrap">
-
-  <!-- ── Category tabs ── -->
-  <div class="cat-tabs" id="cat-tabs">
-    <div style="font-size:12px;color:var(--text3);padding:10px;">Loading categories...</div>
+<!-- ── Category nav ── -->
+<div class="catnav">
+  <div class="catnav-inner" id="cat-tabs">
+    <span class="catnav-item">Loading…</span>
   </div>
+</div>
+
+<div class="grid-wrap">
 
   <!-- ── Search + sort ── -->
   <div class="controls">
     <div class="search-wrap">
-      <span class="search-icon">🔍</span>
-      <input type="text" class="search-input" id="search-input" placeholder="Search by title, summary, or tag..." autocomplete="off">
+      <span class="search-icon">⌕</span>
+      <input type="text" class="search-input" id="search-input" placeholder="Search by title, summary, or tag…" autocomplete="off">
       <button type="button" class="search-clear" id="search-clear" aria-label="Clear search">✕</button>
     </div>
     <select class="sort-select" id="sort-select" aria-label="Sort">
@@ -245,7 +271,11 @@ footer{background:var(--navy3);padding:48px 24px;}
 
   <!-- ── Post grid ── -->
   <div id="post-grid-container">
-    <div style="text-align:center;padding:40px;color:var(--text3);font-size:13px;">Loading posts...</div>
+    <div class="grid">
+      <div><div class="skeleton skel-card"></div></div>
+      <div><div class="skeleton skel-card"></div></div>
+      <div><div class="skeleton skel-card"></div></div>
+    </div>
   </div>
 
   <!-- ── Pagination ── -->
@@ -255,25 +285,26 @@ footer{background:var(--navy3);padding:48px 24px;}
 
 <footer>
   <div class="ft">
-    <div>
-      <div class="ft-logo">Korean <span>Salaryman</span></div>
-      <p class="ft-tagline">Korea, as we actually live it.</p>
+    <div class="ft-brand">
+      <a href="/" class="logo">KOREAN<span class="dot">.</span>SALARYMAN</a>
+      <p>Korea, as we actually live it. What's trending, real daily life, and the culture behind it — from the inside.</p>
     </div>
-    <div class="ft-col">
-      <h4>CATEGORIES</h4>
-      <a href="category-k-trends.html">🔥 K-Trends</a>
-      <a href="category-korean-life.html">🍚 Korean Life</a>
-      <a href="category-culture-explained.html">🧭 Culture</a>
-      <a href="category-essay.html">✍️ Essays</a>
-    </div>
-    <div class="ft-col">
-      <h4>SITE</h4>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-      <a href="mailto:pride93d@gmail.com">Contact</a>
-      <a href="https://koreansalaryman.com">한국어판</a>
+    <div class="ft-links">
+      <div class="ft-col">
+        <h4>Categories</h4>
+        <a href="category-k-trends.html">K-Trends</a>
+        <a href="category-korean-life.html">Korean Life</a>
+        <a href="category-culture-explained.html">Culture</a>
+        <a href="category-essay.html">Essays</a>
+      </div>
+      <div class="ft-col">
+        <h4>Site</h4>
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="mailto:pride93d@gmail.com">Contact</a>
+        <a href="https://koreansalaryman.com">한국어판</a>
+      </div>
     </div>
   </div>
   <div class="ft-bottom">
@@ -290,9 +321,14 @@ function toggleMenu(){ document.getElementById('mobileMenu').classList.toggle('o
  * ═══════════════════════════════════════════════════════ */
 
 const PER_PAGE = 12;
-const CATEGORY_EMOJI = {
-  'all':'📚',
-  'k-trends':'🔥','korean-life':'🍚','culture-explained':'🧭','essay':'✍️'
+
+/* ── Category metadata (bilingual labels: 한글 + EN) ── */
+const CAT_META = {
+  'all':               { kr:'전체', en:'All' },
+  'k-trends':          { kr:'트렌드', en:'K-Trends' },
+  'korean-life':       { kr:'일상',   en:'Korean Life' },
+  'culture-explained': { kr:'문화',   en:'Culture Explained' },
+  'essay':             { kr:'에세이', en:'Essay' },
 };
 
 const CATEGORY_LABEL = {
@@ -309,6 +345,8 @@ const CATEGORY_META = {
   'culture-explained': { title:'Culture — Korean Salaryman', desc:'The culture behind it — the history, habits, and unspoken rules that explain how Korea actually works.', hero:'The <em>culture</em> behind it' },
   'essay':             { title:'Essays — Korean Salaryman', desc:'Personal essays from a Seoul salaryman — honest reflections on living and working in Korea.', hero:'Personal <em>essays</em> from Seoul' }
 };
+
+const GLYPHS = ['월','급','쟁','이','한','국'];
 
 let allPosts = [];
 let currentCat = 'all';
@@ -352,10 +390,8 @@ function formatDate(s){
   if (!s) return '—';
   try {
     const d = new Date(s);
-    const y = d.getFullYear();
-    const m = String(d.getMonth()+1).padStart(2,'0');
-    const day = String(d.getDate()).padStart(2,'0');
-    return `${y}.${m}.${day}`;
+    const m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${m[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
   } catch(e) { return '—'; }
 }
 
@@ -370,6 +406,23 @@ function escapeHtml(s){
   return String(s||'').replace(/[&<>"']/g, c => (
     {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]
   ));
+}
+
+/* ─ Bilingual category label (한글 + EN) ─ */
+function catLabel(cat){
+  const m = CAT_META[cat];
+  if (!m) return `<span class="cat-label"><span class="en">${escapeHtml(cat||'')}</span></span>`;
+  return `<span class="cat-label"><span class="kr">${m.kr}</span><span class="en">${m.en}</span></span>`;
+}
+
+/* ─ Thumbnail or Korean-glyph placeholder ─ */
+function thumbOf(p, glyph){
+  const t = p.thumbnail;
+  if (t) {
+    return `<img src="${escapeHtml(t)}" alt="${escapeHtml(p.title||'')}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+            <div class="ph" style="display:none;">${glyph||'월'}</div>`;
+  }
+  return `<div class="ph">${glyph||'월'}</div>`;
 }
 
 /* ─ Dynamically update SEO meta tags ─ */
@@ -410,16 +463,14 @@ function renderCategoryTabs(){
   container.innerHTML = cats.map(cat => {
     const active = cat === currentCat ? 'active' : '';
     const count = counts[cat] || 0;
-    const label = CATEGORY_LABEL[cat] || cat;
-    return `<a href="blog.html${cat === 'all' ? '' : '?cat=' + encodeURIComponent(cat)}" class="cat-tab ${active}" data-cat="${escapeHtml(cat)}">
-      <span>${CATEGORY_EMOJI[cat] || '📝'}</span>
-      <span>${escapeHtml(label)}</span>
-      <span class="count">${count}</span>
+    const m = CAT_META[cat] || { kr:'', en:(CATEGORY_LABEL[cat] || cat) };
+    return `<a href="blog.html${cat === 'all' ? '' : '?cat=' + encodeURIComponent(cat)}" class="catnav-item ${active}" data-cat="${escapeHtml(cat)}">
+      <span class="kr">${m.kr}</span> ${m.en} <span class="cnt">${count}</span>
     </a>`;
   }).join('');
-  
+
   // Tabs are real links (for SEO), but handled smoothly via JS events
-  container.querySelectorAll('.cat-tab').forEach(el => {
+  container.querySelectorAll('.catnav-item').forEach(el => {
     el.addEventListener('click', (e) => {
       e.preventDefault();
       currentCat = el.dataset.cat;
@@ -456,7 +507,7 @@ function getFilteredPosts(){
       return title.includes(q) || summary.includes(q) || keyword.includes(q) || tags.includes(q);
     });
   }
-  
+
   // Sort
   if (currentSort === 'latest') {
     result.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
@@ -467,7 +518,7 @@ function getFilteredPosts(){
   } else if (currentSort === 'title') {
     result.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
   }
-  
+
   return result;
 }
 
@@ -481,13 +532,13 @@ function renderPosts(){
   const countEl = document.getElementById('result-count');
   const tagEl = document.getElementById('result-tag');
   if (currentSearch) {
-    countEl.innerHTML = `<strong>${totalCount}</strong> result${totalCount === 1 ? '' : 's'} for '<strong>${escapeHtml(currentSearch)}</strong>'`;
-    tagEl.textContent = '🔍 Search';
+    countEl.innerHTML = `<strong>${totalCount}</strong> result${totalCount === 1 ? '' : 's'} for "<strong>${escapeHtml(currentSearch)}</strong>"`;
+    tagEl.textContent = 'Search';
     tagEl.style.display = 'inline-block';
   } else if (currentCat !== 'all') {
     const _label = CATEGORY_LABEL[currentCat] || currentCat;
     countEl.innerHTML = `<strong>${totalCount}</strong> post${totalCount === 1 ? '' : 's'} in <strong>${escapeHtml(_label)}</strong>`;
-    tagEl.textContent = CATEGORY_EMOJI[currentCat] || '📁';
+    tagEl.textContent = _label;
     tagEl.style.display = 'inline-block';
   } else {
     countEl.innerHTML = `<strong>${totalCount}</strong> post${totalCount === 1 ? '' : 's'} in total`;
@@ -496,13 +547,12 @@ function renderPosts(){
 
   if (totalCount === 0) {
     container.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-icon">📭</div>
+      <div class="empty">
+        <span class="kr">텅</span>
         <div class="empty-title">No posts found</div>
-        <div class="empty-desc">
-          There are no posts ${currentSearch ? `matching '${escapeHtml(currentSearch)}'` : 'in this category'} yet.<br>
+        <p>There are no posts ${currentSearch ? `matching "${escapeHtml(currentSearch)}"` : 'in this category'} yet.<br>
           <a href="blog.html">View all posts</a>
-        </div>
+        </p>
       </div>`;
     document.getElementById('pagination').innerHTML = '';
     return;
@@ -514,40 +564,31 @@ function renderPosts(){
   const startIdx = (currentPage - 1) * PER_PAGE;
   const pagePosts = filtered.slice(startIdx, startIdx + PER_PAGE);
 
-  // Card HTML
-  let html = '<div class="post-grid">';
-  pagePosts.forEach(p => {
-    const emoji = CATEGORY_EMOJI[p.category] || '📝';
-    const _catLabel = CATEGORY_LABEL[p.category] || (p.category || '');
-    const thumbnail = p.thumbnail;
+  // Card HTML — uses shared .grid/.card classes from index.html
+  let html = '<div class="grid">';
+  pagePosts.forEach((p, i) => {
+    const glyph = GLYPHS[(startIdx + i) % GLYPHS.length];
+    const slug = p.slug || p.filename.replace(/\.json$/,'');
     const seoScore = (typeof p.seo_score === 'number' && p.seo_score > 0)
       ? `<span class="seo-badge" title="SEO score">⚡ ${Math.round(p.seo_score)}</span>` : '';
-    
+
     html += `
-      <a class="post-card" href="/p/${encodeURIComponent(p.slug || p.filename.replace(/\.json$/,''))}.html">
-        <div class="post-thumb-box">
-          ${thumbnail 
-            ? `<img src="${escapeHtml(thumbnail)}" alt="${escapeHtml(p.title||'')}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-               <div class="fallback" style="display:none;"><div class="fallback-glow"></div><span>${emoji}</span></div>`
-            : `<div class="fallback"><div class="fallback-glow"></div><span>${emoji}</span></div>`
-          }
-        </div>
-        <div class="post-body">
-          <span class="post-cat-badge">${escapeHtml(_catLabel)}</span>
-          <h3>${escapeHtml(p.title||'')}</h3>
-          ${p.summary ? `<div class="post-summary">${escapeHtml(p.summary.slice(0,100))}</div>` : ''}
-          <div class="post-meta-row">
-            <span>${formatDate(p.created_at)}</span>
-            <div class="dot"></div>
-            <span>${readTime(p.summary||'')}</span>
-            ${seoScore}
-          </div>
+      <a class="card" href="/p/${encodeURIComponent(slug)}.html">
+        <div class="card-media">${thumbOf(p, glyph)}</div>
+        <div class="card-cat">${catLabel(p.category)}</div>
+        <h3>${escapeHtml(p.title||'')}</h3>
+        ${p.summary ? `<p class="card-sum">${escapeHtml(p.summary.slice(0,120))}</p>` : ''}
+        <div class="card-meta">
+          <span>${formatDate(p.created_at)}</span>
+          <span>·</span>
+          <span>${readTime(p.summary||'')}</span>
+          ${seoScore}
         </div>
       </a>`;
   });
   html += '</div>';
   container.innerHTML = html;
-  
+
   renderPagination(totalPages);
 }
 
@@ -559,7 +600,7 @@ function renderPagination(totalPages){
   let html = '';
 
   // Previous button
-  html += `<button class="page-btn arrow" ${currentPage === 1 ? 'disabled' : ''} onclick="goToPage(${currentPage - 1})">← Prev</button>`;
+  html += `<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="goToPage(${currentPage - 1})">← Prev</button>`;
 
   // Page numbers (smart display: ±2 around current + first/last)
   const pages = new Set([1, totalPages]);
@@ -573,10 +614,10 @@ function renderPagination(totalPages){
     html += `<button class="page-btn ${p === currentPage ? 'active' : ''}" onclick="goToPage(${p})">${p}</button>`;
     prev = p;
   });
-  
+
   // Next button
-  html += `<button class="page-btn arrow" ${currentPage === totalPages ? 'disabled' : ''} onclick="goToPage(${currentPage + 1})">Next →</button>`;
-  
+  html += `<button class="page-btn" ${currentPage === totalPages ? 'disabled' : ''} onclick="goToPage(${currentPage + 1})">Next →</button>`;
+
   container.innerHTML = html;
 }
 
@@ -611,7 +652,8 @@ async function init(){
     allPosts = await res.json();
   } catch(e){
     document.getElementById('post-grid-container').innerHTML =
-      '<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Could not load posts</div><div class="empty-desc">Please try again in a moment.</div></div>';
+      '<div class="empty"><span class="kr">오류</span><div class="empty-title">Could not load posts</div><p>Please try again in a moment.</p></div>';
+    document.getElementById('cat-tabs').innerHTML = '';
     console.error('[Blog] manifest load failed', e);
     return;
   }
@@ -638,7 +680,7 @@ async function init(){
     updateURL();
     renderPosts();
   });
-  
+
   // First render
   updateSEOMeta();
   renderCategoryTabs();
