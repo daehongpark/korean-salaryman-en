@@ -1119,6 +1119,8 @@ def _generate_ko_review(title: str, content_text: str) -> str:
     prompt = (
         "다음 영어 블로그 글을 한국어로 충실히 번역하세요. 검수용이므로 자연스러움보다 "
         "원문 충실도를 우선합니다. 의역하지 말고 원문 내용을 빠짐없이 옮기세요. "
+        "글 전체를 처음부터 끝까지 번역하고, 절대 중간에 요약하거나 생략하거나 "
+        "'(이하 생략)' 같은 표현으로 줄이지 마세요. 마지막 문장까지 모두 번역해야 합니다. "
         "HTML 태그는 무시하고 텍스트 의미만 번역합니다. 제목 번역도 맨 첫 줄에 넣으세요.\n\n"
         f"[영어 제목]\n{title}\n\n[영어 본문]\n{content_text}"
     )
@@ -1128,12 +1130,20 @@ def _generate_ko_review(title: str, content_text: str) -> str:
     )
     payload = {
         "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"temperature": 0.3, "topP": 0.9, "maxOutputTokens": 8192},
+        "generationConfig": {
+            "temperature": 0.3,
+            "topP": 0.9,
+            # 긴 한글 전문 번역은 길어서 한도 상향. 2.5-flash는 thinking 토큰도
+            # maxOutputTokens에 포함되므로, 번역(추론 불필요)은 thinking을 꺼서
+            # 출력 한도를 전부 본문에 쓴다 (본진에서 겪은 잘림 함정 해결).
+            "maxOutputTokens": 16384,
+            "thinkingConfig": {"thinkingBudget": 0},
+        },
     }
     for attempt in range(3):
         try:
             r = requests.post(url, headers={"Content-Type": "application/json"},
-                              json=payload, timeout=60)
+                              json=payload, timeout=90)
             if r.status_code in (500, 503):
                 print(f"   [ko_review API {r.status_code}] 재시도 {attempt+1}/3")
                 time.sleep(8 * (attempt + 1))
@@ -1144,9 +1154,15 @@ def _generate_ko_review(title: str, content_text: str) -> str:
             if r.status_code != 200:
                 print(f"   [ko_review API {r.status_code}] → 검수본 생략")
                 return ""
-            text = r.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
+            cand = (r.json().get("candidates") or [{}])[0]
+            finish = cand.get("finishReason", "")
+            parts = (cand.get("content") or {}).get("parts") or [{}]
+            text = "".join(p.get("text", "") for p in parts).strip()
+            if finish == "MAX_TOKENS":
+                print(f"   [ko_review ⚠ 경고] 응답이 출력 한도(MAX_TOKENS)에서 잘림 "
+                      f"({len(text)}자). maxOutputTokens 추가 상향 검토 필요.")
             if text:
-                print(f"   [ko_review] 한글 검수본 생성 ({len(text)}자)")
+                print(f"   [ko_review] 한글 검수본 생성 ({len(text)}자, finish={finish or '?'})")
             return text
         except Exception as e:
             print(f"   [ko_review 실패] {e} → 검수본 생략")
@@ -1826,6 +1842,10 @@ def finalize_article(article: dict, hero_image: dict | None = None, body_images:
 
     if hero_image:
         article["hero_image"] = hero_image
+        # 포스트 JSON을 자체 완결형으로: 썸네일 URL을 top-level에도 저장한다.
+        # (manifest 조인 없이 og:image/프론트가 post.thumbnail을 직접 읽을 수 있게)
+        if hero_image.get("url"):
+            article["thumbnail"] = hero_image["url"]
 
     # 본문 이미지 메타데이터 저장 (None 제외)
     if body_images:
