@@ -2205,7 +2205,10 @@ def _already_ran_today():
 
 
 def run_daily():
-    if _already_ran_today():
+    force = os.getenv("FORCE_POST", "").lower() == "true"
+    if force:
+        print("[FORCE_POST] 일일 중복 가드 우회 — 강제 1편 생성 (수동 검증/트리거용)")
+    if not force and _already_ran_today():
         print(f"[SKIP] 오늘 이미 {POSTS_PER_DAY}편 생성 완료 — 다른 cron이 이미 실행했음")
         sys.exit(0)
 

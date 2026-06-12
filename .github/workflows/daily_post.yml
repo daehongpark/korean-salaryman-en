@@ -15,6 +15,12 @@ on:
         description: '오늘 생성할 글 수 (기본 1)'
         required: false
         default: '1'
+      force:
+        description: '일일 중복 가드 우회 강제 생성 (수동 검증용)'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['true', 'false']
 
 jobs:
   generate:
@@ -86,6 +92,8 @@ jobs:
       - name: 글 자동 생성 실행
         run: python automation.py
         env:
+          # 수동 트리거에서 force=true면 일일 중복 가드 우회
+          FORCE_POST:          ${{ github.event.inputs.force || 'false' }}
           # .env 외에 환경변수로도 전달 (이중 안전장치)
           NAVER_CLIENT_ID:     ${{ secrets.NAVER_CLIENT_ID }}
           NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
