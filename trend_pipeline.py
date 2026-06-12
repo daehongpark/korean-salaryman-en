@@ -287,24 +287,33 @@ def convert_trends_to_topics_en(category: str, foreign_interest: list,
             "topP": 0.9,
             "maxOutputTokens": 4000,
             "responseMimeType": "application/json",
+            # thinking off: lightweight task + avoids 2.5-flash thinking-token trap +
+            # lighter load against the recurring "high demand" 503 spikes.
+            "thinkingConfig": {"thinkingBudget": 0},
         },
     }
 
-    for attempt in range(3):
+    # 2.5-flash hits intermittent "high demand" 503 spikes → 5 retries + longer
+    # backoff to ride out the spike window (root cause of trend adoption = 0).
+    MAX_RETRY = 5
+    for attempt in range(MAX_RETRY):
         try:
             r = requests.post(url, headers={"Content-Type": "application/json"},
                               json=payload, timeout=45)
             if r.status_code in (500, 503):
-                # transient overload → backoff retry (503 spikes clear in ~tens of sec)
-                print(f"   [trend->topics API {r.status_code}] retry {attempt+1}/3")
-                time.sleep(8 * (attempt + 1))
-                continue
+                wait = min(45, 9 * (attempt + 1))
+                if attempt < MAX_RETRY - 1:
+                    print(f"   [trend->topics API {r.status_code}] retry {attempt+1}/{MAX_RETRY} (wait {wait}s)")
+                    time.sleep(wait)
+                    continue
+                print(f"   [trend->topics fail] {r.status_code} all {MAX_RETRY} retries failed (high-demand spike) → seed fallback")
+                return []
             if r.status_code == 429:
                 # credit/quota depletion → graceful empty (don't crash the run)
-                print("   [trend->topics] 429 rate/credit limit → empty")
+                print("   [trend->topics] 429 rate/credit limit → seed fallback")
                 return []
             if r.status_code != 200:
-                print(f"   [trend->topics API {r.status_code}]")
+                print(f"   [trend->topics API {r.status_code}] → seed fallback")
                 return []
             text = r.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
             text = re.sub(r"^```(?:json)?\s*", "", text)

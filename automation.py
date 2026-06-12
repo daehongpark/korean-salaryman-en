@@ -111,7 +111,9 @@ def _research_keyword(category: str, keyword: str) -> str:
     )
     payload = {
         "contents": [{"parts": [{"text": research_prompt}]}],
-        "generationConfig": {"temperature": 0.3, "topP": 0.9, "maxOutputTokens": 1200},
+        # thinking 끔: 2.5-flash thinking 토큰이 1200 한도를 잠식해 빈 응답 나는 것 방지
+        "generationConfig": {"temperature": 0.3, "topP": 0.9, "maxOutputTokens": 1200,
+                             "thinkingConfig": {"thinkingBudget": 0}},
     }
     try:
         r = requests.post(url, headers={"Content-Type": "application/json"},
@@ -538,6 +540,7 @@ def _find_korean_font():
 def _download_unsplash_image(category: str):
     """Unsplash에서 이미지를 다운로드해 PIL Image로 반환."""
     if not UNSPLASH_KEY:
+        print("   [Unsplash] 키 미설정(UNSPLASH_ACCESS_KEY 없음) → 다음 폴백")
         return None, None
 
     query = UNSPLASH_QUERY.get(category, "work office")
@@ -550,7 +553,13 @@ def _download_unsplash_image(category: str):
             timeout=10,
         )
         if r.status_code != 200:
-            print(f"   [Unsplash] API 응답 실패: {r.status_code}")
+            # 실패 사유 구분: 401=키 무효(Access Key 확인), 403=rate limit, 404=검색 0건
+            reason = {
+                401: "키 무효 — Secret이 아닌 Access Key인지 확인",
+                403: "rate limit 초과(시간당 한도)",
+                404: f"검색 결과 0건(query='{query}')",
+            }.get(r.status_code, "기타 오류")
+            print(f"   [Unsplash] API 응답 실패: {r.status_code} ({reason}) → 다음 폴백")
             return None, None
 
         data = r.json()
@@ -1255,6 +1264,10 @@ def generate_article(category: str, keyword: str, seo_meta: dict | None = None, 
                 article["ko_review"] = _generate_ko_review(
                     article.get("title", keyword), article.get("content", "")
                 )
+                # 트렌드 채택분 추적용 출처를 글 JSON에 영속화 (없으면 데이터상 전부 '시드'로 보임)
+                if trend_source:
+                    article["trend_source"] = trend_source
+                    article["trend_angle"]  = trend_angle
                 return article
 
         except json.JSONDecodeError as e:
@@ -2122,16 +2135,25 @@ def get_keywords_for_today_with_trends():
         try:
             foreign = fetch_category_news(cat, limit=12)
             print(f"   [트렌드] 방향1 {cat} 외국인 관심사 {len(foreign)}건")
-            if foreign:
+            if not foreign:
+                print(f"   [트렌드] {cat}: 뉴스 0건 (RSS 비어있음) → 시드풀 폴백")
+            else:
                 topics = convert_trends_to_topics_en(cat, foreign, korea_trends, max_topics=3)
-                fresh = [
-                    t for t in topics
-                    if t.get("topic")
-                    and t["topic"] not in recent_kws
-                    and not _has_semantic_overlap(t["topic"], recent_kws)
-                ]
-                if fresh:
-                    topic = fresh[0]
+                if not topics:
+                    # 거의 항상 Gemini 503 high-demand 스파이크 (convert 내부 로그 참조)
+                    print(f"   [트렌드] {cat}: 뉴스 {len(foreign)}건 → 변환 주제 0개 (Gemini 변환 실패/빈배열) → 시드풀 폴백")
+                else:
+                    fresh = [
+                        t for t in topics
+                        if t.get("topic")
+                        and t["topic"] not in recent_kws
+                        and not _has_semantic_overlap(t["topic"], recent_kws)
+                    ]
+                    if fresh:
+                        topic = fresh[0]
+                        print(f"   [트렌드] {cat}: 주제 {len(topics)}개 → 신규 {len(fresh)}개 확보 ✓")
+                    else:
+                        print(f"   [트렌드] {cat}: 주제 {len(topics)}개 모두 최근14일과 중복(쿨다운) → 시드풀 폴백")
         except Exception as e:
             print(f"   [트렌드] {cat} 처리 실패 (시드풀 폴백): {e}")
 
