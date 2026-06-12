@@ -65,7 +65,8 @@
 ## §6 PENDING
 
 - [ ] 박대홍 첫 검수 → 발행 (현재 draft 2편: **울릉도**, **Cost of Living in Seoul**)
-- [ ] Unsplash 키 등록 (실사진 썸네일 활성화)
+- [ ] **Unsplash 키 수정 ⚠️**: `UNSPLASH_ACCESS_KEY` secret이 등록은 됐으나 **401 Unauthorized** 반환(키 값 무효 — Unsplash 대시보드의 "Access Key"가 맞는지, Secret Key와 혼동 아닌지 확인). 현재는 401→그라데이션 폴백으로 정상 동작 중. (2026-06-12 force 검증 run `27391652047`에서 확인)
+- [ ] 수동 강제 생성: `gh workflow run daily_post.yml -f force=true` (FORCE_POST로 일일 가드 우회 — 검증용)
 - [ ] cron 안정성 관찰
 - [ ] cron-job.org 백업 트리거 (선택)
 - [ ] 예약발행 쓰려면 `SCHEDULED_PUBLISH_SECRET` 호출측 설정 필요
