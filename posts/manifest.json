@@ -1,5 +1,32 @@
 [
   {
+    "filename": "post_20260613_132339.json",
+    "title": "Your Korean Hospital Visit as a Foreigner: My Salaryman's Guide",
+    "category": "korean-life",
+    "keyword": "korean hospital visit as a foreigner",
+    "summary": "Navigating a hospital visit in Korea as a foreigner is a straightforward process, characterized by efficiency and affordability, especially if you understand the distinction between clinics and hospitals. By preparing your documents, utilizing digital tools, and knowing emergency procedures, you can access high-quality medical care with minimal hassle.",
+    "tags": [
+      "korean hospital visit as a foreigner",
+      "korean-life",
+      "korea",
+      "korean salaryman"
+    ],
+    "created_at": "2026-06-13T22:23:39.648743",
+    "status": "draft",
+    "source": "auto",
+    "scheduled_at": null,
+    "published_at": null,
+    "has_image": true,
+    "thumbnail": "/posts/thumbnails/thumb_20260613_132336.png",
+    "has_faq": false,
+    "has_tldr": false,
+    "has_comparison": false,
+    "has_steps": false,
+    "has_references": false,
+    "seo_score": null,
+    "monthly_search": null
+  },
+  {
     "filename": "post_20260612_061813.json",
     "title": "Still Craving Dalgona? Where to Buy the Squid Game Candy in Seoul (2026)",
     "category": "k-trends",
@@ -18,7 +45,7 @@
     "status": "published",
     "source": "auto",
     "scheduled_at": null,
-    "published_at": null,
+    "published_at": "2026-06-12T08:09:02.174Z",
     "has_image": true,
     "thumbnail": "/posts/thumbnails/thumb_20260612_061808.png",
     "has_faq": true,
