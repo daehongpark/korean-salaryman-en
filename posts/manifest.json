@@ -1,5 +1,32 @@
 [
   {
+    "filename": "post_20260615_165454.json",
+    "title": "Instant Tteokbokki Bars: Seoul's Hottest Korea Viral Food Trend Right Now",
+    "category": "k-trends",
+    "keyword": "korea viral food trend",
+    "summary": "The Instant Tteokbokki Bar is a major korea viral food trend in 2026, offering a fun, affordable, and highly customizable dining experience where you cook your own tteokbokki at the table. Foreigners should be mindful of spice levels and embrace the bokkeumbap finish for the full Korean cultural experience.",
+    "tags": [
+      "korea viral food trend",
+      "k-trends",
+      "korea",
+      "korean salaryman"
+    ],
+    "created_at": "2026-06-16T01:54:54.099679",
+    "status": "draft",
+    "source": "auto",
+    "scheduled_at": null,
+    "published_at": null,
+    "has_image": true,
+    "thumbnail": "/posts/thumbnails/thumb_20260615_165451.png",
+    "has_faq": false,
+    "has_tldr": false,
+    "has_comparison": false,
+    "has_steps": false,
+    "has_references": false,
+    "seo_score": null,
+    "monthly_search": null
+  },
+  {
     "filename": "post_20260614_132759.json",
     "title": "Korean Military Service Explained: What It's Really Like for Us",
     "category": "culture-explained",
@@ -45,7 +72,7 @@
     "status": "published",
     "source": "auto",
     "scheduled_at": null,
-    "published_at": null,
+    "published_at": "2026-06-15T07:17:12.791Z",
     "has_image": true,
     "thumbnail": "/posts/thumbnails/thumb_20260613_132336.png",
     "has_faq": false,
