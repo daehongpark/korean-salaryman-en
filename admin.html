@@ -979,6 +979,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
     <div class="modal-head">
       <span class="modal-title">✍️ 에세이 작성 (한글 → 영어)</span>
       <div style="display:flex;gap:8px;align-items:center;">
+        <button class="action-btn" onclick="polishEssay()" id="essayPolishBtn" style="background:var(--bg2);color:var(--text1);border:1px solid var(--border);">✨ 다듬기</button>
         <button class="action-btn btn-pub" onclick="convertEssay()" id="essayConvertBtn">🔄 영어로 변환</button>
         <button class="modal-close" onclick="closeModal('essayModal')">✕</button>
       </div>
@@ -986,6 +987,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
     <div class="modal-body">
       <div style="margin-bottom:16px;color:#6b7280;font-size:13px;line-height:1.6;">
         한글로 자유롭게 쓴 개인 에세이(일상·일기·독서후기)를 사이트 페르소나(서울 현직 직장인 1인칭, 네이티브 영어)로 변환합니다.
+        <b>✨ 다듬기</b>로 한글 초안을 먼저 정리한 뒤 변환하면 더 좋습니다(선택).
         원문의 의미·감정·말투를 살려 옮기며, 한글 원문은 검수본(ko_review)으로 함께 저장됩니다. (essay 카테고리 draft)
       </div>
 
@@ -3204,6 +3206,33 @@ function openEssayModal() {
   openModal('essayModal');
 }
 
+// ✨ 다듬기: 박대홍이 쓴 한글 초안을 의미·길이 유지한 채 더 매끄럽게 정리 (선택 단계)
+async function polishEssay() {
+  const titleKo = document.getElementById('essayTitleKo').value.trim();
+  const bodyKo  = document.getElementById('essayBodyKo').value.trim();
+  if (!bodyKo || bodyKo.length < 30) { showToast('본문을 입력하세요 (최소 30자)', 'warn'); return; }
+  if (!geminiKey) { showToast('설정(⚙)에서 Gemini API Key를 먼저 입력하세요.', 'warn'); return; }
+
+  const btn = document.getElementById('essayPolishBtn');
+  const orig = btn.textContent;
+  btn.disabled = true; btn.textContent = '⏳ 다듬는 중...';
+  showLoading(true);
+  try {
+    const prompt = `다음은 글쓴이가 쓴 한국어 개인 에세이 초안이다. 글쓴이의 목소리, 진심, 개성을 그대로 유지하되 더 읽기 좋게 다듬어라: 어색한 문장 정리, 흐름 개선, 중복 제거, 오타 수정. 내용을 새로 지어내거나 의미를 바꾸지 말 것. 글의 길이와 핵심 메시지는 유지.\n\n출력은 JSON만 (설명·코드블록 없이): {"title": "다듬은 제목(한국어)", "body": "다듬은 본문(한국어)"}\n\n[제목]\n${titleKo}\n\n[본문]\n${bodyKo}`;
+    const text = await callGemini(prompt, { temperature: 0.7, maxOutputTokens: 16384, json: true, thinkingBudget: 0 });
+    const parsed = _parseGeminiJson(text);
+    if (!parsed || !parsed.body) throw new Error('다듬기 결과 파싱 실패. 다시 시도하세요.');
+    if (parsed.title) document.getElementById('essayTitleKo').value = parsed.title;
+    document.getElementById('essayBodyKo').value = parsed.body;
+    showToast('다듬기 완료. 확인 후 "영어로 변환"하세요.', 'success');
+  } catch (e) {
+    handleGeminiError(e);
+  } finally {
+    btn.disabled = false; btn.textContent = orig;
+    showLoading(false);
+  }
+}
+
 async function convertEssay() {
   const titleKo = document.getElementById('essayTitleKo').value.trim();
   const bodyKo  = document.getElementById('essayBodyKo').value.trim();
@@ -3258,8 +3287,28 @@ async function saveEssayDraft() {
       faq:        [],
       references: [],
     };
-    await ghPut(`${POSTS_PATH}/${filename}`, JSON.stringify(postData, null, 2), null, `feat: essay draft: ${postData.title}`);
-    await syncManifest('upsert', filename, postData);
+
+    // finalize: 이미지/HTML/SEO/JSON-LD 조립 (automation.finalize_article 단일 소스)
+    // → 에세이도 주제글과 동일하게 hero_image(사진) 자동 확보 (finalize_article이 None이면 자체 생성)
+    let finalized = postData;
+    try {
+      const finRes = await fetch('/api/finalize-post', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ article: postData }),
+      });
+      if (finRes.ok) {
+        const fd = await finRes.json();
+        if (fd.article && fd.article.content) finalized = fd.article;
+      }
+    } catch (e) { console.warn('finalize 실패, 원본 저장:', e.message); }
+
+    // finalize가 덮어쓰거나 비울 수 있는 필드 보존
+    finalized.ko_review = _essayConverted.ko_review;
+    finalized.status    = 'draft';
+    finalized.category  = 'essay';
+
+    await ghPut(`${POSTS_PATH}/${filename}`, JSON.stringify(finalized, null, 2), null, `feat: essay draft: ${finalized.title}`);
+    await syncManifest('upsert', filename, finalized);
     showToast('에세이 draft 저장 완료. 검토 후 발행하세요.', 'success');
     closeModal('essayModal');
     await loadPosts();
