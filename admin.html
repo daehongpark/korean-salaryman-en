@@ -2546,7 +2546,7 @@ async function translateEdit() {
       inputBlock = `[Korean title]\n${koTitle}`;
     }
     const prompt = `${persona}\n\nOutput ONLY JSON: ${fields}\n\n${inputBlock}`;
-    const text = await callGemini(prompt, { temperature: 0.9, maxOutputTokens: 8192, json: true });
+    const text = await callGemini(prompt, { temperature: 0.9, maxOutputTokens: 16384, json: true });
     const parsed = _parseGeminiJson(text);
     if (!parsed || (koTitle && !parsed.title) || (koBody && !parsed.content)) {
       throw new Error('변환 결과 파싱 실패. 다시 시도하세요.');
@@ -3139,10 +3139,12 @@ let _topicGenerated = null;
 
 // Direct Gemini call with the admin's localStorage key. 503 → 1 retry, 429 → credit error.
 async function callGemini(prompt, opts = {}) {
-  const { temperature = 0.95, maxOutputTokens = 8192, json = false } = opts;
+  // thinkingBudget 기본 0: 2.5-flash thinking이 출력 한도(maxOutputTokens)를 잠식하지 않게.
+  // (cron 자동생성과 동일 처리 — admin 글생성/변환이 짧게 잘리던 원인)
+  const { temperature = 0.95, maxOutputTokens = 16384, json = false, thinkingBudget = 0 } = opts;
   if (!geminiKey) throw new Error('NO_GEMINI_KEY');
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`;
-  const generationConfig = { temperature, topP: 0.92, maxOutputTokens };
+  const generationConfig = { temperature, topP: 0.92, maxOutputTokens, thinkingConfig: { thinkingBudget } };
   if (json) generationConfig.responseMimeType = 'application/json';
   const body = JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig });
 
@@ -3175,7 +3177,7 @@ async function generateKoReview(title, content) {
   try {
     const plain = String(content || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
     const prompt = `다음 영어 블로그 글을 한국어로 충실히 번역하세요. 검수용이므로 자연스러움보다 원문 충실도를 우선합니다. HTML 태그는 무시하고 의미만 옮기세요. 제목 번역도 맨 첫 줄에 넣으세요.\n\n[영어 제목]\n${title}\n\n[영어 본문]\n${plain}`;
-    return await callGemini(prompt, { temperature: 0.3, maxOutputTokens: 8192 });
+    return await callGemini(prompt, { temperature: 0.3, maxOutputTokens: 16384 });
   } catch (e) {
     console.warn('ko_review 생성 실패:', e.message);
     return '';
@@ -3213,7 +3215,7 @@ async function convertEssay() {
   showLoading(true);
   try {
     const prompt = `You are an actual Korean salaryman (office worker) in your 30s living in Seoul, writing in fluent, natural English. This is the site operator's PERSONAL essay. Translate it into English, preserving the original meaning, emotion, and the writer's distinctive voice and tone. No literal or machine-translation tone — make it read like a native English speaker wrote it. For Korea-specific concepts, give romanization + a short gloss on first use (e.g. hoesik (the after-work company dinner)). Translate the title into English too. Never output Hangul characters.\n\nOutput ONLY JSON: {"title": "English title", "content": "<p>...</p><p>...</p> (HTML paragraphs)", "summary": "1-2 sentence English summary"}\n\n[Korean title]\n${titleKo}\n\n[Korean body]\n${bodyKo}`;
-    const text = await callGemini(prompt, { temperature: 0.9, maxOutputTokens: 8192, json: true });
+    const text = await callGemini(prompt, { temperature: 0.9, maxOutputTokens: 16384, json: true });
     const parsed = _parseGeminiJson(text);
     if (!parsed || !parsed.title || !parsed.content) throw new Error('변환 결과 파싱 실패. 다시 시도하세요.');
 
@@ -3304,7 +3306,7 @@ function buildTopicPrompt(T, topic, category) {
     '', fmt, '',
     T.tone_guide || '', '',
     T.tone_examples || '', '',
-    `[Length] content body ${(T.common_rules && T.common_rules.content_length) || '1500-2500 words'}.`,
+    `[Length] Write an in-depth article of 1500-2500 words spread across the H2 sections (target: ${(T.common_rules && T.common_rules.content_length) || '1500-2500 words'}). Each H2 must be substantial (at least 4-8 full sentences with concrete detail). Do NOT write a short summary or a thin outline — produce the full-length article.`,
     '[Korean words] romanize + a short gloss on first use. Never output Hangul characters.',
     '[GEO/AEO] answer-first, self-contained H2 sections, specific facts, first-person ("In my office...").',
     '',
@@ -3333,7 +3335,7 @@ async function generateTopicPost() {
   try {
     const T = await loadPromptTemplate();
     const prompt = buildTopicPrompt(T, topic, category);
-    const text = await callGemini(prompt, { temperature: 0.95, maxOutputTokens: 8192, json: true });
+    const text = await callGemini(prompt, { temperature: 0.95, maxOutputTokens: 16384, json: true });
     const parsed = _parseGeminiJson(text);
     if (!parsed || !parsed.title || !parsed.content) throw new Error('생성 결과 파싱 실패. 다시 시도하세요.');
     parsed.category = category;
