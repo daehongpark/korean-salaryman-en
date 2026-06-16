@@ -3328,8 +3328,14 @@ async function loadPromptTemplate() {
   return _promptTemplate;  // single source of truth — no prompt duplicated in admin
 }
 
-function buildTopicPrompt(T, topic, category) {
+function buildTopicPrompt(T, topic, category, headlines) {
   const today = new Date().toISOString().slice(0, 10);
+  // 실시간 헤드라인 블록 (있을 때만) — Gemini 기억 대신 실제 최근 사실에 근거하도록
+  const headlineBlock = (Array.isArray(headlines) && headlines.length)
+    ? `\n[Recent real headlines about this topic — as of ${today}. Base the article on these ACTUAL facts, not your training data]\n`
+      + headlines.slice(0, 10).map((h, i) => `${i + 1}. ${h.title}${h.date ? ` (${h.date})` : ''}`).join('\n')
+      + '\n'
+    : '';
   const intent = (T.category_intents && (T.category_intents[category] || T.category_intents['k-trends'])) || {};
   const fmt = (T.format_directives && (T.format_directives[intent.primary_format] || T.format_directives.explainer || T.format_directives.guide)) || '';
   const schema = {
@@ -3350,8 +3356,15 @@ function buildTopicPrompt(T, topic, category) {
     '[Blog info]',
     `- Category: ${category}`,
     `- Topic / keyword: ${topic}`,
-    `- Written as of: ${today}`,
+    `- Written as of: ${today} (TODAY. Treat anything you "remember" as possibly outdated; today's date is ${today}.)`,
     `- Audience: ${intent.audience || 'foreigners curious about Korea'}`,
+    headlineBlock,
+    '[Recency & Facts — strict]',
+    `- Today is ${today}. Do not write about a past edition/season/event as if it were upcoming, and vice versa.`,
+    '- Do NOT invent specific facts, scores, statistics, dates, names, or events you are not sure of. Fabricated specifics are worse than none.',
+    '- If you lack verified recent information, write about the topic in general terms (patterns, context, what to watch for) instead of fabricating specifics.',
+    "- Never anonymize a real public figure as \"Coach X\"/\"Player Y\"/\"a certain official\". Either name them only if you are certain, or phrase it generally without a placeholder name.",
+    '- Prefer the recent headlines above (if any) as the factual basis; reflect the current state of the topic.',
     '', fmt, '',
     T.tone_guide || '', '',
     T.tone_examples || '', '',
@@ -3383,7 +3396,18 @@ async function generateTopicPost() {
   showLoading(true);
   try {
     const T = await loadPromptTemplate();
-    const prompt = buildTopicPrompt(T, topic, category);
+
+    // 시의성 보강: 주제어로 최근 실제 헤드라인 수집 (best-effort, 실패해도 진행)
+    let headlines = [];
+    try {
+      btn.textContent = '⏳ 최신 정보 수집 중...';
+      const nres = await fetch(`/api/news?q=${encodeURIComponent(topic)}`);
+      if (nres.ok) { const nd = await nres.json(); if (Array.isArray(nd.headlines)) headlines = nd.headlines; }
+      console.log(`[topic] 헤드라인 ${headlines.length}건 수집`);
+    } catch (e) { console.warn('헤드라인 수집 실패(무시):', e.message); }
+
+    btn.textContent = '⏳ 생성 중... (30-60초)';
+    const prompt = buildTopicPrompt(T, topic, category, headlines);
     const text = await callGemini(prompt, { temperature: 0.95, maxOutputTokens: 16384, json: true });
     const parsed = _parseGeminiJson(text);
     if (!parsed || !parsed.title || !parsed.content) throw new Error('생성 결과 파싱 실패. 다시 시도하세요.');
