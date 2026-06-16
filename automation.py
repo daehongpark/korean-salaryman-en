@@ -1814,6 +1814,21 @@ def finalize_article(article: dict, hero_image: dict | None = None, body_images:
     article["status"]     = "published" if AUTO_PUBLISH else "draft"
     article.setdefault("source", "auto")
 
+    # ── hero_image 미전달 시 자체 생성 ──────────────────────────
+    # cron은 get_hero_image()로 만들어 넘기지만, admin 주제글/맞춤글은
+    # finalize-post.py가 hero_image 없이 호출 → 여기서 직접 확보.
+    # get_hero_image는 Unsplash→Gemini→그라데이션 3단 폴백 내장.
+    if hero_image is None:
+        kw    = article.get("keyword") or article.get("title", "")
+        cat   = article.get("category", "")
+        title = article.get("title", "")
+        try:
+            hero_image = get_hero_image(cat, kw, title)
+            print(f"   [finalize] hero_image 자동 생성: {hero_image.get('source') if hero_image else 'None'}")
+        except Exception as e:
+            print(f"   [finalize] hero_image 생성 실패(계속 진행): {e}")
+            hero_image = None
+
     # 텍스트 정리
     raw_content = clean_content(article.get("content", ""))
     article["content_raw"] = raw_content                                            # 원본 텍스트 보존
