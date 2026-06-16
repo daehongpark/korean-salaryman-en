@@ -381,14 +381,14 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <div id="loginScreen">
   <div class="login-box">
     <div class="login-logo">Korean <span>Salaryman</span></div>
-    <div class="login-sub">ADMIN PANEL · OWNER ONLY</div>
-    <label class="login-label">Password</label>
+    <div class="login-sub">관리자 패널 · 운영자 전용</div>
+    <label class="login-label">비밀번호</label>
     <input class="login-input" type="password" id="pwInput" placeholder="••••••••" autocomplete="current-password">
-    <button class="login-btn" onclick="doLogin()">Log In</button>
+    <button class="login-btn" onclick="doLogin()">로그인</button>
     <div class="login-err" id="loginErr"></div>
     <div class="login-note">
-      If no GitHub Token is set,<br>editing/publishing/deleting posts may be limited.<br>
-      Please enter your Token in Settings after logging in.
+      GitHub 토큰이 설정되지 않으면<br>글 편집·발행·삭제가 제한될 수 있습니다.<br>
+      로그인 후 설정에서 토큰을 입력하세요.
     </div>
   </div>
 </div>
@@ -396,56 +396,56 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <!-- Admin app -->
 <div id="adminApp" style="display:none;flex-direction:column;min-height:100vh;">
   <header class="admin-header">
-    <div class="admin-logo">Korean <span>Salaryman</span><small>ADMIN</small></div>
+    <div class="admin-logo">Korean <span>Salaryman</span><small>관리자</small></div>
     <div class="admin-header-right">
-      <button class="logout-btn" onclick="openModal('settingsModal')" style="margin-right:4px;">⚙ Settings</button>
-      <span class="admin-user">Admin</span>
-      <button class="logout-btn" onclick="doLogout()">Log Out</button>
+      <button class="logout-btn" onclick="openModal('settingsModal')" style="margin-right:4px;">⚙ 설정</button>
+      <span class="admin-user">관리자</span>
+      <button class="logout-btn" onclick="doLogout()">로그아웃</button>
     </div>
   </header>
 
   <div class="admin-body">
     <nav class="admin-sidebar">
       <div class="sidebar-section">
-        <div class="sidebar-label">POSTS</div>
+        <div class="sidebar-label">글</div>
         <div class="sidebar-item active" id="si-all" onclick="setFilter('all',this)">
-          <span class="si-icon">📋</span> All Posts
+          <span class="si-icon">📋</span> 전체 글
           <span class="sidebar-count" id="cnt-all">0</span>
         </div>
         <div class="sidebar-item" id="si-pub" onclick="setFilter('published',this)">
-          <span class="si-icon">✅</span> Published
+          <span class="si-icon">✅</span> 발행됨
           <span class="sidebar-count" id="cnt-pub">0</span>
         </div>
         <div class="sidebar-item" id="si-draft" onclick="setFilter('draft',this)">
-          <span class="si-icon">📝</span> Drafts
+          <span class="si-icon">📝</span> 임시저장
           <span class="sidebar-count" id="cnt-draft">0</span>
         </div>
         <div class="sidebar-item" id="si-scheduled" onclick="setFilter('scheduled',this)">
-          <span class="si-icon">⏰</span> Scheduled
+          <span class="si-icon">⏰</span> 예약
           <span class="sidebar-count" id="cnt-scheduled">0</span>
         </div>
       </div>
       <div class="sidebar-section">
-        <div class="sidebar-label">CATEGORIES</div>
+        <div class="sidebar-label">카테고리</div>
         <div class="sidebar-item" onclick="setFilter('cat:k-trends',this)"><span class="si-icon">🔥</span> K-Trends</div>
         <div class="sidebar-item" onclick="setFilter('cat:korean-life',this)"><span class="si-icon">🏠</span> Korean Life</div>
         <div class="sidebar-item" onclick="setFilter('cat:culture-explained',this)"><span class="si-icon">📖</span> Culture</div>
         <div class="sidebar-item" onclick="setFilter('cat:essay',this)"><span class="si-icon">✍️</span> Essays</div>
       </div>
       <div class="sidebar-section">
-        <div class="sidebar-label">REVENUE</div>
+        <div class="sidebar-label">수익</div>
         <div class="sidebar-item" id="si-income" onclick="showView('income',this)">
-          <span class="si-icon">💰</span> Edit Revenue
+          <span class="si-icon">💰</span> 수익 편집
         </div>
         <div class="sidebar-item" id="si-adsense" onclick="showView('adsense',this)">
-          <span class="si-icon">🎯</span> AdSense Readiness
+          <span class="si-icon">🎯</span> 애드센스 준비도
           <span class="sidebar-count" id="cnt-adsense">—</span>
         </div>
       </div>
       <div class="sidebar-section">
-        <div class="sidebar-label">SHORTCUTS</div>
-        <div class="sidebar-item" onclick="window.open('/','_blank')"><span class="si-icon">🏠</span> Blog Home</div>
-        <div class="sidebar-item" onclick="window.open('/income.html','_blank')"><span class="si-icon">📊</span> Public Revenue Page</div>
+        <div class="sidebar-label">바로가기</div>
+        <div class="sidebar-item" onclick="window.open('/','_blank')"><span class="si-icon">🏠</span> 블로그 홈</div>
+        <div class="sidebar-item" onclick="window.open('/income.html','_blank')"><span class="si-icon">📊</span> 공개 수익 페이지</div>
       </div>
     </nav>
 
@@ -469,55 +469,55 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
       </div>
 
       <div class="stat-grid">
-        <div class="stat-card"><div class="stat-label">Total Posts</div><div class="stat-val" id="statTotal">—</div></div>
+        <div class="stat-card"><div class="stat-label">전체 글</div><div class="stat-val" id="statTotal">—</div></div>
         <div class="stat-card" style="cursor:pointer;" onclick="document.querySelector('[style*=featured]')?.scrollIntoView({behavior:'smooth'})">
-          <div class="stat-label">Featured</div>
-          <div class="stat-val" id="statFeatured" style="font-size:13px;color:var(--point);">Checking...</div>
+          <div class="stat-label">추천</div>
+          <div class="stat-val" id="statFeatured" style="font-size:13px;color:var(--point);">확인 중...</div>
         </div>
-        <div class="stat-card"><div class="stat-label">Published</div><div class="stat-val green" id="statPub">—</div></div>
-        <div class="stat-card"><div class="stat-label">Drafts</div><div class="stat-val yellow" id="statDraft">—</div></div>
-        <div class="stat-card"><div class="stat-label">Created Today</div><div class="stat-val orange" id="statToday">—</div></div>
+        <div class="stat-card"><div class="stat-label">발행됨</div><div class="stat-val green" id="statPub">—</div></div>
+        <div class="stat-card"><div class="stat-label">임시저장</div><div class="stat-val yellow" id="statDraft">—</div></div>
+        <div class="stat-card"><div class="stat-label">오늘 작성</div><div class="stat-val orange" id="statToday">—</div></div>
       </div>
 
       <div class="toolbar">
         <div class="search-wrap">
           <span class="search-icon">🔍</span>
-          <input class="search-input" type="text" id="searchInput" placeholder="Search post titles..." oninput="applyFilters()">
+          <input class="search-input" type="text" id="searchInput" placeholder="글 제목 검색..." oninput="applyFilters()">
         </div>
         <select class="filter-select" id="catFilter" onchange="applyFilters()">
-          <option value="">All Categories</option>
+          <option value="">전체 카테고리</option>
           <option value="k-trends">🔥 K-Trends</option>
           <option value="korean-life">🏠 Korean Life</option>
           <option value="culture-explained">📖 Culture</option>
           <option value="essay">✍️ Essays</option>
         </select>
-        <button class="refresh-btn" onclick="loadPosts()">↻ Refresh</button>
-        <button onclick="openNewPost()" style="background:var(--point);color:var(--white);border:none;padding:8px 18px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">✏️ New Post</button>
-        <button onclick="openNaverImport()" style="background:var(--bg2);color:var(--text1);border:1px solid var(--border);padding:8px 14px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;">📥 Rewrite Naver Post</button>
-        <button onclick="openCustomRequest()" style="background:var(--bg2);color:var(--text1);border:1px solid var(--border);padding:8px 14px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;">✏️ Custom Post Request</button>
+        <button class="refresh-btn" onclick="loadPosts()">↻ 새로고침</button>
+        <button onclick="openNewPost()" style="background:var(--point);color:var(--white);border:none;padding:8px 18px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">✏️ 새 글</button>
+        <button onclick="openNaverImport()" style="background:var(--bg2);color:var(--text1);border:1px solid var(--border);padding:8px 14px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;">📥 네이버 글 재작성</button>
+        <button onclick="openCustomRequest()" style="background:var(--bg2);color:var(--text1);border:1px solid var(--border);padding:8px 14px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;">✏️ 맞춤 글 요청</button>
         <button onclick="openEssayModal()" style="background:var(--bg2);color:var(--text1);border:1px solid var(--border);padding:8px 14px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;">✍️ 에세이 작성</button>
         <button onclick="openTopicModal()" style="background:var(--bg2);color:var(--text1);border:1px solid var(--border);padding:8px 14px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;">🤖 주제로 글 생성</button>
       </div>
 
       <div id="bulkActionBar" style="display:none;background:#f9fafb;padding:10px 14px;border:1px solid var(--border);border-radius:8px;margin-bottom:12px;align-items:center;gap:10px;flex-wrap:wrap;">
-        <span id="bulkSelectedCount" style="font-weight:600;color:#111;">0 selected</span>
-        <button onclick="bulkPublish()" class="btn-publish" style="padding:8px 14px;font-size:13px;border:none;border-radius:6px;cursor:pointer;font-family:inherit;font-weight:600;">📢 Publish Selected</button>
-        <button onclick="bulkUnpublish()" class="cancel-btn" style="padding:8px 14px;font-size:13px;">📝 Move to Drafts</button>
-        <button onclick="bulkDelete()" class="del-btn" style="padding:8px 14px;font-size:13px;">🗑️ Delete Selected</button>
-        <button onclick="clearSelection()" style="background:transparent;border:1px solid var(--border);padding:8px 14px;border-radius:6px;font-size:13px;cursor:pointer;font-family:inherit;">Clear Selection</button>
+        <span id="bulkSelectedCount" style="font-weight:600;color:#111;">0개 선택</span>
+        <button onclick="bulkPublish()" class="btn-publish" style="padding:8px 14px;font-size:13px;border:none;border-radius:6px;cursor:pointer;font-family:inherit;font-weight:600;">📢 선택 발행</button>
+        <button onclick="bulkUnpublish()" class="cancel-btn" style="padding:8px 14px;font-size:13px;">📝 임시저장으로</button>
+        <button onclick="bulkDelete()" class="del-btn" style="padding:8px 14px;font-size:13px;">🗑️ 선택 삭제</button>
+        <button onclick="clearSelection()" style="background:transparent;border:1px solid var(--border);padding:8px 14px;border-radius:6px;font-size:13px;cursor:pointer;font-family:inherit;">선택 해제</button>
       </div>
 
       <div class="posts-table">
         <div class="table-head">
-          <div class="th"><input type="checkbox" id="selectAllPosts" class="post-checkbox" onchange="toggleSelectAll(this)" title="Select all"></div>
-          <div class="th">Title</div>
-          <div class="th">Category</div>
-          <div class="th">Status</div>
-          <div class="th">Date</div>
-          <div class="th" style="text-align:right">Actions</div>
+          <div class="th"><input type="checkbox" id="selectAllPosts" class="post-checkbox" onchange="toggleSelectAll(this)" title="전체 선택"></div>
+          <div class="th">제목</div>
+          <div class="th">카테고리</div>
+          <div class="th">상태</div>
+          <div class="th">날짜</div>
+          <div class="th" style="text-align:right">관리</div>
         </div>
         <div id="postTableBody">
-          <div class="empty-row"><div class="empty-row-icon">⏳</div><p>Loading posts...</p></div>
+          <div class="empty-row"><div class="empty-row-icon">⏳</div><p>글 불러오는 중...</p></div>
         </div>
       </div>
 
@@ -527,47 +527,47 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
       <div id="view-income" style="display:none;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
           <div>
-            <h2 style="font-family:'Noto Serif KR',serif;font-size:20px;font-weight:700;color:var(--navy);margin-bottom:4px;">💰 Revenue Management</h2>
-            <p style="font-size:12px;color:var(--text3);">Changes here are reflected instantly on the public revenue page.</p>
+            <h2 style="font-family:'Noto Serif KR',serif;font-size:20px;font-weight:700;color:var(--navy);margin-bottom:4px;">💰 수익 관리</h2>
+            <p style="font-size:12px;color:var(--text3);">여기서 변경하면 공개 수익 페이지에 즉시 반영됩니다.</p>
           </div>
           <div style="display:flex;gap:8px;">
             <button onclick="window.open('/income.html','_blank')"
               style="background:var(--bg2);color:var(--text2);border:1px solid var(--border);padding:8px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">
-              👁 Preview
+              👁 미리보기
             </button>
             <button onclick="saveIncome()"
               style="background:var(--green);color:var(--white);border:none;padding:8px 20px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">
-              💾 Save
+              💾 저장
             </button>
           </div>
         </div>
 
         <!-- This month's total revenue -->
         <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;">
-          <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;margin-bottom:16px;">THIS MONTH · Total Revenue</div>
+          <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;margin-bottom:16px;">이번 달 · 총 수익</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
             <div>
-              <label style="display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px;">Display amount (e.g. 5,000,000)</label>
+              <label style="display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px;">표시 금액 (예: 5,000,000)</label>
               <input id="inc-total-amount" class="form-input" type="text" placeholder="5,000,000" style="font-size:16px;font-weight:700;">
             </div>
             <div>
-              <label style="display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px;">Suffix (e.g. KRW+ / KRW)</label>
+              <label style="display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px;">단위 (예: KRW+ / KRW)</label>
               <input id="inc-total-suffix" class="form-input" type="text" placeholder="KRW+">
             </div>
           </div>
           <div style="margin-top:12px;">
-            <label style="display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px;">Footnote</label>
-            <input id="inc-total-note" class="form-input" type="text" placeholder="* Excludes day-job salary · Pre-tax · Updated monthly">
+            <label style="display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px;">각주</label>
+            <input id="inc-total-note" class="form-input" type="text" placeholder="* 본업 급여 제외 · 세전 · 매월 갱신">
           </div>
         </div>
 
         <!-- Income items -->
         <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-            <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;">INCOME ITEMS</div>
+            <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;">수익 항목</div>
             <button onclick="addIncomeItem()"
               style="background:var(--point-light);color:var(--point);border:1px solid rgba(193,127,62,0.3);padding:6px 14px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">
-              + Add Item
+              + 항목 추가
             </button>
           </div>
           <div id="incomeItemList" style="display:flex;flex-direction:column;gap:12px;"></div>
@@ -576,10 +576,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
         <!-- Monthly history -->
         <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-            <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;">MONTHLY HISTORY</div>
+            <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;">월별 기록</div>
             <button onclick="addMonthHistory()"
               style="background:var(--point-light);color:var(--point);border:1px solid rgba(193,127,62,0.3);padding:6px 14px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">
-              + Add Month
+              + 월 추가
             </button>
           </div>
           <div id="monthHistoryList" style="display:flex;flex-direction:column;gap:16px;"></div>
@@ -587,9 +587,9 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 
         <!-- Revenue structure explanation -->
         <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;">
-          <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;margin-bottom:16px;">STRUCTURE · Revenue Breakdown</div>
+          <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;margin-bottom:16px;">구성 · 수익 구조</div>
           <div id="incomeStructureList" style="display:flex;flex-direction:column;gap:12px;"></div>
-          <button onclick="addStructureItem()" style="margin-top:12px;background:var(--bg2);color:var(--text2);border:1px solid var(--border);padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">+ Add Item</button>
+          <button onclick="addStructureItem()" style="margin-top:12px;background:var(--bg2);color:var(--text2);border:1px solid var(--border);padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">+ 항목 추가</button>
         </div>
 
       </div><!-- /view-income -->
@@ -597,21 +597,21 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
       <!-- ── AdSense readiness view ── -->
       <div id="view-adsense" style="display:none;">
         <div style="margin-bottom:20px;">
-          <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;margin-bottom:8px;">ADSENSE READINESS</div>
-          <h2 style="font-family:'Noto Serif KR',serif;font-size:24px;font-weight:700;color:var(--navy);margin-bottom:6px;">AdSense Approval Diagnostic</h2>
-          <p style="font-size:13px;color:var(--text3);line-height:1.7;">Automatically analyzes manifest.json and your site status to assess your AdSense approval chances.</p>
+          <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;margin-bottom:8px;">애드센스 준비도</div>
+          <h2 style="font-family:'Noto Serif KR',serif;font-size:24px;font-weight:700;color:var(--navy);margin-bottom:6px;">애드센스 승인 진단</h2>
+          <p style="font-size:13px;color:var(--text3);line-height:1.7;">manifest.json과 사이트 상태를 자동 분석해 애드센스 승인 가능성을 평가합니다.</p>
         </div>
 
         <!-- Overall score card -->
         <div id="adsense-score-card" style="background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:16px;padding:28px 32px;margin-bottom:20px;color:var(--white);position:relative;overflow:hidden;">
           <div style="position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(193,127,62,0.2),transparent 65%);"></div>
           <div style="position:relative;z-index:1;">
-            <div style="font-size:11px;letter-spacing:0.15em;color:rgba(255,255,255,0.5);margin-bottom:8px;">READINESS SCORE</div>
+            <div style="font-size:11px;letter-spacing:0.15em;color:rgba(255,255,255,0.5);margin-bottom:8px;">준비도 점수</div>
             <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:8px;">
               <div id="adsense-score" style="font-family:'Noto Serif KR',serif;font-size:52px;font-weight:900;color:var(--gold);line-height:1;">—</div>
               <div style="font-size:22px;color:rgba(255,255,255,0.4);">/ 100</div>
             </div>
-            <div id="adsense-verdict" style="font-size:14px;color:rgba(255,255,255,0.85);margin-top:8px;line-height:1.6;">Analyzing...</div>
+            <div id="adsense-verdict" style="font-size:14px;color:rgba(255,255,255,0.85);margin-top:8px;line-height:1.6;">분석 중...</div>
           </div>
         </div>
 
@@ -620,21 +620,21 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 
         <!-- Required items check -->
         <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;">
-          <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;margin-bottom:16px;">REQUIRED · Mandatory items (rejection if missing)</div>
+          <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;margin-bottom:16px;">필수 · 반드시 필요한 항목 (없으면 거절)</div>
           <div id="adsense-required-list" style="display:flex;flex-direction:column;gap:10px;"></div>
         </div>
 
         <!-- Recommended items check -->
         <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;">
-          <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;margin-bottom:16px;">RECOMMENDED · Optional items (boost approval odds)</div>
+          <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;margin-bottom:16px;">권장 · 선택 항목 (승인 가능성 향상)</div>
           <div id="adsense-recommended-list" style="display:flex;flex-direction:column;gap:10px;"></div>
         </div>
 
         <!-- Draft review section -->
         <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;">
-          <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;margin-bottom:6px;">DRAFT REVIEW</div>
+          <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;margin-bottom:6px;">임시저장 검수</div>
           <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:18px;">
-            <h3 style="font-family:'Noto Serif KR',serif;font-size:17px;font-weight:700;color:var(--navy);">Drafts needing review before publishing</h3>
+            <h3 style="font-family:'Noto Serif KR',serif;font-size:17px;font-weight:700;color:var(--navy);">발행 전 검수가 필요한 임시저장 글</h3>
             <span id="adsense-draft-count" style="font-size:12px;color:var(--text3);">—</span>
           </div>
           <div id="adsense-draft-list" style="display:flex;flex-direction:column;gap:10px;"></div>
@@ -642,15 +642,15 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 
         <!-- Step-by-step execution roadmap -->
         <div style="background:linear-gradient(135deg,#fef8ef,#fdeed6);border:1px solid var(--point-light);border-radius:16px;padding:24px;margin-bottom:20px;">
-          <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;margin-bottom:16px;">ROADMAP · 4-Week Execution Plan</div>
+          <div style="font-size:11px;font-weight:700;color:var(--point);letter-spacing:0.15em;margin-bottom:16px;">로드맵 · 4주 실행 계획</div>
           <div id="adsense-roadmap" style="display:flex;flex-direction:column;gap:12px;"></div>
         </div>
 
         <!-- Action buttons -->
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px;">
-          <button onclick="renderAdsenseChecklist()" style="background:var(--navy);color:var(--white);border:none;padding:11px 22px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">🔄 Re-run Diagnostic</button>
-          <a href="https://www.google.com/adsense" target="_blank" style="background:var(--point);color:var(--white);text-decoration:none;padding:11px 22px;border-radius:8px;font-size:13px;font-weight:700;display:inline-flex;align-items:center;">🎯 Apply for AdSense →</a>
-          <a href="https://support.google.com/adsense/answer/48182" target="_blank" style="background:var(--bg2);color:var(--text2);text-decoration:none;padding:11px 22px;border-radius:8px;font-size:13px;font-weight:700;">📘 View Program Policies</a>
+          <button onclick="renderAdsenseChecklist()" style="background:var(--navy);color:var(--white);border:none;padding:11px 22px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">🔄 진단 다시 실행</button>
+          <a href="https://www.google.com/adsense" target="_blank" style="background:var(--point);color:var(--white);text-decoration:none;padding:11px 22px;border-radius:8px;font-size:13px;font-weight:700;display:inline-flex;align-items:center;">🎯 애드센스 신청하기 →</a>
+          <a href="https://support.google.com/adsense/answer/48182" target="_blank" style="background:var(--bg2);color:var(--text2);text-decoration:none;padding:11px 22px;border-radius:8px;font-size:13px;font-weight:700;">📘 프로그램 정책 보기</a>
         </div>
 
       </div><!-- /view-adsense -->
@@ -663,7 +663,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <div class="modal-overlay" id="previewModal">
   <div class="modal">
     <div class="modal-head">
-      <span class="modal-title">Preview</span>
+      <span class="modal-title">미리보기</span>
       <button class="modal-close" onclick="closeModal('previewModal')">✕</button>
     </div>
     <div class="modal-body">
@@ -675,10 +675,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
       <div class="preview-tags" id="pvTags"></div>
     </div>
     <div class="modal-foot">
-      <button class="cancel-btn" onclick="closeModal('previewModal')">Close</button>
-      <button class="action-btn btn-edit" id="pvEditBtn" onclick="editFromPreview()">Edit</button>
-      <button class="action-btn btn-pub" id="pvToggleBtn" onclick="togglePvFromPreview()">Publish</button>
-      <button class="action-btn btn-delete" id="pvDeleteBtn" onclick="deleteFromPreview()">Delete</button>
+      <button class="cancel-btn" onclick="closeModal('previewModal')">닫기</button>
+      <button class="action-btn btn-edit" id="pvEditBtn" onclick="editFromPreview()">수정</button>
+      <button class="action-btn btn-pub" id="pvToggleBtn" onclick="togglePvFromPreview()">발행</button>
+      <button class="action-btn btn-delete" id="pvDeleteBtn" onclick="deleteFromPreview()">삭제</button>
     </div>
   </div>
 </div>
@@ -687,10 +687,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <div class="modal-overlay" id="editModal">
   <div class="modal" style="max-width:860px;width:100%;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;" onclick="event.stopPropagation();">
     <div class="modal-head" style="flex-shrink:0;">
-      <span class="modal-title" id="editModalTitle">✏️ New Post</span>
+      <span class="modal-title" id="editModalTitle">✏️ 새 글</span>
       <div style="display:flex;gap:8px;align-items:center;">
-        <button id="btnDraft" onclick="event.stopPropagation();savePost('draft')" style="background:var(--bg2);color:var(--text2);border:1px solid var(--border);padding:7px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">Save Draft</button>
-        <button id="btnPublish" onclick="event.stopPropagation();savePost('published')" style="background:var(--navy);color:var(--white);border:none;padding:7px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">Publish 🚀</button>
+        <button id="btnDraft" onclick="event.stopPropagation();savePost('draft')" style="background:var(--bg2);color:var(--text2);border:1px solid var(--border);padding:7px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">임시저장</button>
+        <button id="btnPublish" onclick="event.stopPropagation();savePost('published')" style="background:var(--navy);color:var(--white);border:none;padding:7px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">발행 🚀</button>
         <button id="btnCloseEdit" onclick="event.stopPropagation();closeModal('editModal')" class="modal-close">✕</button>
       </div>
     </div>
@@ -698,16 +698,37 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
       <input type="hidden" id="editFilename">
       <input type="hidden" id="editSha">
 
+      <!-- 🇰🇷 한글로 수정 (KO→EN 번역) -->
+      <div style="margin-bottom:16px;">
+        <button type="button" id="koEditToggleBtn" onclick="toggleKoEdit()"
+          style="background:var(--bg2);color:var(--text1);border:1px solid var(--border);padding:8px 14px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">
+          🇰🇷 한글로 수정
+        </button>
+        <span style="font-size:11px;color:var(--text3);margin-left:8px;">한글로 쓰면 사이트 페르소나 영어로 번역해 위 필드에 채웁니다 (제목·본문 각각 부분 수정 가능)</span>
+        <div id="koEditPanel" style="display:none;margin-top:12px;padding:14px;border:1.5px solid var(--point-light);border-radius:10px;background:#fffdf9;">
+          <label class="form-label" style="display:block;margin-bottom:6px;">한글 제목 <span style="font-weight:400;color:var(--text3);">(비우면 제목은 그대로)</span></label>
+          <input id="editKoTitle" class="form-input" type="text" placeholder="한글로 제목 입력" style="margin-bottom:12px;font-family:'Noto Sans KR',sans-serif;">
+          <label class="form-label" style="display:block;margin-bottom:6px;">한글 본문 <span style="font-weight:400;color:var(--text3);">(비우면 본문은 그대로)</span></label>
+          <textarea id="editKoBody" class="form-textarea" style="min-height:180px;font-family:'Noto Sans KR',sans-serif;" placeholder="한글로 본문을 자유롭게 작성/수정하세요. 변환 시 ko_review(검수본)도 함께 갱신됩니다."></textarea>
+          <div style="display:flex;justify-content:flex-end;margin-top:10px;">
+            <button type="button" id="editTranslateBtn" onclick="translateEdit()"
+              style="background:var(--point);color:var(--white);border:none;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">
+              ✨ 영어로 변환 적용
+            </button>
+          </div>
+        </div>
+      </div>
+
       <!-- Title -->
       <div class="form-group" style="margin-bottom:16px;">
-        <input class="form-input" type="text" id="editTitle" placeholder="Enter a title"
+        <input class="form-input" type="text" id="editTitle" placeholder="제목 입력"
           style="font-size:20px;font-weight:700;padding:14px 16px;border-radius:10px;border:2px solid var(--border);">
       </div>
 
       <!-- Category + tags -->
       <div class="form-row" style="margin-bottom:16px;">
         <div class="form-group">
-          <label class="form-label">Category</label>
+          <label class="form-label">카테고리</label>
           <select class="form-select" id="editCategory">
             <option value="k-trends">🔥 K-Trends</option>
             <option value="korean-life">🏠 Korean Life</option>
@@ -716,34 +737,34 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label">Tags (comma-separated)</label>
+          <label class="form-label">태그 (쉼표로 구분)</label>
           <input class="form-input" type="text" id="editTags" placeholder="korea, expat, work culture">
         </div>
       </div>
 
       <!-- Editor toolbar -->
       <div class="form-group" style="margin-bottom:6px;">
-        <label class="form-label">Body</label>
+        <label class="form-label">본문</label>
         <div style="display:flex;gap:4px;flex-wrap:wrap;padding:8px 10px;background:var(--bg);border:1.5px solid var(--border);border-bottom:none;border-radius:8px 8px 0 0;">
-          <button class="tb-btn" onclick="editorCmd('bold')" title="Bold"><b>B</b></button>
-          <button class="tb-btn" onclick="editorCmd('italic')" title="Italic"><i>I</i></button>
-          <button class="tb-btn" onclick="editorCmd('underline')" title="Underline"><u>U</u></button>
+          <button class="tb-btn" onclick="editorCmd('bold')" title="굵게"><b>B</b></button>
+          <button class="tb-btn" onclick="editorCmd('italic')" title="기울임"><i>I</i></button>
+          <button class="tb-btn" onclick="editorCmd('underline')" title="밑줄"><u>U</u></button>
           <div style="width:1px;background:var(--border);margin:2px 4px;"></div>
-          <button class="tb-btn" onclick="insertHeading(2)" title="H2 heading">H2</button>
-          <button class="tb-btn" onclick="insertHeading(3)" title="H3 subheading">H3</button>
+          <button class="tb-btn" onclick="insertHeading(2)" title="H2 제목">H2</button>
+          <button class="tb-btn" onclick="insertHeading(3)" title="H3 소제목">H3</button>
           <div style="width:1px;background:var(--border);margin:2px 4px;"></div>
-          <button class="tb-btn" onclick="editorCmd('insertUnorderedList')" title="Bullet list">• List</button>
-          <button class="tb-btn" onclick="editorCmd('insertOrderedList')" title="Numbered list">1. List</button>
+          <button class="tb-btn" onclick="editorCmd('insertUnorderedList')" title="글머리 목록">• 목록</button>
+          <button class="tb-btn" onclick="editorCmd('insertOrderedList')" title="번호 목록">1. 목록</button>
           <div style="width:1px;background:var(--border);margin:2px 4px;"></div>
-          <button class="tb-btn" onclick="insertQuote()" title="Quote">❝ Quote</button>
-          <button class="tb-btn" onclick="insertDivider()" title="Divider">— Divider</button>
+          <button class="tb-btn" onclick="insertQuote()" title="인용">❝ 인용</button>
+          <button class="tb-btn" onclick="insertDivider()" title="구분선">— 구분선</button>
           <div style="width:1px;background:var(--border);margin:2px 4px;"></div>
-          <button class="tb-btn" onclick="insertLink()" title="Link">🔗 Link</button>
+          <button class="tb-btn" onclick="insertLink()" title="링크">🔗 링크</button>
           <div style="width:1px;background:var(--border);margin:2px 4px;"></div>
-          <button type="button" class="tb-btn" onclick="insertImage()" title="Insert image">🖼️ Image</button>
-          <button type="button" class="tb-btn" onclick="insertVideo()" title="Insert video">🎬 Video</button>
+          <button type="button" class="tb-btn" onclick="insertImage()" title="이미지 삽입">🖼️ 이미지</button>
+          <button type="button" class="tb-btn" onclick="insertVideo()" title="동영상 삽입">🎬 동영상</button>
           <div style="flex:1;"></div>
-          <button class="tb-btn" onclick="togglePreviewMode()" id="previewToggleBtn" style="background:var(--navy);color:var(--white);border-color:var(--navy);">👁 Preview</button>
+          <button class="tb-btn" onclick="togglePreviewMode()" id="previewToggleBtn" style="background:var(--navy);color:var(--white);border-color:var(--navy);">👁 미리보기</button>
         </div>
         <!-- Editor area -->
         <div id="richEditor"
@@ -759,10 +780,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 
       <!-- Summary -->
       <div class="form-group" style="margin-top:16px;">
-        <label class="form-label">Summary <span style="font-weight:400;color:var(--text3);">(shown in search/cards · 2–3 sentences)</span></label>
-        <textarea class="form-textarea" id="editSummary" style="min-height:72px;" placeholder="Summarize this post in 2–3 sentences."></textarea>
+        <label class="form-label">요약 <span style="font-weight:400;color:var(--text3);">(검색/카드에 노출 · 2~3문장)</span></label>
+        <textarea class="form-textarea" id="editSummary" style="min-height:72px;" placeholder="이 글을 2~3문장으로 요약하세요."></textarea>
         <div style="display:flex;justify-content:flex-end;margin-top:6px;">
-          <button onclick="autoSummary()" style="font-size:11px;color:var(--point);background:none;border:none;cursor:pointer;font-family:inherit;">✨ AI Auto-Summary</button>
+          <button onclick="autoSummary()" style="font-size:11px;color:var(--point);background:none;border:none;cursor:pointer;font-family:inherit;">✨ AI 자동 요약</button>
         </div>
       </div>
 
@@ -776,7 +797,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
       </div>
 
       <!-- Character count -->
-      <div style="font-size:11px;color:var(--text3);text-align:right;margin-top:8px;" id="charCount">0 chars</div>
+      <div style="font-size:11px;color:var(--text3);text-align:right;margin-top:8px;" id="charCount">0자</div>
     </div>
   </div>
 </div>
@@ -786,18 +807,18 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <div class="modal-overlay" id="scheduleModal">
   <div class="modal" style="max-width:480px;">
     <div class="modal-head">
-      <span class="modal-title">⏰ Schedule Publish</span>
+      <span class="modal-title">⏰ 발행 예약</span>
       <button class="modal-close" onclick="closeModal('scheduleModal')">✕</button>
     </div>
     <div class="modal-body">
       <div id="scheduleTitle" style="font-weight:600;margin-bottom:14px;color:var(--text1);"></div>
 
-      <label class="form-label">Publish date</label>
+      <label class="form-label">발행 날짜</label>
       <input type="date" id="scheduleDate" class="form-input" style="margin-bottom:14px;">
 
-      <label class="form-label">Publish time (KST · 30-min increments)</label>
+      <label class="form-label">발행 시간 (KST · 30분 단위)</label>
       <select id="scheduleTime" class="form-select" style="margin-bottom:14px;">
-        <option value="">Select time</option>
+        <option value="">시간 선택</option>
       </select>
 
       <div id="schedulePreview" style="background:#f9fafb;padding:12px;border-radius:6px;font-size:13px;color:var(--text2);display:none;margin-top:8px;border-left:3px solid #16a34a;">
@@ -805,13 +826,13 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
       </div>
 
       <div style="margin-top:14px;font-size:11px;color:var(--text3);line-height:1.6;">
-        ※ Scheduled posts are checked and auto-published by GitHub Actions every 30 minutes.<br>
-        ※ Minute-level precision is not guaranteed; publishing may be delayed by up to 30 minutes.
+        ※ 예약 글은 GitHub Actions가 30분마다 확인해 자동 발행합니다.<br>
+        ※ 분 단위 정확도는 보장되지 않으며, 발행이 최대 30분까지 지연될 수 있습니다.
       </div>
     </div>
     <div class="modal-foot">
-      <button class="cancel-btn" onclick="closeModal('scheduleModal')">Cancel</button>
-      <button class="save-btn" onclick="confirmSchedule()">Confirm Schedule</button>
+      <button class="cancel-btn" onclick="closeModal('scheduleModal')">취소</button>
+      <button class="save-btn" onclick="confirmSchedule()">예약 확정</button>
     </div>
   </div>
 </div>
@@ -819,19 +840,19 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <div class="modal-overlay" id="deleteModal">
   <div class="modal">
     <div class="modal-head">
-      <span class="modal-title">Delete Post</span>
+      <span class="modal-title">글 삭제</span>
       <button class="modal-close" onclick="closeModal('deleteModal')">✕</button>
     </div>
     <div class="modal-body">
       <div class="delete-icon">🗑️</div>
       <div class="delete-msg">
         <div class="delete-title" id="deletePostTitle"></div>
-        <br>Deleting this post cannot be undone.<br>Are you sure you want to delete it?
+        <br>이 글은 삭제하면 되돌릴 수 없습니다.<br>정말 삭제하시겠습니까?
       </div>
     </div>
     <div class="modal-foot">
-      <button class="cancel-btn" onclick="closeModal('deleteModal')">Cancel</button>
-      <button class="del-btn" onclick="confirmDelete()">Delete</button>
+      <button class="cancel-btn" onclick="closeModal('deleteModal')">취소</button>
+      <button class="del-btn" onclick="confirmDelete()">삭제</button>
     </div>
   </div>
 </div>
@@ -840,7 +861,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <div class="modal-overlay" id="settingsModal">
   <div class="modal">
     <div class="modal-head">
-      <span class="modal-title">⚙ Settings</span>
+      <span class="modal-title">⚙ 설정</span>
       <button class="modal-close" onclick="closeModal('settingsModal')">✕</button>
     </div>
     <div class="modal-body">
@@ -848,10 +869,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
         <label class="form-label">GitHub Personal Access Token</label>
         <input class="form-input token-input" type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
         <div class="settings-info">
-          A Token is required for edits / publishing / deletions to sync automatically to GitHub.<br>
-          The Token is stored securely in this browser only and is never sent anywhere else.<br><br>
-          <b>How to create one:</b> GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token<br>
-          Scope: check <b>repo</b>
+          글 편집·발행·삭제가 GitHub에 자동 반영되려면 토큰이 필요합니다.<br>
+          토큰은 이 브라우저에만 안전하게 저장되며 외부로 전송되지 않습니다.<br><br>
+          <b>발급 방법:</b> GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token<br>
+          권한 범위: <b>repo</b> 체크
         </div>
       </div>
       <div class="form-group">
@@ -864,8 +885,8 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
       </div>
     </div>
     <div class="modal-foot">
-      <button class="cancel-btn" onclick="closeModal('settingsModal')">Cancel</button>
-      <button class="save-btn" onclick="saveSettings()">Save</button>
+      <button class="cancel-btn" onclick="closeModal('settingsModal')">취소</button>
+      <button class="save-btn" onclick="saveSettings()">저장</button>
     </div>
   </div>
 </div>
@@ -874,18 +895,18 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <div class="modal-overlay" id="naverImportModal">
   <div class="modal" style="max-width:800px;width:100%;max-height:90vh;">
     <div class="modal-head">
-      <span class="modal-title">📥 Rewrite Naver Post</span>
+      <span class="modal-title">📥 네이버 글 재작성</span>
       <div style="display:flex;gap:8px;align-items:center;">
-        <button class="action-btn btn-pub" onclick="convertNaverPost()" id="naverConvertBtn">🔄 Convert</button>
+        <button class="action-btn btn-pub" onclick="convertNaverPost()" id="naverConvertBtn">🔄 변환</button>
         <button class="modal-close" onclick="closeModal('naverImportModal')">✕</button>
       </div>
     </div>
     <div class="modal-body">
       <div style="margin-bottom:16px;color:#6b7280;font-size:13px;line-height:1.6;">
-        Paste the body of a Naver blog post. The AI rewrites it in the author's voice and expands it, then saves it as a site draft. (Prevents duplicate content)
+        네이버 블로그 글 본문을 붙여넣으세요. AI가 페르소나 말투로 다시 쓰고 내용을 보강한 뒤 사이트 임시저장 글로 저장합니다. (중복 콘텐츠 방지)
       </div>
 
-      <label class="form-label" style="margin-bottom:6px;display:block;">Category</label>
+      <label class="form-label" style="margin-bottom:6px;display:block;">카테고리</label>
       <select id="naverCategory" class="form-select" style="margin-bottom:14px;">
         <option value="k-trends">🔥 K-Trends</option>
         <option value="korean-life">🏠 Korean Life</option>
@@ -893,16 +914,16 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
         <option value="essay">✍️ Essays</option>
       </select>
 
-      <label class="form-label" style="margin-bottom:6px;display:block;">Naver post body (paste the whole thing, including the title)</label>
-      <textarea id="naverContent" class="form-textarea" style="min-height:300px;font-family:inherit;" placeholder="Copy the full body from the Naver blog → paste it here"></textarea>
+      <label class="form-label" style="margin-bottom:6px;display:block;">네이버 글 본문 (제목 포함 전체를 붙여넣기)</label>
+      <textarea id="naverContent" class="form-textarea" style="min-height:300px;font-family:inherit;" placeholder="네이버 블로그에서 본문 전체를 복사 → 여기에 붙여넣기"></textarea>
 
       <div id="naverConvertResult" style="margin-top:16px;display:none;">
         <hr style="margin:16px 0;border:none;border-top:1px solid #e5e7eb;">
-        <div style="font-weight:600;margin-bottom:8px;">Conversion preview</div>
+        <div style="font-weight:600;margin-bottom:8px;">변환 미리보기</div>
         <div id="naverResultBody" style="background:#f9fafb;padding:14px;border-radius:8px;font-size:14px;line-height:1.7;white-space:pre-wrap;max-height:300px;overflow-y:auto;"></div>
         <div style="margin-top:12px;display:flex;gap:8px;">
-          <button class="action-btn btn-pub" onclick="saveNaverDraft()">💾 Save as draft</button>
-          <button class="cancel-btn" onclick="document.getElementById('naverConvertResult').style.display='none';">Convert again</button>
+          <button class="action-btn btn-pub" onclick="saveNaverDraft()">💾 임시저장</button>
+          <button class="cancel-btn" onclick="document.getElementById('naverConvertResult').style.display='none';">다시 변환</button>
         </div>
       </div>
     </div>
@@ -913,21 +934,21 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <div class="modal-overlay" id="customRequestModal">
   <div class="modal" style="max-width:800px;width:100%;max-height:90vh;">
     <div class="modal-head">
-      <span class="modal-title">✏️ Custom Post Request</span>
+      <span class="modal-title">✏️ 맞춤 글 요청</span>
       <div style="display:flex;gap:8px;align-items:center;">
-        <button class="action-btn btn-pub" onclick="generateCustomPost()" id="customGenBtn">✨ Generate Post</button>
+        <button class="action-btn btn-pub" onclick="generateCustomPost()" id="customGenBtn">✨ 글 생성</button>
         <button class="modal-close" onclick="closeModal('customRequestModal')">✕</button>
       </div>
     </div>
     <div class="modal-body">
       <div style="margin-bottom:16px;color:#6b7280;font-size:13px;line-height:1.6;">
-        Enter a topic you're curious about, and a post is generated in the same v2 voice as the automation system and saved as a draft.
+        궁금한 주제를 입력하면 자동화 시스템과 동일한 v2 페르소나로 글을 생성해 임시저장합니다.
       </div>
 
-      <label class="form-label" style="margin-bottom:6px;display:block;">Keyword (the post's core topic)</label>
-      <input id="customKeyword" class="form-input" type="text" placeholder="e.g. Korean drinking culture, jeonse explained, working at a chaebol" style="margin-bottom:14px;">
+      <label class="form-label" style="margin-bottom:6px;display:block;">키워드 (글의 핵심 주제)</label>
+      <input id="customKeyword" class="form-input" type="text" placeholder="예: Korean drinking culture, jeonse explained, working at a chaebol" style="margin-bottom:14px;">
 
-      <label class="form-label" style="margin-bottom:6px;display:block;">Category</label>
+      <label class="form-label" style="margin-bottom:6px;display:block;">카테고리</label>
       <select id="customCategory" class="form-select" style="margin-bottom:14px;">
         <option value="k-trends">🔥 K-Trends</option>
         <option value="korean-life" selected>🏠 Korean Life</option>
@@ -935,17 +956,17 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
         <option value="essay">✍️ Essays</option>
       </select>
 
-      <label class="form-label" style="margin-bottom:6px;display:block;">Additional context (optional, steers the post's direction)</label>
-      <textarea id="customContext" class="form-textarea" style="min-height:100px;font-family:inherit;" placeholder="e.g. From the perspective of an expat working in Seoul. Focus on the contrast with Western office culture. Center it on my own experience adjusting to hoesik (company dinners)."></textarea>
-      <div style="font-size:12px;color:#9ca3af;margin-top:6px;">Leave it blank to write from the keyword alone. The more specific you are, the closer it matches your intent.</div>
+      <label class="form-label" style="margin-bottom:6px;display:block;">추가 맥락 (선택, 글의 방향을 조정)</label>
+      <textarea id="customContext" class="form-textarea" style="min-height:100px;font-family:inherit;" placeholder="예: 서울에서 일하는 외국인 직장인 관점으로. 서구 오피스 문화와의 대비에 초점. 회식 적응기 본인 경험 중심으로."></textarea>
+      <div style="font-size:12px;color:#9ca3af;margin-top:6px;">비워두면 키워드만으로 작성합니다. 구체적으로 적을수록 의도에 더 가깝게 생성됩니다.</div>
 
       <div id="customGenResult" style="margin-top:16px;display:none;">
         <hr style="margin:16px 0;border:none;border-top:1px solid #e5e7eb;">
-        <div style="font-weight:600;margin-bottom:8px;">Generation preview</div>
+        <div style="font-weight:600;margin-bottom:8px;">생성 미리보기</div>
         <div id="customResultBody" style="background:#f9fafb;padding:14px;border-radius:8px;font-size:14px;line-height:1.7;white-space:pre-wrap;max-height:300px;overflow-y:auto;"></div>
         <div style="margin-top:12px;display:flex;gap:8px;">
-          <button class="action-btn btn-pub" onclick="saveCustomDraft()">💾 Save as draft</button>
-          <button class="cancel-btn" onclick="document.getElementById('customGenResult').style.display='none';">Generate again</button>
+          <button class="action-btn btn-pub" onclick="saveCustomDraft()">💾 임시저장</button>
+          <button class="cancel-btn" onclick="document.getElementById('customGenResult').style.display='none';">다시 생성</button>
         </div>
       </div>
     </div>
@@ -1061,9 +1082,9 @@ function renderAutomationBanner() {
     banner.style.color      = '#ffffff';
     dot.style.background    = '#4ade80';
     dot.style.boxShadow     = '0 0 8px #4ade80';
-    title.textContent       = 'Automation running — posts are generated automatically every day at 9 AM';
-    desc.textContent        = 'AUTO_PUBLISH=false saves as draft / true auto-publishes';
-    btn.textContent         = '⏹ Turn Off Automation';
+    title.textContent       = '자동화 작동 중 — 매일 오전 9시에 글이 자동 생성됩니다';
+    desc.textContent        = 'AUTO_PUBLISH=false면 임시저장 / true면 자동 발행';
+    btn.textContent         = '⏹ 자동화 끄기';
     btn.style.background    = '#c0392b';
     btn.style.color         = '#ffffff';
   } else {
@@ -1071,9 +1092,9 @@ function renderAutomationBanner() {
     banner.style.color      = '#444444';
     dot.style.background    = '#d4cfc8';
     dot.style.boxShadow     = 'none';
-    title.textContent       = 'Automation off — automatic post generation is paused';
-    desc.textContent        = 'Press the button below to re-enable automation';
-    btn.textContent         = '▶ Turn On Automation';
+    title.textContent       = '자동화 꺼짐 — 자동 글 생성이 일시 중지되었습니다';
+    desc.textContent        = '아래 버튼을 눌러 자동화를 다시 켜세요';
+    btn.textContent         = '▶ 자동화 켜기';
     btn.style.background    = '#2d6a4f';
     btn.style.color         = '#ffffff';
   }
@@ -1140,7 +1161,7 @@ function resetAutoLogoutTimer() {
   if (autoLogoutTimer) clearTimeout(autoLogoutTimer);
   autoLogoutTimer = setTimeout(() => {
     sessionStorage.removeItem('adminLoggedIn');
-    alert('You have been logged out automatically after 1 hour of inactivity.');
+    alert('1시간 동안 활동이 없어 자동 로그아웃되었습니다.');
     location.reload();
   }, AUTO_LOGOUT_MS);
 }
@@ -1162,7 +1183,7 @@ async function doLogin() {
     loadPosts();
   } else {
     const err = document.getElementById('loginErr');
-    err.textContent = 'Incorrect password.';
+    err.textContent = '비밀번호가 올바르지 않습니다.';
     err.style.display = 'block';
   }
 }
@@ -1200,7 +1221,7 @@ function saveSettings() {
   else localStorage.removeItem('geminiKey');
 
   closeModal('settingsModal');
-  showToast('Settings saved.', 'success');
+  showToast('설정이 저장되었습니다.', 'success');
 }
 
 // Show the current token when the settings modal opens
@@ -1409,7 +1430,7 @@ async function syncManifest(action, filename, postData) {
         continue;
       }
       console.error('manifest sync failed:', e);
-      showToast('manifest sync failed: ' + e.message, 'error');
+      showToast('manifest 동기화 실패: ' + e.message, 'error');
       throw e;
     }
   }
@@ -1440,9 +1461,9 @@ async function loadPosts() {
 
     updateStats();
     applyFilters();
-    showToast(`Loaded ${allPosts.length} posts.`, 'success');
+    showToast(`글 ${allPosts.length}개를 불러왔습니다.`, 'success');
   } catch(e) {
-    showToast('Failed to load posts: ' + e.message, 'error');
+    showToast('글 불러오기 실패: ' + e.message, 'error');
     document.getElementById('postTableBody').innerHTML = `
       <div class="empty-row">
         <div class="empty-row-icon">⚠️</div>
@@ -1467,7 +1488,7 @@ function updateStats() {
   const featuredPost = featuredId ? allPosts.find(p => p.filename === featuredId) : null;
   const featuredEl = document.getElementById('statFeatured');
   if (featuredEl) {
-    featuredEl.textContent = featuredPost ? 'Set ⭐' : 'Latest (auto)';
+    featuredEl.textContent = featuredPost ? '설정됨 ⭐' : '최신 글 (자동)';
   }
   document.getElementById('statPub').textContent   = pub;
   document.getElementById('statDraft').textContent = draft;
@@ -1517,7 +1538,7 @@ function formatDate(iso) {
 function renderTable(posts) {
   const tbody = document.getElementById('postTableBody');
   if (posts.length === 0) {
-    tbody.innerHTML = `<div class="empty-row"><div class="empty-row-icon">📭</div><p>No matching posts.</p></div>`;
+    tbody.innerHTML = `<div class="empty-row"><div class="empty-row-icon">📭</div><p>일치하는 글이 없습니다.</p></div>`;
     return;
   }
   tbody.innerHTML = posts.map(p => `
@@ -1533,7 +1554,7 @@ function renderTable(posts) {
       <div>
         <span class="status-badge ${p.status}">
           <span class="status-dot"></span>
-          ${p.status === 'published' ? 'Published' : (p.status === 'scheduled' ? '⏰ Scheduled' : 'Draft')}
+          ${p.status === 'published' ? '발행됨' : (p.status === 'scheduled' ? '⏰ 예약됨' : '임시저장')}
         </span>
         ${p.status === 'scheduled' && p.scheduled_at
           ? `<div style="font-size:10px;color:var(--text3);margin-top:3px;">${formatScheduledKST(p.scheduled_at)}</div>`
@@ -1541,23 +1562,23 @@ function renderTable(posts) {
       </div>
       <div class="date-cell">${formatDate(p.created_at)}</div>
       <div class="action-cell">
-        <button class="action-btn btn-preview" onclick="openPreview('${p.filename}')">View</button>
+        <button class="action-btn btn-preview" onclick="openPreview('${p.filename}')">보기</button>
         ${p.status === 'draft'
-          ? `<button class="action-btn btn-publish" onclick="toggleStatus('${p.filename}','published')">Publish</button>`
+          ? `<button class="action-btn btn-publish" onclick="toggleStatus('${p.filename}','published')">발행</button>`
           : (p.status === 'scheduled'
-            ? `<button class="action-btn btn-publish" onclick="toggleStatus('${p.filename}','published')">Publish Now</button>`
-            : `<button class="action-btn btn-draft" onclick="toggleStatus('${p.filename}','draft')">Move to Draft</button>`)
+            ? `<button class="action-btn btn-publish" onclick="toggleStatus('${p.filename}','published')">지금 발행</button>`
+            : `<button class="action-btn btn-draft" onclick="toggleStatus('${p.filename}','draft')">임시저장으로</button>`)
         }
         ${p.status !== 'published'
-          ? `<button class="action-btn btn-schedule" onclick="openScheduleModal('${p.filename}','${escAttr(p.title)}')">⏰ Schedule</button>`
+          ? `<button class="action-btn btn-schedule" onclick="openScheduleModal('${p.filename}','${escAttr(p.title)}')">⏰ 예약</button>`
           : ''}
-        <button class="action-btn btn-edit" onclick="openEdit('${p.filename}')">Edit</button>
-        <button class="action-btn btn-delete" onclick="openDelete('${p.filename}','${escAttr(p.title)}')">Delete</button>
+        <button class="action-btn btn-edit" onclick="openEdit('${p.filename}')">수정</button>
+        <button class="action-btn btn-delete" onclick="openDelete('${p.filename}','${escAttr(p.title)}')">삭제</button>
         <button class="action-btn"
           style="background:${localStorage.getItem('featured_post')===p.filename?'#c17f3e':'#f0ede8'};color:${localStorage.getItem('featured_post')===p.filename?'#fff':'#888'};border:1px solid #e0d8d0;"
           onclick="setFeatured('${p.filename}','${escAttr(p.title)}')"
-          title="Set as the main featured post">
-          ${localStorage.getItem('featured_post')===p.filename?'⭐ Featured':'☆ Featured'}
+          title="메인 추천 글로 설정">
+          ${localStorage.getItem('featured_post')===p.filename?'⭐ 추천':'☆ 추천'}
         </button>
       </div>
     </div>`).join('');
@@ -1586,7 +1607,7 @@ function updateBulkActionBar() {
   if (!bar) return;
   if (count > 0) {
     bar.style.display = 'flex';
-    if (counter) counter.textContent = `${count} selected`;
+    if (counter) counter.textContent = `${count}개 선택`;
   } else {
     bar.style.display = 'none';
   }
@@ -1625,8 +1646,8 @@ async function _bulkStatusChange(newStatus) {
   const filenames = getSelectedFilenames();
   if (filenames.length === 0) return;
 
-  const label = newStatus === 'published' ? 'Published' : 'Draft';
-  if (!confirm(`Change the ${filenames.length} selected posts to "${label}".`)) return;
+  const label = newStatus === 'published' ? '발행' : '임시저장';
+  if (!confirm(`선택한 ${filenames.length}개 글을 "${label}" 상태로 변경합니다.`)) return;
 
   showLoading(true);
 
@@ -1708,7 +1729,7 @@ async function _bulkStatusChange(newStatus) {
         );
       } catch (e) {
         console.error('manifest bulk sync failed:', e);
-        showToast('manifest sync failed: ' + e.message, 'warn');
+        showToast('manifest 동기화 실패: ' + e.message, 'warn');
       }
     }
 
@@ -1724,7 +1745,7 @@ async function _bulkStatusChange(newStatus) {
       applyFilters();
     }
 
-    showToast(`${label} done: ${success} succeeded / ${failed} failed`, failed > 0 ? 'warn' : 'success');
+    showToast(`${label} 완료: 성공 ${success} / 실패 ${failed}`, failed > 0 ? 'warn' : 'success');
     clearSelection();
   } catch (e) {
     // Roll back everything
@@ -1735,7 +1756,7 @@ async function _bulkStatusChange(newStatus) {
     });
     updateStats();
     applyFilters();
-    showToast(`Bulk ${label} failed: ` + e.message, 'error');
+    showToast(`일괄 ${label} 실패: ` + e.message, 'error');
   } finally {
     showLoading(false);
   }
@@ -1775,7 +1796,7 @@ function openScheduleModal(filename, title) {
 
   // Build time options (30-min increments, 06:00 ~ 23:30)
   const timeSelect = document.getElementById('scheduleTime');
-  timeSelect.innerHTML = '<option value="">Select time</option>';
+  timeSelect.innerHTML = '<option value="">시간 선택</option>';
   for (let h = 6; h < 24; h++) {
     for (const m of [0, 30]) {
       const hh = String(h).padStart(2, '0');
@@ -1809,7 +1830,7 @@ function updateSchedulePreview() {
   const now = new Date();
 
   if (target <= now) {
-    previewText.textContent = '⚠️ You cannot select a time in the past.';
+    previewText.textContent = '⚠️ 과거 시간은 선택할 수 없습니다.';
     previewEl.style.display = 'block';
     previewEl.style.borderLeft = '3px solid #dc2626';
     return;
@@ -1824,11 +1845,11 @@ function updateSchedulePreview() {
   if (diffHr >= 24) {
     const diffDay = Math.floor(diffHr / 24);
     const remainHr = diffHr % 24;
-    waitText = `publishes in ${diffDay}d ${remainHr}h`;
+    waitText = `${diffDay}일 ${remainHr}시간 후 발행`;
   } else if (diffHr > 0) {
-    waitText = `publishes in ${diffHr}h ${remainMin}m`;
+    waitText = `${diffHr}시간 ${remainMin}분 후 발행`;
   } else {
-    waitText = `publishes in ${diffMin}m`;
+    waitText = `${diffMin}분 후 발행`;
   }
 
   previewText.textContent = `📅 ${date} ${time} KST — ${waitText}`;
@@ -1841,13 +1862,13 @@ async function confirmSchedule() {
   const time = document.getElementById('scheduleTime').value;
 
   if (!date || !time || !_scheduleTargetFilename) {
-    showToast('Please select a date and time', 'warn');
+    showToast('날짜와 시간을 선택하세요', 'warn');
     return;
   }
 
   const target = new Date(`${date}T${time}:00+09:00`);
   if (target <= new Date()) {
-    showToast('You cannot select a time in the past', 'warn');
+    showToast('과거 시간은 선택할 수 없습니다', 'warn');
     return;
   }
 
@@ -1891,13 +1912,13 @@ async function confirmSchedule() {
       applyFilters();
     }
 
-    showToast(`Scheduled: will publish at ${date} ${time} KST`, 'success');
+    showToast(`예약 완료: ${date} ${time} KST에 발행됩니다`, 'success');
     closeModal('scheduleModal');
     _scheduleTargetFilename = null;
     // loadPosts call removed (memory already updated)
   } catch (e) {
     console.error(e);
-    showToast('Scheduling failed: ' + e.message, 'error');
+    showToast('예약 실패: ' + e.message, 'error');
   } finally {
     showLoading(false);
   }
@@ -1907,10 +1928,10 @@ async function bulkDelete() {
   const filenames = getSelectedFilenames();
   if (filenames.length === 0) return;
 
-  const confirmText = `Permanently delete the ${filenames.length} selected posts.\n\nThis cannot be undone. Are you sure you want to continue?`;
+  const confirmText = `선택한 ${filenames.length}개 글을 영구 삭제합니다.\n\n되돌릴 수 없습니다. 계속하시겠습니까?`;
   if (!confirm(confirmText)) return;
   if (filenames.length >= 5) {
-    if (!confirm(`Deleting ${filenames.length} posts at once. This is your final confirmation.`)) return;
+    if (!confirm(`${filenames.length}개 글을 한 번에 삭제합니다. 마지막 확인입니다.`)) return;
   }
 
   showLoading(true);
@@ -1966,7 +1987,7 @@ async function bulkDelete() {
         );
       } catch (e) {
         console.error('manifest bulk sync failed:', e);
-        showToast('manifest sync failed: ' + e.message, 'warn');
+        showToast('manifest 동기화 실패: ' + e.message, 'warn');
       }
     }
 
@@ -1980,7 +2001,7 @@ async function bulkDelete() {
       applyFilters();
     }
 
-    showToast(`Delete done: ${success} succeeded / ${failed} failed`, failed > 0 ? 'warn' : 'success');
+    showToast(`삭제 완료: 성공 ${success} / 실패 ${failed}`, failed > 0 ? 'warn' : 'success');
     clearSelection();
   } catch (e) {
     // On total failure, roll back everything
@@ -1989,7 +2010,7 @@ async function bulkDelete() {
     );
     updateStats();
     applyFilters();
-    showToast('Bulk delete failed: ' + e.message, 'error');
+    showToast('일괄 삭제 실패: ' + e.message, 'error');
   } finally {
     showLoading(false);
   }
@@ -2000,10 +2021,10 @@ function setFeatured(filename, title) {
   const current = localStorage.getItem('featured_post');
   if (current === filename) {
     localStorage.removeItem('featured_post');
-    showToast('Featured post cleared. (The latest post will be shown automatically)');
+    showToast('추천 글이 해제되었습니다. (최신 글이 자동으로 표시됩니다)');
   } else {
     localStorage.setItem('featured_post', filename);
-    showToast(`✅ "${title}" is now set as the main featured post!`);
+    showToast(`✅ "${title}"이(가) 메인 추천 글로 설정되었습니다!`);
   }
   renderTable(allPosts); // Refresh button state
 }
@@ -2012,7 +2033,7 @@ function setFeatured(filename, title) {
 async function toggleStatus(filename, newStatus) {
   const post = allPosts.find(p => p.filename === filename);
   if (!post) {
-    showToast('Post not found.', 'error');
+    showToast('글을 찾을 수 없습니다.', 'error');
     return;
   }
 
@@ -2041,15 +2062,15 @@ async function toggleStatus(filename, newStatus) {
 
     invalidatePostBody(filename);
 
-    const label = newStatus === 'published' ? 'Published' : 'Draft';
-    showToast(`Changed to "${label}".`, 'success');
+    const label = newStatus === 'published' ? '발행' : '임시저장';
+    showToast(`"${label}" 상태로 변경되었습니다.`, 'success');
     // ★ loadPosts call removed: allPosts is already updated and the UI was drawn via applyFilters
   } catch(e) {
     // Roll back on failure
     post.status = prevStatus;
     updateStats();
     applyFilters();
-    showToast('Status change failed: ' + e.message, 'error');
+    showToast('상태 변경 실패: ' + e.message, 'error');
   } finally {
     showLoading(false);
   }
@@ -2092,13 +2113,13 @@ async function openPreview(filename) {
   const _pvPost = allPosts.find(p => p.filename === filename);
   if (!_pvPost) return;
   currentPreviewStatus = _pvPost.status || 'draft';
-  document.getElementById('pvToggleBtn').textContent = (currentPreviewStatus === 'published') ? 'Move to Draft' : 'Publish';
+  document.getElementById('pvToggleBtn').textContent = (currentPreviewStatus === 'published') ? '임시저장으로' : '발행';
   document.getElementById('pvCat').textContent  = _pvPost.category || '';
   document.getElementById('pvTitle').textContent = _pvPost.title || '';
-  document.getElementById('pvMeta').textContent  = `${formatDate(_pvPost.created_at)} · ${_pvPost.status === 'published' ? 'Published' : 'Draft'}`;
+  document.getElementById('pvMeta').textContent  = `${formatDate(_pvPost.created_at)} · ${_pvPost.status === 'published' ? '발행됨' : '임시저장'}`;
   const sumEl = document.getElementById('pvSummary');
   if (_pvPost.summary) {
-    sumEl.innerHTML = `<div class="preview-summary-label">SUMMARY</div><p>${_pvPost.summary.replace(/\n/g,'<br>')}</p>`;
+    sumEl.innerHTML = `<div class="preview-summary-label">요약</div><p>${_pvPost.summary.replace(/\n/g,'<br>')}</p>`;
     sumEl.style.display = 'block';
   } else {
     sumEl.style.display = 'none';
@@ -2107,7 +2128,7 @@ async function openPreview(filename) {
     .map(t=>`<span class="preview-tag">${escHtml(t)}</span>`).join('');
 
   // Lazy-load the body (open the modal first, show a loading indicator)
-  document.getElementById('pvContent').innerHTML = '<div style="text-align:center;padding:40px;color:var(--text3);">Loading...</div>';
+  document.getElementById('pvContent').innerHTML = '<div style="text-align:center;padding:40px;color:var(--text3);">불러오는 중...</div>';
   openModal('previewModal');
 
   try {
@@ -2121,14 +2142,14 @@ async function openPreview(filename) {
         .map(p=>`<p>${p.replace(/\n/g,'<br>')}</p>`).join('');
     }
   } catch(e) {
-    document.getElementById('pvContent').innerHTML = `<div style="padding:20px;color:#c00;">Failed to load body: ${e.message}</div>`;
+    document.getElementById('pvContent').innerHTML = `<div style="padding:20px;color:#c00;">본문 불러오기 실패: ${e.message}</div>`;
   }
 }
 
 // ── Editing ─────────────────────────────────────────────
 // ── New post ────────────────────────────────────
 function openNewPost() {
-  document.getElementById('editModalTitle').textContent = '✏️ New Post';
+  document.getElementById('editModalTitle').textContent = '✏️ 새 글';
   document.getElementById('editFilename').value = '';
   document.getElementById('editSha').value = '';
   document.getElementById('editTitle').value = '';
@@ -2136,9 +2157,10 @@ function openNewPost() {
   document.getElementById('editTags').value = '';
   document.getElementById('editSummary').value = '';
   document.getElementById('richEditor').innerHTML = '';
-  document.getElementById('charCount').textContent = '0 chars';
+  document.getElementById('charCount').textContent = '0자';
   document.getElementById('koReviewSection').style.display = 'none';
   document.getElementById('editKoReview').value = '';
+  resetKoEdit();
   openModal('editModal');
 }
 
@@ -2175,7 +2197,7 @@ function insertQuote() {
   const sel = window.getSelection();
   const range = sel.getRangeAt(0);
   const quote = document.createElement('blockquote');
-  quote.textContent = range.toString() || 'Enter a quote';
+  quote.textContent = range.toString() || '인용문을 입력하세요';
   range.deleteContents();
   range.insertNode(quote);
   const br = document.createElement('p');
@@ -2198,9 +2220,9 @@ function insertDivider() {
 }
 
 function insertLink() {
-  const url = prompt('Enter the link URL:', 'https://');
+  const url = prompt('링크 URL을 입력하세요:', 'https://');
   if (!url) return;
-  const text = prompt('Enter the link text:', url);
+  const text = prompt('링크 텍스트를 입력하세요:', url);
   if (!text) return;
   document.getElementById('richEditor').focus();
   document.execCommand('createLink', false, url);
@@ -2263,7 +2285,7 @@ async function insertImage() {
     if (!file) return;
 
     if (file.size > 5 * 1024 * 1024) {
-      showToast('Images must be 5MB or smaller', 'warn');
+      showToast('이미지는 5MB 이하만 가능합니다', 'warn');
       return;
     }
 
@@ -2272,7 +2294,7 @@ async function insertImage() {
       const base64 = await new Promise((res, rej) => {
         const reader = new FileReader();
         reader.onload = () => res(reader.result.split(',')[1]);
-        reader.onerror = () => rej(new Error('Failed to read file'));
+        reader.onerror = () => rej(new Error('파일 읽기 실패'));
         reader.readAsDataURL(file);
       });
 
@@ -2299,10 +2321,10 @@ async function insertImage() {
       const imgHtml = `<img src="${imgUrl}" alt="" style="width:100%;max-width:720px;height:auto;margin:16px auto;border-radius:8px;display:block;">`;
 
       insertHtmlAtSavedRange(imgHtml);
-      showToast('Image added', 'success');
+      showToast('이미지가 추가되었습니다', 'success');
     } catch (err) {
       console.error(err);
-      showToast('Image upload failed: ' + err.message, 'error');
+      showToast('이미지 업로드 실패: ' + err.message, 'error');
     } finally {
       showLoading(false);
     }
@@ -2315,14 +2337,14 @@ async function insertVideo() {
   saveEditorRange();
 
   const choice = prompt(
-    'Choose how to add a video:\n\n' +
-    '1. Paste a YouTube/Vimeo URL (recommended — no size limit)\n' +
-    '2. Upload a video file (50MB or smaller)\n\n' +
-    'Enter 1 or 2:'
+    '동영상 추가 방법을 선택하세요:\n\n' +
+    '1. YouTube/Vimeo URL 붙여넣기 (권장 — 용량 제한 없음)\n' +
+    '2. 동영상 파일 업로드 (50MB 이하)\n\n' +
+    '1 또는 2 입력:'
   );
 
   if (choice === '1') {
-    const url = prompt('YouTube or Vimeo URL:');
+    const url = prompt('YouTube 또는 Vimeo URL:');
     if (!url) return;
 
     let embedUrl = '';
@@ -2337,14 +2359,14 @@ async function insertVideo() {
     }
 
     if (!embedUrl) {
-      showToast('Not a valid YouTube or Vimeo URL', 'warn');
+      showToast('유효한 YouTube 또는 Vimeo URL이 아닙니다', 'warn');
       return;
     }
 
     const html = `<div style="position:relative;padding-bottom:56.25%;height:0;margin:16px auto;max-width:720px;border-radius:8px;overflow:hidden;"><iframe src="${embedUrl}" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe></div>`;
 
     insertHtmlAtSavedRange(html);
-    showToast('Video added', 'success');
+    showToast('동영상이 추가되었습니다', 'success');
 
   } else if (choice === '2') {
     const input = document.createElement('input');
@@ -2355,7 +2377,7 @@ async function insertVideo() {
       if (!file) return;
 
       if (file.size > 50 * 1024 * 1024) {
-        showToast('Video files must be 50MB or smaller. YouTube/Vimeo recommended.', 'warn');
+        showToast('동영상 파일은 50MB 이하만 가능합니다. YouTube/Vimeo를 권장합니다.', 'warn');
         return;
       }
 
@@ -2364,7 +2386,7 @@ async function insertVideo() {
         const base64 = await new Promise((res, rej) => {
           const reader = new FileReader();
           reader.onload = () => res(reader.result.split(',')[1]);
-          reader.onerror = () => rej(new Error('Failed to read file'));
+          reader.onerror = () => rej(new Error('파일 읽기 실패'));
           reader.readAsDataURL(file);
         });
 
@@ -2391,10 +2413,10 @@ async function insertVideo() {
         const html = `<video controls src="${videoUrl}" style="width:100%;max-width:720px;height:auto;margin:16px auto;border-radius:8px;display:block;"></video>`;
 
         insertHtmlAtSavedRange(html);
-        showToast('Video added', 'success');
+        showToast('동영상이 추가되었습니다', 'success');
       } catch (err) {
         console.error(err);
-        showToast('Video upload failed: ' + err.message, 'error');
+        showToast('동영상 업로드 실패: ' + err.message, 'error');
       } finally {
         showLoading(false);
       }
@@ -2410,27 +2432,27 @@ function togglePreviewMode() {
   if (editor.style.display === 'none') {
     editor.style.display = 'block';
     preview.style.display = 'none';
-    btn.textContent = '👁 Preview';
+    btn.textContent = '👁 미리보기';
   } else {
     preview.innerHTML = `<div class="preview-content">${editor.innerHTML}</div>`;
     editor.style.display = 'none';
     preview.style.display = 'block';
-    btn.textContent = '✏️ Back to Edit';
+    btn.textContent = '✏️ 편집으로';
   }
 }
 
 function updateCharCount() {
   const text = document.getElementById('richEditor').innerText || '';
-  document.getElementById('charCount').textContent = text.length.toLocaleString() + ' chars';
+  document.getElementById('charCount').textContent = text.length.toLocaleString() + '자';
 }
 
 // AI auto-summary
 async function autoSummary() {
   const title = document.getElementById('editTitle').value;
   const bodyText = document.getElementById('richEditor').innerText || '';
-  if (!bodyText.trim()) { alert('Please enter the body first.'); return; }
+  if (!bodyText.trim()) { alert('본문을 먼저 입력하세요.'); return; }
   const btn = event.target;
-  btn.textContent = '✨ Summarizing...';
+  btn.textContent = '✨ 요약 중...';
   btn.disabled = true;
   try {
     const res = await fetch('https://api.anthropic.com/v1/messages', {
@@ -2454,10 +2476,96 @@ ${bodyText.slice(0, 1000)}`
     const summary = data.content?.[0]?.text || '';
     if (summary) document.getElementById('editSummary').value = summary;
   } catch(e) {
-    alert('Failed to generate a summary. Please enter it manually.');
+    alert('요약 생성에 실패했습니다. 직접 입력하세요.');
   } finally {
-    btn.textContent = '✨ AI Auto-Summary';
+    btn.textContent = '✨ AI 자동 요약';
     btn.disabled = false;
+  }
+}
+
+// ── 🇰🇷 한글로 수정 (편집 모달 KO→EN 번역) ───────────────────
+function toggleKoEdit() {
+  const panel = document.getElementById('koEditPanel');
+  const btn   = document.getElementById('koEditToggleBtn');
+  const show  = panel.style.display === 'none';
+  panel.style.display = show ? 'block' : 'none';
+  btn.style.background = show ? 'var(--point-light)' : 'var(--bg2)';
+  btn.style.color = show ? 'var(--point)' : 'var(--text1)';
+}
+
+function resetKoEdit() {
+  const panel = document.getElementById('koEditPanel');
+  if (panel) panel.style.display = 'none';
+  const t = document.getElementById('editKoTitle'); if (t) t.value = '';
+  const b = document.getElementById('editKoBody');  if (b) b.value = '';
+  const btn = document.getElementById('koEditToggleBtn');
+  if (btn) { btn.style.background = 'var(--bg2)'; btn.style.color = 'var(--text1)'; }
+}
+
+// ko_review 동기화: 최신 한글 원문을 검수본 필드에 반영 (부분 수정 시 기존 값과 병합)
+function syncKoReviewFromEdit(koTitle, koBody) {
+  const koTa  = document.getElementById('editKoReview');
+  const koSec = document.getElementById('koReviewSection');
+  const existing = (koTa.value || '').trim();
+  let exTitle = '', exBody = '';
+  if (existing) {
+    const sep = existing.indexOf('\n\n');
+    if (sep >= 0) { exTitle = existing.slice(0, sep).trim(); exBody = existing.slice(sep + 2).trim(); }
+    else { exBody = existing; }
+  }
+  const newTitle = koTitle || exTitle;
+  const newBody  = koBody  || exBody;
+  koTa.value = newBody ? `${newTitle}\n\n${newBody}` : newTitle;
+  koSec.style.display = 'block';
+}
+
+// 한글 입력 → 페르소나 영어로 번역해 편집 필드(제목/본문/요약)에 반영.
+// 제목만/본문만/둘 다 입력 모두 지원 (입력된 것만 번역·반영).
+async function translateEdit() {
+  const koTitle = document.getElementById('editKoTitle').value.trim();
+  const koBody  = document.getElementById('editKoBody').value.trim();
+  if (!koTitle && !koBody) { showToast('한글 제목이나 본문 중 하나는 입력하세요.', 'warn'); return; }
+  if (!geminiKey) { showToast('설정(⚙)에서 Gemini API Key를 먼저 입력하세요.', 'warn'); return; }
+
+  const btn = document.getElementById('editTranslateBtn');
+  const orig = btn.textContent;
+  btn.disabled = true; btn.textContent = '⏳ 변환 중...';
+  showLoading(true);
+  try {
+    // 에세이 변환과 동일 페르소나 (서울 현직 직장인 1인칭, 직역 금지, 로마자+설명 병기)
+    const persona = `You are an actual Korean salaryman (office worker) in your 30s living in Seoul, writing in fluent, natural English. This is the site operator's PERSONAL post. Translate the Korean below into English, preserving the original meaning, emotion, and the writer's distinctive voice and tone. No literal or machine-translation tone — make it read like a native English speaker wrote it. For Korea-specific concepts, give romanization + a short gloss on first use (e.g. hoesik (the after-work company dinner)). Never output Hangul characters.`;
+    let fields, inputBlock;
+    if (koTitle && koBody) {
+      fields = '{"title": "English title", "content": "<p>...</p><p>...</p> (HTML paragraphs)", "summary": "1-2 sentence English summary"}';
+      inputBlock = `[Korean title]\n${koTitle}\n\n[Korean body]\n${koBody}`;
+    } else if (koBody) {
+      fields = '{"content": "<p>...</p><p>...</p> (HTML paragraphs)", "summary": "1-2 sentence English summary"}';
+      inputBlock = `[Korean body]\n${koBody}`;
+    } else {
+      fields = '{"title": "English title"}';
+      inputBlock = `[Korean title]\n${koTitle}`;
+    }
+    const prompt = `${persona}\n\nOutput ONLY JSON: ${fields}\n\n${inputBlock}`;
+    const text = await callGemini(prompt, { temperature: 0.9, maxOutputTokens: 8192, json: true });
+    const parsed = _parseGeminiJson(text);
+    if (!parsed || (koTitle && !parsed.title) || (koBody && !parsed.content)) {
+      throw new Error('변환 결과 파싱 실패. 다시 시도하세요.');
+    }
+
+    if (parsed.title)   document.getElementById('editTitle').value = parsed.title;
+    if (parsed.content) document.getElementById('richEditor').innerHTML = parsed.content;
+    if (parsed.summary) document.getElementById('editSummary').value = parsed.summary;
+
+    // 검수본(ko_review)을 최신 한글과 일치하게 갱신
+    syncKoReviewFromEdit(koTitle, koBody);
+
+    updateCharCount();
+    showToast('변환 완료. 미리보기 확인 후 "발행"/"임시저장"으로 저장하세요.', 'success');
+  } catch (e) {
+    handleGeminiError(e);
+  } finally {
+    btn.disabled = false; btn.textContent = orig;
+    showLoading(false);
   }
 }
 
@@ -2473,8 +2581,9 @@ async function openEdit(filename) {
   document.getElementById('editTags').value     = (post.tags||[]).join(', ');
 
   // Lazy-load the body (also fetches the sha - needed for ghPut in savePost)
-  document.getElementById('richEditor').innerHTML = '<div style="text-align:center;padding:40px;color:#888;">Loading...</div>';
+  document.getElementById('richEditor').innerHTML = '<div style="text-align:center;padding:40px;color:#888;">불러오는 중...</div>';
   document.getElementById('editSha').value = '';
+  resetKoEdit();
   openModal('editModal');
 
   try {
@@ -2493,7 +2602,7 @@ async function openEdit(filename) {
     }
     updateCharCount();
   } catch(e) {
-    document.getElementById('richEditor').innerHTML = `<div style="color:#c00;padding:20px;">Failed to load body: ${e.message}</div>`;
+    document.getElementById('richEditor').innerHTML = `<div style="color:#c00;padding:20px;">본문 불러오기 실패: ${e.message}</div>`;
   }
 }
 
@@ -2505,7 +2614,7 @@ async function savePost(statusOverride) {
   const title = document.getElementById('editTitle').value.trim();
 
   if (!title) {
-    showToast('Please enter a title.', 'error');
+    showToast('제목을 입력하세요.', 'error');
     return;
   }
 
@@ -2526,6 +2635,9 @@ async function savePost(statusOverride) {
         created_at: now.toISOString(),
         status: statusOverride || 'published'
       };
+      // 한글로 수정 기능으로 검수본이 채워졌다면 함께 저장
+      const _newKoReview = document.getElementById('editKoReview').value;
+      if (_newKoReview) newPost.ko_review = _newKoReview;
       await ghPut(`${POSTS_PATH}/${newFilename}`, JSON.stringify(newPost, null, 2), null, `new post: ${title}`);
       await syncManifest('upsert', newFilename, {
         title:      newPost.title,
@@ -2552,11 +2664,11 @@ async function savePost(statusOverride) {
       applyFilters();
 
       closeModal('editModal');
-      showToast('New post saved!', 'success');
+      showToast('새 글이 저장되었습니다!', 'success');
     } else {
       // ── Edit existing post ─────────────────────────────────
       const post = allPosts.find(p => p.filename === filename);
-      if (!post) { showToast('Post not found.', 'error'); return; }
+      if (!post) { showToast('글을 찾을 수 없습니다.', 'error'); return; }
       const updated = {
         ...post,
         title,
@@ -2599,10 +2711,10 @@ async function savePost(statusOverride) {
       }
 
       closeModal('editModal');
-      showToast('Post saved!', 'success');
+      showToast('글이 저장되었습니다!', 'success');
     }
   } catch(e) {
-    showToast('Save failed: ' + e.message, 'error');
+    showToast('저장 실패: ' + e.message, 'error');
   } finally {
     showLoading(false);
   }
@@ -2642,7 +2754,7 @@ async function confirmDelete() {
 
     closeModal('deleteModal');
     deleteTarget = null;
-    showToast('Post deleted.', 'success');
+    showToast('글이 삭제되었습니다.', 'success');
     // loadPosts call removed (already removed from memory)
   } catch(e) {
     // Roll back on failure
@@ -2651,7 +2763,7 @@ async function confirmDelete() {
       updateStats();
       applyFilters();
     }
-    showToast('Delete failed: ' + e.message, 'error');
+    showToast('삭제 실패: ' + e.message, 'error');
   } finally {
     showLoading(false);
   }
@@ -2755,13 +2867,13 @@ async function convertNaverPost() {
   const category = document.getElementById('naverCategory').value;
 
   if (!content || content.length < 100) {
-    showToast('Body is too short (minimum 100 characters)', 'warn');
+    showToast('본문이 너무 짧습니다 (최소 100자)', 'warn');
     return;
   }
 
   const btn = document.getElementById('naverConvertBtn');
   btn.disabled = true;
-  btn.textContent = '⏳ Rewriting with Gemini...';
+  btn.textContent = '⏳ Gemini로 재작성 중...';
   showLoading(true);
 
   try {
@@ -2800,12 +2912,12 @@ async function convertNaverPost() {
         if (!parsed || !parsed.title || !parsed.content) {
           throw new Error('JSON parse failed. Problem with the Gemini response format. Please try again.');
         }
-        showToast('Some fields were auto-recovered. Reviewing the preview is required.', 'warn');
+        showToast('일부 필드가 자동 복구되었습니다. 미리보기 확인이 필요합니다.', 'warn');
       }
     }
 
     // Step 2: finalize-post auto-assembles images, HTML, SEO, and JSON-LD (reuses automation.finalize_article)
-    btn.textContent = '⏳ Assembling images/HTML...';
+    btn.textContent = '⏳ 이미지/HTML 조립 중...';
 
     // Setting source ahead of time means finalize_article's setdefault preserves it
     parsed.source = 'naver_import';
@@ -2854,23 +2966,23 @@ async function convertNaverPost() {
 
     const rawPreview = (finalized.content_raw || '').slice(0, 600);
     document.getElementById('naverResultBody').textContent =
-      `[Title]\n${finalized.title}\n\n[Summary]\n${finalized.summary}\n\n[Enrichment]\n${stats}\n\n[Body preview (first 600 chars)]\n${rawPreview}${(finalized.content_raw || '').length > 600 ? '\n…' : ''}`;
+      `[제목]\n${finalized.title}\n\n[요약]\n${finalized.summary}\n\n[보강 정보]\n${stats}\n\n[본문 미리보기 (앞 600자)]\n${rawPreview}${(finalized.content_raw || '').length > 600 ? '\n…' : ''}`;
     document.getElementById('naverConvertResult').style.display = 'block';
 
-    showToast('Rewrite and assembly complete. Review the preview, then save.', 'success');
+    showToast('재작성·조립 완료. 미리보기 확인 후 저장하세요.', 'success');
   } catch (e) {
     console.error(e);
-    showToast('Conversion failed: ' + e.message, 'error');
+    showToast('변환 실패: ' + e.message, 'error');
   } finally {
     btn.disabled = false;
-    btn.textContent = '🔄 Convert';
+    btn.textContent = '🔄 변환';
     showLoading(false);
   }
 }
 
 async function saveNaverDraft() {
   if (!_naverConverted) {
-    showToast('No converted post', 'warn');
+    showToast('변환된 글이 없습니다', 'warn');
     return;
   }
 
@@ -2887,12 +2999,12 @@ async function saveNaverDraft() {
     await ghPut(`${POSTS_PATH}/${filename}`, content, null, `feat: import from naver: ${postData.title}`);
     await syncManifest('upsert', filename, postData);
 
-    showToast('Saved as a draft. Review it in the admin panel, then publish.', 'success');
+    showToast('임시저장 완료. 관리자 패널에서 검토 후 발행하세요.', 'success');
     closeModal('naverImportModal');
     await loadPosts();
   } catch (e) {
     console.error(e);
-    showToast('Save failed: ' + e.message, 'error');
+    showToast('저장 실패: ' + e.message, 'error');
   } finally {
     showLoading(false);
   }
@@ -2916,13 +3028,13 @@ async function generateCustomPost() {
   const context = document.getElementById('customContext').value.trim();
 
   if (!keyword || keyword.length < 2) {
-    showToast('Please enter a keyword (minimum 2 characters)', 'warn');
+    showToast('키워드를 입력하세요 (최소 2자)', 'warn');
     return;
   }
 
   const btn = document.getElementById('customGenBtn');
   btn.disabled = true;
-  btn.textContent = '⏳ Generating... (30-60s)';
+  btn.textContent = '⏳ 생성 중... (30-60초)';
   showLoading(true);
 
   try {
@@ -2956,30 +3068,30 @@ async function generateCustomPost() {
         if (!parsed || !parsed.title || !parsed.content) {
           throw new Error('JSON parse failed. Please try again.');
         }
-        showToast('Some fields were auto-recovered. Reviewing the preview is required.', 'warn');
+        showToast('일부 필드가 자동 복구되었습니다. 미리보기 확인이 필요합니다.', 'warn');
       }
     }
 
     _customGenerated = { ...parsed, category, keyword };
 
     document.getElementById('customResultBody').textContent =
-      `[Title]\n${parsed.title}\n\n[Summary]\n${parsed.summary || ''}\n\n[Body]\n${parsed.content}`;
+      `[제목]\n${parsed.title}\n\n[요약]\n${parsed.summary || ''}\n\n[본문]\n${parsed.content}`;
     document.getElementById('customGenResult').style.display = 'block';
 
-    showToast('Generation complete. Review the preview, then save.', 'success');
+    showToast('생성 완료. 미리보기 확인 후 저장하세요.', 'success');
   } catch (e) {
     console.error(e);
-    showToast('Generation failed: ' + e.message, 'error');
+    showToast('생성 실패: ' + e.message, 'error');
   } finally {
     btn.disabled = false;
-    btn.textContent = '✨ Generate Post';
+    btn.textContent = '✨ 글 생성';
     showLoading(false);
   }
 }
 
 async function saveCustomDraft() {
   if (!_customGenerated) {
-    showToast('No generated post', 'warn');
+    showToast('생성된 글이 없습니다', 'warn');
     return;
   }
 
@@ -3007,12 +3119,12 @@ async function saveCustomDraft() {
     await ghPut(`${POSTS_PATH}/${filename}`, content, null, `feat: custom request: ${postData.title}`);
     await syncManifest('upsert', filename, postData);
 
-    showToast('Saved as a draft. Review it in the admin panel, then publish.', 'success');
+    showToast('임시저장 완료. 관리자 패널에서 검토 후 발행하세요.', 'success');
     closeModal('customRequestModal');
     await loadPosts();
   } catch (e) {
     console.error(e);
-    showToast('Save failed: ' + e.message, 'error');
+    showToast('저장 실패: ' + e.message, 'error');
   } finally {
     showLoading(false);
   }
@@ -3112,7 +3224,7 @@ async function convertEssay() {
       ko_review: `${titleKo}\n\n${bodyKo}`,   // 원문이 곧 검수본
     };
     document.getElementById('essayResultBody').textContent =
-      `[Title]\n${parsed.title}\n\n[Summary]\n${parsed.summary || ''}\n\n[Body]\n${String(parsed.content).replace(/<[^>]+>/g, '')}`;
+      `[제목]\n${parsed.title}\n\n[요약]\n${parsed.summary || ''}\n\n[본문]\n${String(parsed.content).replace(/<[^>]+>/g, '')}`;
     document.getElementById('essayResult').style.display = 'block';
     showToast('변환 완료. 미리보기 확인 후 저장하세요.', 'success');
   } catch (e) {
@@ -3251,7 +3363,7 @@ async function generateTopicPost() {
 
     const bodyPreview = (finalized.content_raw || String(finalized.content || '').replace(/<[^>]+>/g, '')).slice(0, 500);
     document.getElementById('topicResultBody').textContent =
-      `[Title]\n${finalized.title}\n\n[Summary]\n${finalized.summary || ''}\n\n[ko_review]\n${(ko || '(생성 안 됨)').slice(0, 200)}\n\n[Body preview]\n${bodyPreview}`;
+      `[제목]\n${finalized.title}\n\n[요약]\n${finalized.summary || ''}\n\n[한글 검수본]\n${(ko || '(생성 안 됨)').slice(0, 200)}\n\n[본문 미리보기]\n${bodyPreview}`;
     document.getElementById('topicResult').style.display = 'block';
     showToast('생성 완료. 미리보기 확인 후 저장하세요.', 'success');
   } catch (e) {
@@ -3358,15 +3470,15 @@ function renderAdsenseChecklist() {
 
   // ── 3. Verdict text ──
   let verdict = '';
-  if (score >= 85)      verdict = '🎉 <strong>Ready to apply now</strong>! Everything is well prepared.';
-  else if (score >= 70) verdict = '✅ <strong>Applying recommended</strong> — a little more polish will further raise your approval odds.';
-  else if (score >= 50) verdict = '⚠️ <strong>More prep needed</strong> — follow the checklist below to improve.';
-  else                  verdict = '❌ <strong>Too early</strong> — increase your number of published posts first.';
+  if (score >= 85)      verdict = '🎉 <strong>지금 신청 가능</strong>! 모든 준비가 잘 되어 있습니다.';
+  else if (score >= 70) verdict = '✅ <strong>신청 권장</strong> — 조금만 더 다듬으면 승인 가능성이 더 올라갑니다.';
+  else if (score >= 50) verdict = '⚠️ <strong>준비 더 필요</strong> — 아래 체크리스트를 따라 보완하세요.';
+  else                  verdict = '❌ <strong>아직 이릅니다</strong> — 발행 글 수를 먼저 늘리세요.';
 
   // Estimated approval timing
   const needed = Math.max(0, 20 - publishedCount);
   if (needed > 0) {
-    verdict += `<br><span style="font-size:12px;opacity:0.75;">💡 Just ${needed} more published posts and you'll be ready to apply.</span>`;
+    verdict += `<br><span style="font-size:12px;opacity:0.75;">💡 발행 글 ${needed}개만 더 채우면 신청 준비가 끝납니다.</span>`;
   }
 
   document.getElementById('adsense-score').textContent = score;
@@ -3381,10 +3493,10 @@ function renderAdsenseChecklist() {
     </div>`;
 
   document.getElementById('adsense-quick-stats').innerHTML =
-    statBox('Published', `${publishedCount}<span style="font-size:14px;font-weight:500;color:var(--text3);"> /20</span>`, publishedCount >= 20 ? '✅ Met' : `${20 - publishedCount} more needed`, publishedCount >= 20) +
-    statBox('Drafts Pending', drafts.length, 'Review then publish', false) +
-    statBox('Thumbnail Ratio', thumbnailPct + '%', `${thumbnailCount}/${totalCount} posts`, thumbnailPct >= 80) +
-    statBox('FAQ Included', faqPct + '%', `${faqCount}/${totalCount} posts`, false);
+    statBox('발행됨', `${publishedCount}<span style="font-size:14px;font-weight:500;color:var(--text3);"> /20</span>`, publishedCount >= 20 ? '✅ 충족' : `${20 - publishedCount}개 더 필요`, publishedCount >= 20) +
+    statBox('검수 대기 임시저장', drafts.length, '검토 후 발행', false) +
+    statBox('썸네일 비율', thumbnailPct + '%', `${thumbnailCount}/${totalCount}개 글`, thumbnailPct >= 80) +
+    statBox('FAQ 포함', faqPct + '%', `${faqCount}/${totalCount}개 글`, false);
 
   // Update the sidebar score
   const cntEl = document.getElementById('cnt-adsense');
@@ -3392,23 +3504,23 @@ function renderAdsenseChecklist() {
 
   // ── 5. Required items checklist ──
   const required = [
-    { ok: publishedCount >= 20, title: '20+ published posts', desc: `Currently ${publishedCount}. Basic AdSense requirement` },
-    { ok: hasPrivacy, title: 'Privacy Policy', desc: 'privacy.html created (must be accessible after deployment)' },
-    { ok: true, title: 'HTTPS enabled', desc: 'Vercel automatic SSL' },
-    { ok: true, title: 'Google Search Console verification', desc: 'Already verified' },
-    { ok: true, title: 'Sitemap submitted', desc: 'sitemap.xml auto-updated' },
-    { ok: thumbnailPct >= 80, title: 'Image per post (80%+)', desc: `Currently ${thumbnailPct}% · thanks to the auto-thumbnail system` },
+    { ok: publishedCount >= 20, title: '발행 글 20개 이상', desc: `현재 ${publishedCount}개. 애드센스 기본 요건` },
+    { ok: hasPrivacy, title: '개인정보처리방침', desc: 'privacy.html 생성됨 (배포 후 접근 가능해야 함)' },
+    { ok: true, title: 'HTTPS 적용', desc: 'Vercel 자동 SSL' },
+    { ok: true, title: 'Google Search Console 인증', desc: '이미 인증됨' },
+    { ok: true, title: '사이트맵 제출', desc: 'sitemap.xml 자동 갱신' },
+    { ok: thumbnailPct >= 80, title: '글당 이미지 (80% 이상)', desc: `현재 ${thumbnailPct}% · 자동 썸네일 시스템 덕분` },
   ];
   document.getElementById('adsense-required-list').innerHTML = required.map(itemRow).join('');
 
   // ── 6. Recommended items ──
   const recommended = [
-    { ok: hasTerms, title: 'Terms of Service page', desc: 'terms.html created' },
-    { ok: true, title: 'About page', desc: 'about.html exists' },
-    { ok: faqCount > 0, title: 'Posts with a FAQ section', desc: `${faqCount} posts include a FAQ (more structured data)` },
-    { ok: true, title: 'Per-category navigation', desc: 'Blog page + category filter complete' },
-    { ok: true, title: 'OG image set', desc: 'Social-share thumbnails OK' },
-    { ok: publishedCount >= 30, title: '30+ published posts (higher approval odds)', desc: `Currently ${publishedCount}` },
+    { ok: hasTerms, title: '이용약관 페이지', desc: 'terms.html 생성됨' },
+    { ok: true, title: '소개 페이지', desc: 'about.html 존재' },
+    { ok: faqCount > 0, title: 'FAQ 섹션 포함 글', desc: `${faqCount}개 글에 FAQ 포함 (구조화 데이터 강화)` },
+    { ok: true, title: '카테고리별 내비게이션', desc: '블로그 페이지 + 카테고리 필터 완비' },
+    { ok: true, title: 'OG 이미지 설정', desc: '소셜 공유 썸네일 정상' },
+    { ok: publishedCount >= 30, title: '발행 글 30개 이상 (승인 가능성 향상)', desc: `현재 ${publishedCount}개` },
   ];
   document.getElementById('adsense-recommended-list').innerHTML = recommended.map(itemRow).join('');
 
@@ -3428,19 +3540,19 @@ function renderAdsenseChecklist() {
   const draftCountEl = document.getElementById('adsense-draft-count');
   const draftListEl  = document.getElementById('adsense-draft-list');
 
-  draftCountEl.textContent = `${drafts.length} total · showing top 10`;
+  draftCountEl.textContent = `총 ${drafts.length}개 · 상위 10개 표시`;
 
   if (drafts.length === 0) {
-    draftListEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text3);font-size:13px;">No drafts to review. All drafts are published, or there are no posts.</div>';
+    draftListEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text3);font-size:13px;">검수할 임시저장 글이 없습니다. 모두 발행됐거나 글이 없습니다.</div>';
   } else {
     // Sort by SEO score (when available), then by creation date
-    const sortedDrafts = [...drafts].sort((a, b) => {
+    const topDraftList = [...drafts].sort((a, b) => {
       const sa = a.seo_score || 0, sb = b.seo_score || 0;
       if (sa !== sb) return sb - sa;
       return new Date(b.created_at) - new Date(a.created_at);
     }).slice(0, 10);
 
-    draftListEl.innerHTML = sortedDrafts.map(p => {
+    draftListEl.innerHTML = topDraftList.map(p => {
       const seoBadge = (typeof p.seo_score === 'number' && p.seo_score > 0)
         ? `<span style="background:var(--point-light);color:var(--point);padding:2px 8px;border-radius:100px;font-size:10px;font-weight:700;margin-left:6px;">⚡ SEO ${Math.round(p.seo_score)}</span>`
         : '';
@@ -3449,14 +3561,14 @@ function renderAdsenseChecklist() {
       return `<div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;">
         <div style="flex:1;min-width:0;">
           <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-            ${escapeHtml(p.title || '(no title)')}${seoBadge}
+            ${escapeHtml(p.title || '(제목 없음)')}${seoBadge}
           </div>
           <div style="font-size:11px;color:var(--text3);">
             <span style="color:var(--point);font-weight:600;">${escapeHtml(p.category || '')}</span> · 
             ${formatDate(p.created_at)} · ${hasImg} ${hasFaq}
           </div>
         </div>
-        <button onclick="openPost('${escapeHtml(p.filename)}')" style="background:var(--navy);color:var(--white);border:none;padding:8px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;font-family:inherit;">Review →</button>
+        <button onclick="openPost('${escapeHtml(p.filename)}')" style="background:var(--navy);color:var(--white);border:none;padding:8px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;font-family:inherit;">검수 →</button>
       </div>`;
     }).join('');
   }
@@ -3464,46 +3576,46 @@ function renderAdsenseChecklist() {
   // ── 8. Execution roadmap ──
   const weeks = [
     {
-      week: 'Week 1',
+      week: '1주차',
       date: '4/24 ~ 4/30',
-      title: 'Focus on draft review and publishing',
+      title: '임시저장 검수·발행에 집중',
       tasks: [
-        `Published ${publishedCount} → target 25 (${Math.max(0, 25-publishedCount)} more needed)`,
-        'Improve low-quality drafts, then publish',
-        'Check the mobile preview',
+        `발행 ${publishedCount}개 → 목표 25개 (${Math.max(0, 25-publishedCount)}개 더 필요)`,
+        '품질 낮은 임시저장 글 개선 후 발행',
+        '모바일 미리보기 확인',
       ],
       done: publishedCount >= 25,
     },
     {
-      week: 'Week 2',
+      week: '2주차',
       date: '5/1 ~ 5/7',
-      title: 'Quality improvements and SEO optimization',
+      title: '품질 개선 및 SEO 최적화',
       tasks: [
-        `Published ${publishedCount} → target 30`,
-        'Expand the top 5 posts to 2,000+ words',
-        'Add internal links (connect posts to each other)',
+        `발행 ${publishedCount}개 → 목표 30개`,
+        '상위 5개 글을 2,000자 이상으로 확장',
+        '내부 링크 추가 (글끼리 연결)',
       ],
       done: publishedCount >= 30,
     },
     {
-      week: 'Week 3',
+      week: '3주차',
       date: '5/8 ~ 5/14',
-      title: '🎯 Apply for AdSense',
+      title: '🎯 애드센스 신청',
       tasks: [
-        'Set up ads.txt (in Vercel)',
-        'Submit the AdSense application',
-        'Wait for review (1-2 weeks)',
+        'ads.txt 설정 (Vercel에서)',
+        '애드센스 신청서 제출',
+        '심사 대기 (1~2주)',
       ],
       done: false,
     },
     {
-      week: 'Week 4',
+      week: '4주차',
       date: '5/15 ~ 5/21',
-      title: 'Await approval + secondary improvements',
+      title: '승인 대기 + 2차 개선',
       tasks: [
-        'Keep automatic post generation running',
-        'Build backlinks (Naver blog, etc.)',
-        'Plan an ad placement strategy for after approval',
+        '자동 글 생성 계속 유지',
+        '백링크 구축 (네이버 블로그 등)',
+        '승인 후 광고 배치 전략 수립',
       ],
       done: false,
     },
@@ -3598,7 +3710,7 @@ function loadIncomeData() {
 function saveIncome() {
   const data = collectIncomeData();
   localStorage.setItem('incomeData', JSON.stringify(data));
-  showToast('Revenue data saved! It is reflected on the public revenue page immediately.', 'success');
+  showToast('수익 데이터가 저장되었습니다! 공개 수익 페이지에 즉시 반영됩니다.', 'success');
 }
 
 // ── Render the revenue editor ────────────────────────────────
@@ -3627,29 +3739,29 @@ function renderIncomeItems(items) {
     <div class="income-edit-row" data-idx="${i}" style="background:var(--bg);border-radius:10px;padding:16px;display:grid;grid-template-columns:auto 1fr 1fr 1fr 1fr auto;gap:10px;align-items:center;">
       <div style="width:16px;height:16px;border-radius:50%;background:${item.color};flex-shrink:0;"></div>
       <div>
-        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">Income name</div>
+        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">수익 항목명</div>
         <input class="form-input" style="font-size:13px;padding:7px 10px;" value="${escHtml(item.name)}"
           onchange="updateItem(${i},'name',this.value)" placeholder="Blog Management">
       </div>
       <div>
-        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">Amount</div>
+        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">금액</div>
         <input class="form-input" style="font-size:13px;padding:7px 10px;" value="${escHtml(item.amount)}"
           onchange="updateItem(${i},'amount',this.value)" placeholder="3,500,000+">
       </div>
       <div>
-        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">Unit</div>
+        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">단위</div>
         <input class="form-input" style="font-size:13px;padding:7px 10px;" value="${escHtml(item.suffix)}"
           onchange="updateItem(${i},'suffix',this.value)" placeholder="KRW">
       </div>
       <div>
-        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">Description</div>
+        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">설명</div>
         <input class="form-input" style="font-size:13px;padding:7px 10px;" value="${escHtml(item.desc)}"
           onchange="updateItem(${i},'desc',this.value)" placeholder="Managing multiple client blogs">
       </div>
       <div style="display:flex;flex-direction:column;gap:4px;align-items:center;">
         <input type="color" value="${item.color}" onchange="updateItem(${i},'color',this.value)"
           style="width:32px;height:28px;border:none;border-radius:4px;cursor:pointer;padding:0;">
-        <button onclick="removeItem(${i})" style="background:var(--red-light);color:var(--red);border:none;padding:3px 8px;border-radius:4px;font-size:11px;cursor:pointer;">Delete</button>
+        <button onclick="removeItem(${i})" style="background:var(--red-light);color:var(--red);border:none;padding:3px 8px;border-radius:4px;font-size:11px;cursor:pointer;">삭제</button>
       </div>
     </div>`).join('');
 }
@@ -3691,14 +3803,14 @@ function renderMonthHistory(months) {
         <input class="form-input" style="font-size:14px;font-weight:700;flex:1;min-width:120px;padding:7px 10px;color:var(--point);"
           value="${escHtml(month.total)}" placeholder="5,000,000 KRW+"
           onchange="updateMonth(${mi},'total',this.value)">
-        <button onclick="removeMonth(${mi})" style="background:var(--red-light);color:var(--red);border:none;padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer;white-space:nowrap;">Delete</button>
+        <button onclick="removeMonth(${mi})" style="background:var(--red-light);color:var(--red);border:none;padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer;white-space:nowrap;">삭제</button>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;" id="month-rows-${mi}">
         ${(month.rows || []).map((row, ri) => `
           <div style="display:grid;grid-template-columns:16px 1fr 1fr auto;gap:8px;align-items:center;background:var(--white);padding:10px 12px;border-radius:8px;border:1px solid var(--border);">
             <div style="width:10px;height:10px;border-radius:50%;background:${row.color};"></div>
             <input class="form-input" style="font-size:12px;padding:5px 8px;" value="${escHtml(row.name)}"
-              onchange="updateMonthRow(${mi},${ri},'name',this.value)" placeholder="Income item name">
+              onchange="updateMonthRow(${mi},${ri},'name',this.value)" placeholder="수익 항목명">
             <input class="form-input" style="font-size:12px;padding:5px 8px;font-weight:700;" value="${escHtml(row.value)}"
               onchange="updateMonthRow(${mi},${ri},'value',this.value)" placeholder="₩ 3,500,000+">
             <div style="display:flex;gap:4px;">
@@ -3708,7 +3820,7 @@ function renderMonthHistory(months) {
             </div>
           </div>`).join('')}
       </div>
-      <button onclick="addMonthRow(${mi})" style="margin-top:8px;background:var(--bg2);color:var(--text2);border:1px solid var(--border);padding:5px 12px;border-radius:6px;font-size:11px;cursor:pointer;">+ Add Row</button>
+      <button onclick="addMonthRow(${mi})" style="margin-top:8px;background:var(--bg2);color:var(--text2);border:1px solid var(--border);padding:5px 12px;border-radius:6px;font-size:11px;cursor:pointer;">+ 행 추가</button>
     </div>`).join('');
 }
 
@@ -3724,7 +3836,7 @@ function updateMonthRow(mi, ri, key, val) {
   }
 }
 function removeMonth(mi) {
-  if (!confirm('Delete this month\'s record?')) return;
+  if (!confirm('이 달의 기록을 삭제할까요?')) return;
   const data = loadIncomeData();
   data.months.splice(mi, 1);
   localStorage.setItem('incomeData', JSON.stringify(data));
@@ -3765,7 +3877,7 @@ function renderStructure(structure) {
   list.innerHTML = structure.map((s, i) => `
     <div style="background:var(--bg);border-radius:10px;padding:16px;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:start;">
       <div>
-        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">Icon + title</div>
+        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">아이콘 + 제목</div>
         <div style="display:flex;gap:6px;">
           <input class="form-input" style="width:52px;font-size:16px;padding:6px;text-align:center;" value="${escHtml(s.icon)}"
             onchange="updateStructure(${i},'icon',this.value)">
@@ -3774,7 +3886,7 @@ function renderStructure(structure) {
         </div>
       </div>
       <div>
-        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">Amount + unit</div>
+        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">금액 + 단위</div>
         <div style="display:flex;gap:6px;">
           <input class="form-input" style="font-size:13px;padding:7px 10px;flex:1;" value="${escHtml(s.amount)}"
             onchange="updateStructure(${i},'amount',this.value)" placeholder="₩ 3,500,000">
@@ -3783,14 +3895,14 @@ function renderStructure(structure) {
         </div>
       </div>
       <div>
-        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">Description</div>
+        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">설명</div>
         <textarea class="form-textarea" style="min-height:64px;font-size:12px;padding:7px 10px;"
           onchange="updateStructure(${i},'desc',this.value)">${escHtml(s.desc)}</textarea>
       </div>
       <div style="display:flex;flex-direction:column;gap:4px;align-items:center;padding-top:18px;">
         <input type="color" value="${s.color}" onchange="updateStructure(${i},'color',this.value)"
           style="width:32px;height:28px;border:none;border-radius:4px;cursor:pointer;padding:0;">
-        <button onclick="removeStructure(${i})" style="background:var(--red-light);color:var(--red);border:none;padding:3px 8px;border-radius:4px;font-size:11px;cursor:pointer;">Delete</button>
+        <button onclick="removeStructure(${i})" style="background:var(--red-light);color:var(--red);border:none;padding:3px 8px;border-radius:4px;font-size:11px;cursor:pointer;">삭제</button>
       </div>
     </div>`).join('');
 }
