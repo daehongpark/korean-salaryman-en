@@ -26,7 +26,16 @@ TEMPLATE_PATH = os.path.join(ROOT, "post.html")
 MANIFEST_PATH = os.path.join(ROOT, "posts", "manifest.json")
 POSTS_DIR = os.path.join(ROOT, "posts")
 OUT_DIR = os.path.join(ROOT, "p")
+ARCHIVE_PATH = os.path.join(ROOT, "archive.html")
 SITE = "https://en.koreansalaryman.com"
+
+# 카테고리 표시 라벨 (index/blog 푸터와 동일 순서·표시명)
+CATEGORY_LABELS = [
+    ("k-trends",          "K-Trends"),
+    ("korean-life",       "Korean Life"),
+    ("culture-explained", "Culture Explained"),
+    ("essay",             "Essays"),
+]
 
 
 def esc_attr(s):
@@ -329,6 +338,124 @@ def build_page(template, post, filename, slug, manifest_entry):
     return slug, doc
 
 
+# ── 정적 글 목록 페이지(archive.html) — 크롤러 진입점 ──────────────
+# JS fetch 없이 순수 HTML 링크. 크롤러가 즉시 전체 /p/ 글 경로를 발견하게 한다.
+ARCHIVE_TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Posts — Korean Salaryman</title>
+<meta name="description" content="Every post on Korean Salaryman, grouped by category — K-Trends, Korean Life, Culture Explained, and Essays.">
+<link rel="canonical" href="https://en.koreansalaryman.com/archive.html">
+<meta property="og:title" content="All Posts — Korean Salaryman">
+<meta property="og:description" content="Every post on Korean Salaryman, grouped by category.">
+<meta property="og:url" content="https://en.koreansalaryman.com/archive.html">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#FFFFFF;--ink:#0A0A0A;--accent:#FF3D00;--muted:#666;--line:#e5e5e5;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+.display{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:-0.01em;line-height:0.98;}
+header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--ink);}
+.hdr-in{max-width:1080px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;}
+.logo{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:16px;letter-spacing:-0.01em;color:var(--ink);}
+.logo .dot{color:var(--accent);}
+.hdr-nav a{font-size:13px;font-weight:600;color:var(--ink);margin-left:18px;text-transform:uppercase;letter-spacing:0.02em;}
+.hdr-nav a:hover{color:var(--accent);}
+.wrap{max-width:1080px;margin:0 auto;padding:56px 24px 72px;}
+.page-title{font-size:44px;margin-bottom:10px;}
+.page-sub{font-size:15px;color:var(--muted);margin-bottom:48px;}
+.cat-block{margin-bottom:44px;}
+.cat-head{font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);font-weight:700;padding-bottom:10px;border-bottom:2px solid var(--ink);margin-bottom:4px;}
+.cat-count{color:var(--muted);font-weight:500;margin-left:8px;}
+ul.post-list{list-style:none;}
+ul.post-list li{padding:14px 2px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;}
+ul.post-list li a{font-size:17px;font-weight:600;}
+ul.post-list li a:hover{color:var(--accent);}
+.post-date{font-size:13px;color:var(--muted);white-space:nowrap;}
+footer{border-top:1px solid var(--ink);padding:32px 24px;margin-top:32px;}
+.ft-in{max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--muted);}
+.ft-in a:hover{color:var(--accent);}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr-in">
+    <a href="/index.html" class="logo">KOREAN<span class="dot">.</span>SALARYMAN</a>
+    <nav class="hdr-nav">
+      <a href="/index.html">Home</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/archive.html">All Posts</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <h1 class="display page-title">All Posts</h1>
+  <p class="page-sub">Every post on Korean Salaryman, grouped by category. (__TOTAL__ total)</p>
+__BODY__
+</main>
+<footer>
+  <div class="ft-in">
+    <span>&copy; 2026 Korean Salaryman. All rights reserved.</span>
+    <span><a href="/index.html">Home</a> · <a href="/blog.html">Blog</a> · <a href="/about.html">About</a> · en.koreansalaryman.com</span>
+  </div>
+</footer>
+</body>
+</html>
+"""
+
+
+def generate_archive(manifest):
+    """published 전체 글을 카테고리별 정적 링크 목록(archive.html)으로 생성."""
+    published = [m for m in manifest if m.get("status") == "published"]
+
+    groups = {}
+    for m in published:
+        cat = m.get("category") or "Other"
+        groups.setdefault(cat, []).append(m)
+
+    label_map = dict(CATEGORY_LABELS)
+    ordered_keys = [k for k, _ in CATEGORY_LABELS if k in groups]
+    for k in groups:  # 알 수 없는 카테고리는 뒤에 그대로 추가
+        if k not in label_map and k not in ordered_keys:
+            ordered_keys.append(k)
+
+    blocks = []
+    total_links = 0
+    for k in ordered_keys:
+        items = sorted(groups[k], key=lambda x: (x.get("created_at") or ""), reverse=True)
+        label = label_map.get(k, k)
+        rows = []
+        for it in items:
+            slug = it.get("slug") or it["filename"][:-5]
+            title = esc_text(it.get("title") or "(untitled)")
+            date = esc_text(format_date_kr(it.get("created_at") or ""))
+            rows.append(
+                '      <li><a href="/p/%s.html">%s</a><span class="post-date">%s</span></li>'
+                % (esc_attr(slug), title, date)
+            )
+            total_links += 1
+        block = (
+            '  <section class="cat-block">\n'
+            '    <h2 class="cat-head">%s<span class="cat-count">%d posts</span></h2>\n'
+            '    <ul class="post-list">\n%s\n    </ul>\n'
+            '  </section>'
+        ) % (esc_text(label), len(items), "\n".join(rows))
+        blocks.append(block)
+
+    body = "\n".join(blocks) if blocks else "  <p>No published posts yet.</p>"
+    doc = ARCHIVE_TEMPLATE.replace("__BODY__", body).replace("__TOTAL__", str(total_links))
+    with open(ARCHIVE_PATH, "w", encoding="utf-8") as f:
+        f.write(doc)
+    print("archive.html 생성:", total_links, "개 글 링크 /", len(ordered_keys), "개 카테고리")
+    return total_links
+
+
 def main():
     with open(TEMPLATE_PATH, encoding="utf-8") as f:
         template = f.read()
@@ -384,10 +511,14 @@ def main():
             fail_list.append((filename, str(e)))
             print("FAIL:", filename, "->", e)
 
+    # ── 정적 글 목록(archive.html) 생성 — 크롤러 진입점 ──
+    archive_links = generate_archive(manifest)
+
     print("\n=== 정적 생성 결과 ===")
     print("published 대상:", len(published))
     print("생성(슬러그):", generated)
     print("리다이렉트 stub:", stubs)
+    print("archive.html 글 링크:", archive_links)
     print("스킵:", skipped)
     print("실패:", failed)
     if fail_list:
