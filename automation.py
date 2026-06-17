@@ -1829,6 +1829,20 @@ def finalize_article(article: dict, hero_image: dict | None = None, body_images:
             print(f"   [finalize] hero_image 생성 실패(계속 진행): {e}")
             hero_image = None
 
+    # ── body_images 미전달 시 자체 생성 (admin 주제글/에세이 본문 사진) ──────
+    # cron은 get_body_images()로 만들어 넘기지만, admin 주제글/맞춤글/에세이는
+    # finalize-post.py가 body_images 없이 호출 → 본문 사진 0장이 되던 문제.
+    # CDN(Unsplash) URL을 그대로 본문에 박으므로 Vercel FS 제약과 무관.
+    # UNSPLASH_ACCESS_KEY 없으면 get_body_images가 []를 반환 → 사진 스킵(에러 아님).
+    if not body_images:
+        cat = article.get("category", "")
+        try:
+            body_images = get_body_images(cat, count=3)
+            print(f"   [finalize] body_images 자동 생성: {sum(1 for x in body_images if x)}장")
+        except Exception as e:
+            print(f"   [finalize] body_images 생성 실패(계속 진행): {e}")
+            body_images = []
+
     # 텍스트 정리
     raw_content = clean_content(article.get("content", ""))
     article["content_raw"] = raw_content                                            # 원본 텍스트 보존
