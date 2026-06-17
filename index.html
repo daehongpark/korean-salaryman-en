@@ -421,11 +421,33 @@ function applyFilter(cat){
   window.scrollTo({top:y, behavior:'smooth'});
 }
 
-// ── Newsletter ──
-function handleSubscribe(){
+// ── Newsletter (Substack 실제 연결) ──
+async function handleSubscribe(){
   const input = document.getElementById('nlEmail');
-  if(!input.value || !input.value.includes('@')){ alert('Please enter a valid email address.'); return; }
-  alert("Thanks for subscribing! You'll hear from me soon."); input.value='';
+  const email = (input?.value || '').trim();
+  if (!email || !email.includes('@') || !email.includes('.')) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+  const btn = document.querySelector('.nl-form button') || document.querySelector('[onclick*="handleSubscribe"]');
+  const orig = btn ? btn.textContent : '';
+  if (btn) { btn.disabled = true; btn.textContent = 'Subscribing...'; }
+  try {
+    await fetch('https://koreansalarymanen.substack.com/api/v1/free', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, first_url: 'en.koreansalaryman.com', first_referrer: '' })
+    });
+    // no-cors라 응답 확인 불가 → 낙관적 성공 처리 (Substack 확인메일로 더블옵트인)
+    if (input) input.value = '';
+    alert("You're subscribed! Check your inbox to confirm — see you in your inbox 👋");
+  } catch (e) {
+    // 실패 시 Substack 페이지로 폴백
+    window.open('https://koreansalarymanen.substack.com/subscribe', '_blank');
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = orig; }
+  }
 }
 
 // ── Load manifest ──
