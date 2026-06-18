@@ -305,9 +305,8 @@ footer{background:var(--paper);border-top:1px solid var(--ink);padding:58px 28px
     <span class="kr">뉴스레터</span>
     <h2>Korea, in your inbox</h2>
     <p>The most interesting things happening in Korea right now — one email, no spam, just Korea explained.</p>
-    <div class="nl-form">
-      <input type="email" id="nlEmail" placeholder="Enter your email address">
-      <button onclick="handleSubscribe()">Subscribe</button>
+    <div class="nl-embed" style="max-width:480px;margin:0 auto;text-align:center;">
+      <div data-supascribe-embed-id="626540047570" data-supascribe-subscribe></div>
     </div>
   </div>
 </section>
@@ -421,35 +420,6 @@ function applyFilter(cat){
   window.scrollTo({top:y, behavior:'smooth'});
 }
 
-// ── Newsletter (Substack 실제 연결) ──
-async function handleSubscribe(){
-  const input = document.getElementById('nlEmail');
-  const email = (input?.value || '').trim();
-  if (!email || !email.includes('@') || !email.includes('.')) {
-    alert('Please enter a valid email address.');
-    return;
-  }
-  const btn = document.querySelector('.nl-form button') || document.querySelector('[onclick*="handleSubscribe"]');
-  const orig = btn ? btn.textContent : '';
-  if (btn) { btn.disabled = true; btn.textContent = 'Subscribing...'; }
-  try {
-    await fetch('https://koreansalarymanen.substack.com/api/v1/free', {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, first_url: 'en.koreansalaryman.com', first_referrer: '' })
-    });
-    // no-cors라 응답 확인 불가 → 낙관적 성공 처리 (Substack 확인메일로 더블옵트인)
-    if (input) input.value = '';
-    alert("You're subscribed! Check your inbox to confirm — see you in your inbox 👋");
-  } catch (e) {
-    // 실패 시 Substack 페이지로 폴백
-    window.open('https://koreansalarymanen.substack.com/subscribe', '_blank');
-  } finally {
-    if (btn) { btn.disabled = false; btn.textContent = orig; }
-  }
-}
-
 // ── Load manifest ──
 fetch('./posts/manifest.json')
   .then(r=>{ if(!r.ok) throw new Error('manifest'); return r.json(); })
@@ -474,5 +444,7 @@ fetch('./posts/manifest.json')
   })
   .catch(err=>{ console.warn('manifest load failed:', err); renderFeed([]); });
 </script>
+<!-- Supascribe newsletter embed loader -->
+<script src="https://js.supascribe.com/v1/loader/JkwsA3yFWeR9Lly9cSs6fAyXRMD3.js" async></script>
 </body>
 </html>
