@@ -2212,11 +2212,20 @@ def get_keywords_for_today_with_trends():
 def _already_ran_today():
     """오늘 이미 글이 POSTS_PER_DAY만큼 생성됐는지 확인.
     중복 cron(GitHub Actions schedule + cron-job.org) 동시 발동 시 두 번째 SKIP.
-    KST 기준 "오늘" 판정 — GitHub Actions가 UTC라서 datetime.now() 그대로 쓰면 안 됨.
+
+    [2026-06-18 fix] 판정 기준을 KST 달력일 → **UTC 달력일**로 변경.
+    이유: cron 앵커가 '0 12 * * *'(UTC)이고 GitHub Actions는 정시보다 늦게만(절대
+    이르지 않게) 트리거된다. 그런데 created_at은 KST 벽시계로 저장되므로, 실행이
+    15:00 UTC(=00:00 KST)를 넘기면 그 글이 '다음 KST 날짜'로 찍혀 다음날 cron이
+    "오늘 이미 생성"으로 오인하고 SKIP된다(6/16 16:20 UTC 실행 → 6/17 KST로 찍힘 →
+    6/17 cron SKIP 실측). UTC 달력일로 보면 연속된 두 일일 실행은 항상 12:00 UTC
+    이후의 서로 다른 UTC 날짜에 떨어지므로 오판 SKIP이 사라지고, 같은 UTC 날의
+    중복 발동(2차 cron)은 여전히 정상적으로 잡힌다.
     """
     from datetime import timezone, timedelta, datetime as _dt
     KST = timezone(timedelta(hours=9))
-    today_str = datetime.now(KST).strftime("%Y-%m-%d")
+    UTC = timezone.utc
+    today_str = datetime.now(UTC).strftime("%Y-%m-%d")
     manifest_path = Path(__file__).parent / "posts" / "manifest.json"
 
     if not manifest_path.exists():
@@ -2236,17 +2245,14 @@ def _already_ran_today():
         if not created:
             continue
         try:
-            # 시간대 정보 있는 ISO (Z 또는 +/-HH:MM): 그대로 파싱 후 KST 변환
+            # 시간대 정보 있는 ISO (Z 또는 +/-HH:MM): 그대로 파싱
             if created.endswith('Z') or '+' in created[10:] or '-' in created[10:]:
                 ts = _dt.fromisoformat(created.replace('Z', '+00:00'))
             else:
-                # naive datetime: KST로 가정 (한국 운영 블로그).
-                # 본 fix 이후 글은 KST naive 저장. 과거 글은 사실 UTC naive지만,
-                # KST로 가정하면 "5/17 UTC 22:30 = KST 5/18 07:30" 같은 글이
-                # "5/17 KST"로 매핑되어 새 cron이 SKIP되지 않고 정상 실행됨.
+                # naive datetime: KST 벽시계로 저장됨(line 1813) → KST로 간주
                 ts = _dt.fromisoformat(created).replace(tzinfo=KST)
-            ts_kst = ts.astimezone(KST)
-            if ts_kst.strftime("%Y-%m-%d") == today_str:
+            ts_utc = ts.astimezone(UTC)
+            if ts_utc.strftime("%Y-%m-%d") == today_str:
                 today_posts.append(p)
         except Exception:
             if created.startswith(today_str):
