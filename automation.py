@@ -230,6 +230,200 @@ def _has_semantic_overlap(new_keyword: str, past_keywords) -> bool:
     return False
 
 
+# ── 주제 그룹 쿨다운 (본진 이식: TOPIC_GROUPS) ─────────────
+# 같은 "큰 주제군"이 짧은 기간에 반복 발행되는 것을 차단한다.
+# (EN 콘텐츠 주제 기준. 키워드/제목 모두 영어+한글 혼용 매칭, 대소문자 무시)
+# 실측 중복: Dalgona/Squid Game 2회, korea viral food trend 2회, Salary 다회.
+TOPIC_GROUPS = {
+    # K-드라마 음식 트렌드 (오징어게임/달고나)
+    'squid-game-food': [
+        'dalgona', 'squid game', 'squid-game', 'squidgame',
+        '오징어게임', '오징어 게임', '달고나',
+    ],
+    # 길거리/분식 K-푸드 트렌드
+    'street-food': [
+        'tteokbokki', 'ramyeon', 'ramen', 'street food', 'k-food', 'kfood',
+        'viral food', 'food trend', 'kimbap', 'mukbang',
+        '떡볶이', '라면', '분식', '길거리 음식', '먹방',
+    ],
+    # 출퇴근/대중교통 생활
+    'commute-life': [
+        'subway', 'jiokcheol', 'commute', 'commuting', 'metro',
+        'public transport', 'public transportation', 'transportation',
+        '지옥철', '지하철', '출근', '출퇴근', '대중교통',
+    ],
+    # 직장/근무 문화 (월급·야근·위계·집단조화)
+    'work-culture': [
+        'salary', 'salaries', 'wage', 'overtime', 'hierarchy', 'work culture',
+        'workplace', 'group harmony', 'hoesik', 'nine to five',
+        '월급', '연봉', '야근', '회식', '위계', '직장 문화', '집단주의',
+    ],
+    # 전통/관습 문화 설명 (결혼·존댓말·정·빨리빨리·우리)
+    'k-culture': [
+        'wedding', 'honorific', 'honorifics', 'jeong', 'palli', 'pali-pali',
+        'palli-palli', 'uri culture', "'uri'", 'we instead of i',
+        '결혼', '존댓말', '빨리빨리',
+    ],
+}
+
+GROUP_COOLDOWN_POSTS = 14   # 최근 N편 안에 같은 그룹 있으면 회피
+GROUP_COOLDOWN_DAYS  = 45   # 최근 D일 안에 같은 그룹 있으면 회피
+
+
+def _topic_group(text: str):
+    """제목/키워드가 속한 주제 그룹 id 반환 (없으면 None).
+    영문/숫자 패턴은 단어경계(word-boundary)로 매칭해 'salary'가
+    페르소나 단어 'salaryman'에 잘못 걸리는 것을 방지한다. 한글은 부분일치."""
+    import re
+    if not text:
+        return None
+    s = text.lower()
+    for group, patterns in TOPIC_GROUPS.items():
+        for pat in patterns:
+            p = pat.lower()
+            if re.search(r'[a-z0-9]', p):
+                # 앞뒤가 영숫자가 아니어야 매칭 (salaryman 제외, k-food/squid game 허용)
+                if re.search(r'(?<![a-z0-9])' + re.escape(p) + r'(?![a-z0-9])', s):
+                    return group
+            else:
+                if p in s:
+                    return group
+    return None
+
+
+def _recent_posts_for_groups() -> list:
+    """그룹 쿨다운 판정용: (최근 GROUP_COOLDOWN_POSTS편) ∪ (최근 GROUP_COOLDOWN_DAYS일) 포스트."""
+    import datetime
+    try:
+        if not MANIFEST_PATH.exists():
+            return []
+        manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+        posts = [p for p in manifest if p.get("filename", "").startswith("post_")]
+        posts.sort(key=lambda p: p.get("filename", ""), reverse=True)  # 날짜 desc
+        cutoff = (datetime.datetime.now() - datetime.timedelta(days=GROUP_COOLDOWN_DAYS)).strftime("%Y%m%d")
+        chosen = []
+        for i, p in enumerate(posts):
+            date_part = p.get("filename", "")[5:13]
+            if i < GROUP_COOLDOWN_POSTS or date_part >= cutoff:
+                chosen.append(p)
+            else:
+                break  # desc 정렬이므로 두 윈도우 모두 벗어나면 이후도 전부 벗어남
+        return chosen
+    except Exception as e:
+        print(f"   [경고] 그룹 쿨다운 포스트 로드 실패: {e}")
+        return []
+
+
+def _recent_groups() -> set:
+    """쿨다운 윈도우 내 포스트들이 점유한 주제 그룹 집합."""
+    groups = set()
+    for p in _recent_posts_for_groups():
+        g = _topic_group(p.get("keyword", "")) or _topic_group(p.get("title", ""))
+        if g:
+            groups.add(g)
+    return groups
+
+
+def _group_in_cooldown(keyword: str, title: str = "", recent_groups=None) -> bool:
+    """후보(keyword/title)의 주제 그룹이 최근 쿨다운 윈도우에 이미 있으면 True."""
+    g = _topic_group(keyword) or _topic_group(title)
+    if not g:
+        return False
+    if recent_groups is None:
+        recent_groups = _recent_groups()
+    return g in recent_groups
+
+
+# ── 제목 토큰 겹침 차단 (본진 이식: _has_strong_overlap) ────
+# 흔한 불용어/페르소나/지명을 제외한 핵심 토큰이 과거 제목과 N개 이상 겹치면 회피.
+_STRONG_STOP_TOKENS = {
+    # 영문 불용어
+    'the', 'a', 'an', 'in', 'of', 'for', 'your', 'you', 'to', 'and', 'on',
+    'with', 'is', 'are', 'as', 'at', 'by', 'from', 'this', 'that', 'it', 'its',
+    'my', 'our', 'we', 'us', 'be', 'or', 'but', 'so', 'no', 'not', 'do',
+    'what', 'how', 'why', 'when', 'where', 'who', 'about', 'into', 'out',
+    # 사이트 브랜드/페르소나/지명 (거의 모든 제목에 등장)
+    'korea', 'korean', 'koreans', 'seoul', 'salaryman', 'salarymans',
+    'guide', 'insider', 'local', 'real', 'really', 'take', 'look',
+    # 연도
+    '2024', '2025', '2026', '2027',
+    # 흔한 형식어
+    'vs', 'tips', 'guide', 'explained',
+}
+
+
+def _strong_tokens(title: str) -> set:
+    """제목에서 핵심 토큰(소문자, 길이>=3, 불용어 제외) 추출."""
+    import re
+    if not title:
+        return set()
+    toks = re.findall(r'[a-z0-9]+', title.lower())
+    return {t for t in toks if len(t) >= 3 and t not in _STRONG_STOP_TOKENS}
+
+
+def _has_strong_overlap(new_title: str, past_titles, threshold: int = 3) -> bool:
+    """새 제목이 과거 제목들 중 하나와 핵심 토큰 threshold개 이상 겹치면 True."""
+    nt = _strong_tokens(new_title)
+    if len(nt) < threshold:
+        return False
+    for past in past_titles:
+        if len(nt & _strong_tokens(past)) >= threshold:
+            return True
+    return False
+
+
+def _recent_titles_from_manifest(limit: int = 30) -> list:
+    """최근 limit편의 title+keyword 문자열 리스트 (제목 토큰 겹침 판정용)."""
+    try:
+        if not MANIFEST_PATH.exists():
+            return []
+        manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+        posts = [p for p in manifest if p.get("filename", "").startswith("post_")]
+        posts.sort(key=lambda p: p.get("filename", ""), reverse=True)
+        out = []
+        for p in posts[:limit]:
+            for k in ("title", "keyword"):
+                v = (p.get(k) or "").strip()
+                if v:
+                    out.append(v)
+        return out
+    except Exception as e:
+        print(f"   [경고] 최근 제목 로드 실패: {e}")
+        return []
+
+
+def _is_duplicate_topic(keyword, recent_kws=None, recent_groups=None,
+                        recent_titles=None, title="") -> bool:
+    """통합 중복 판정(이중 방어):
+      ① 완전일치 + ② 의미겹침(_has_semantic_overlap, 어근)
+      ③ 그룹 쿨다운(_group_in_cooldown, 14편/45일)
+      ④ 제목 토큰 겹침(_has_strong_overlap, 핵심토큰 3개)
+    """
+    if recent_kws is not None:
+        if keyword in recent_kws or _has_semantic_overlap(keyword, recent_kws):
+            return True
+    if recent_groups is not None and _group_in_cooldown(keyword, title, recent_groups):
+        return True
+    if recent_titles is not None and _has_strong_overlap(title or keyword, recent_titles):
+        return True
+    return False
+
+
+def _register_pick(keyword, title="", recent_kws=None, recent_groups=None, recent_titles=None):
+    """선택 확정 시 런(run) 내 누적 차단 상태 갱신 (같은 실행 안 중복 방지)."""
+    if recent_kws is not None and keyword:
+        recent_kws.add(keyword)
+    if recent_groups is not None:
+        g = _topic_group(keyword) or _topic_group(title)
+        if g:
+            recent_groups.add(g)
+    if recent_titles is not None:
+        if title:
+            recent_titles.append(title)
+        if keyword:
+            recent_titles.append(keyword)
+
+
 # ── 카테고리 정규화 (한글 키 / 미지의 키 → 영문 7개 키로 매핑) ──
 VALID_CATEGORIES = {"k-trends", "korean-life", "culture-explained", "essay"}
 FALLBACK_CATEGORY = "k-trends"  # 알 수 없는 카테고리 도착 시 보낼 곳
@@ -310,16 +504,21 @@ def _pick_balanced_categories(n: int) -> list:
 def get_keywords_for_today():
     """가중치 기반 랜덤 카테고리 선택 + 시드 키워드 랜덤 픽 (폴백용)"""
     import random
-    recent_kws = _recent_keywords_from_manifest(days=14)
+    recent_kws    = _recent_keywords_from_manifest(days=14)
+    recent_groups = _recent_groups()
+    recent_titles = _recent_titles_from_manifest(30)
     selected = []
     for cat in _pick_balanced_categories(POSTS_PER_DAY):
         seeds = KEYWORD_POOL.get(cat, [])
         if not seeds:
             continue
-        cooldown_seeds = [s for s in seeds if s not in recent_kws and not _has_semantic_overlap(s, recent_kws)]
+        cooldown_seeds = [
+            s for s in seeds
+            if not _is_duplicate_topic(s, recent_kws, recent_groups, recent_titles)
+        ]
         pick = random.choice(cooldown_seeds if cooldown_seeds else seeds)
         selected.append({"category": cat, "keyword": pick})
-        recent_kws.add(pick)
+        _register_pick(pick, "", recent_kws, recent_groups, recent_titles)
     return selected
 
 
@@ -368,6 +567,8 @@ def get_seo_optimized_keywords():
         if needed:
             from trend_pipeline import fetch_category_news, convert_trends_to_topics
             _recent_for_trend = _recent_keywords_from_manifest(days=14)
+            _recent_groups_trend = _recent_groups()
+            _recent_titles_trend = _recent_titles_from_manifest(30)
             for tcat in needed:
                 try:
                     news = fetch_category_news(tcat, limit=10)
@@ -376,8 +577,9 @@ def get_seo_optimized_keywords():
                         fresh = [
                             t for t in topics
                             if t.get("topic")
-                            and t["topic"] not in _recent_for_trend
-                            and not _has_semantic_overlap(t["topic"], _recent_for_trend)
+                            and not _is_duplicate_topic(
+                                t["topic"], _recent_for_trend,
+                                _recent_groups_trend, _recent_titles_trend)
                         ]
                         if fresh:
                             trend_topics_by_cat[tcat] = fresh
@@ -387,10 +589,14 @@ def get_seo_optimized_keywords():
     except Exception as e:
         print(f"   [트렌드] 전체 비활성 (기존 로직): {e}")
 
-    selected      = []
-    used_keywords = _recent_keywords_from_manifest(days=14)
+    selected       = []
+    used_keywords  = _recent_keywords_from_manifest(days=14)
+    used_groups    = _recent_groups()
+    used_titles    = _recent_titles_from_manifest(30)
     if used_keywords:
         print(f"   [cooldown] 최근 14일 키워드 {len(used_keywords)}개 제외 대상")
+    if used_groups:
+        print(f"   [cooldown] 그룹쿨다운 점유 그룹: {sorted(used_groups)}")
 
     print(f"\n   [SEO 분석] 카테고리 분배: {picked_cats}")
 
@@ -403,8 +609,8 @@ def get_seo_optimized_keywords():
         if trend_topics_by_cat.get(cat):
             t = trend_topics_by_cat[cat].pop(0)
             topic_kw = t["topic"]
-            if topic_kw not in used_keywords and not _has_semantic_overlap(topic_kw, used_keywords):
-                used_keywords.add(topic_kw)
+            if not _is_duplicate_topic(topic_kw, used_keywords, used_groups, used_titles):
+                _register_pick(topic_kw, "", used_keywords, used_groups, used_titles)
                 selected.append({
                     "category": cat,
                     "keyword":  topic_kw,
@@ -445,13 +651,11 @@ def get_seo_optimized_keywords():
                         check_competition=False,
                     )
             
-            # 이미 선택된 키워드는 제외 (완전 일치 + 의미 매칭 둘 다 차단)
+            # 이미 선택된 키워드는 제외 (완전일치+의미+그룹쿨다운+제목토큰 4중 차단)
             available = []
             for s in scored:
                 kw = s["keyword"]
-                if kw in used_keywords:
-                    continue
-                if _has_semantic_overlap(kw, used_keywords):
+                if _is_duplicate_topic(kw, used_keywords, used_groups, used_titles):
                     continue
                 available.append(s)
 
@@ -460,7 +664,7 @@ def get_seo_optimized_keywords():
                 pool = available[:20]
                 weights = [max(it.get("score", 1) or 1, 1) ** 0.5 for it in pool]
                 top = _rnd.choices(pool, weights=weights, k=1)[0]
-                used_keywords.add(top["keyword"])
+                _register_pick(top["keyword"], "", used_keywords, used_groups, used_titles)
                 selected.append({
                     "category": cat,
                     "keyword":  top["keyword"],
@@ -472,18 +676,24 @@ def get_seo_optimized_keywords():
                 })
                 print(f"   ✓ 선택: {top['keyword']} (SEO {top['score']}점, 상위 {len(pool)}개 중 가중랜덤)")
             else:
-                # SEO 분석 결과 없음 → 랜덤 폴백 (cooldown 적용 + 의미 매칭)
-                cooldown_seeds = [s for s in seed_pool if s not in used_keywords and not _has_semantic_overlap(s, used_keywords)]
+                # SEO 분석 결과 없음 → 랜덤 폴백 (4중 차단 cooldown 적용)
+                cooldown_seeds = [
+                    s for s in seed_pool
+                    if not _is_duplicate_topic(s, used_keywords, used_groups, used_titles)
+                ]
                 kw = random.choice(cooldown_seeds if cooldown_seeds else seed_pool)
-                used_keywords.add(kw)
+                _register_pick(kw, "", used_keywords, used_groups, used_titles)
                 selected.append({"category": cat, "keyword": kw})
                 print(f"   ⚠ SEO 결과 없음 → 폴백: {kw}")
 
         except Exception as e:
             print(f"   ⚠ SEO 분석 오류: {e} → 폴백")
-            cooldown_seeds = [s for s in seed_pool if s not in used_keywords and not _has_semantic_overlap(s, used_keywords)]
+            cooldown_seeds = [
+                s for s in seed_pool
+                if not _is_duplicate_topic(s, used_keywords, used_groups, used_titles)
+            ]
             kw = random.choice(cooldown_seeds if cooldown_seeds else seed_pool)
-            used_keywords.add(kw)
+            _register_pick(kw, "", used_keywords, used_groups, used_titles)
             selected.append({"category": cat, "keyword": kw})
     
     return selected
@@ -2139,9 +2349,11 @@ def get_keywords_for_today_with_trends():
     반환 item에 trend_source/trend_angle을 실어 generate_article 도입부 훅에 사용.
     """
     import random
-    selected   = []
-    recent_kws = _recent_keywords_from_manifest(days=14)
-    cats       = _pick_balanced_categories(POSTS_PER_DAY)  # essay 제외됨
+    selected      = []
+    recent_kws    = _recent_keywords_from_manifest(days=14)
+    recent_groups = _recent_groups()
+    recent_titles = _recent_titles_from_manifest(30)
+    cats          = _pick_balanced_categories(POSTS_PER_DAY)  # essay 제외됨
 
     try:
         from trend_pipeline import (
@@ -2175,8 +2387,8 @@ def get_keywords_for_today_with_trends():
                     fresh = [
                         t for t in topics
                         if t.get("topic")
-                        and t["topic"] not in recent_kws
-                        and not _has_semantic_overlap(t["topic"], recent_kws)
+                        and not _is_duplicate_topic(
+                            t["topic"], recent_kws, recent_groups, recent_titles)
                     ]
                     if fresh:
                         topic = fresh[0]
@@ -2187,7 +2399,7 @@ def get_keywords_for_today_with_trends():
             print(f"   [트렌드] {cat} 처리 실패 (시드풀 폴백): {e}")
 
         if topic:
-            recent_kws.add(topic["topic"])
+            _register_pick(topic["topic"], "", recent_kws, recent_groups, recent_titles)
             selected.append({
                 "category":     cat,
                 "keyword":      topic["topic"],
@@ -2199,9 +2411,12 @@ def get_keywords_for_today_with_trends():
             seeds = KEYWORD_POOL.get(cat, [])
             if not seeds:
                 continue
-            cool = [s for s in seeds if s not in recent_kws and not _has_semantic_overlap(s, recent_kws)]
+            cool = [
+                s for s in seeds
+                if not _is_duplicate_topic(s, recent_kws, recent_groups, recent_titles)
+            ]
             kw = random.choice(cool if cool else seeds)
-            recent_kws.add(kw)
+            _register_pick(kw, "", recent_kws, recent_groups, recent_titles)
             selected.append({"category": cat, "keyword": kw})
             print(f"   ○ [시드풀 폴백] {cat}: {kw}")
 
@@ -2368,7 +2583,12 @@ def run_daily():
                 fallback_seeds = KEYWORD_POOL.get(item["category"], [])
                 recent_kws = _recent_keywords_from_manifest(days=14)
                 blocked = recent_kws | used_in_run
-                available = [s for s in fallback_seeds if s not in blocked and not _has_semantic_overlap(s, blocked)]
+                recent_groups = _recent_groups()
+                recent_titles = _recent_titles_from_manifest(30)
+                available = [
+                    s for s in fallback_seeds
+                    if not _is_duplicate_topic(s, blocked, recent_groups, recent_titles)
+                ]
                 if available:
                     import random
                     fb_kw = random.choice(available)
