@@ -40,10 +40,10 @@
       "korean salaryman"
     ],
     "created_at": "2026-06-21T22:46:19.961086",
-    "status": "scheduled",
+    "status": "published",
     "source": "auto",
     "scheduled_at": "2026-06-23T08:00:00.000Z",
-    "published_at": null,
+    "published_at": "2026-06-23T11:24:09.143Z",
     "has_image": true,
     "thumbnail": "/posts/thumbnails/thumb_20260621_134617.png",
     "has_faq": false,
