@@ -1,5 +1,32 @@
 [
   {
+    "filename": "post_20260625_140609.json",
+    "title": "Navigating Seoul's Metro: Essential Korean Subway Etiquette for Tourists",
+    "category": "korean-life",
+    "keyword": "korean subway etiquette for tourists",
+    "summary": "Mastering Korean subway etiquette for tourists ensures a smooth and respectful experience on Seoul's highly efficient metro system. By understanding local norms like priority seating, quiet conduct, and efficient boarding, visitors can navigate like a local and avoid common faux pas.",
+    "tags": [
+      "korean subway etiquette for tourists",
+      "korean-life",
+      "korea",
+      "korean salaryman"
+    ],
+    "created_at": "2026-06-25T23:06:09.527240",
+    "status": "draft",
+    "source": "auto",
+    "scheduled_at": null,
+    "published_at": null,
+    "has_image": true,
+    "thumbnail": "/posts/thumbnails/thumb_20260625_140607.png",
+    "has_faq": false,
+    "has_tldr": false,
+    "has_comparison": false,
+    "has_steps": false,
+    "has_references": false,
+    "seo_score": null,
+    "monthly_search": null
+  },
+  {
     "filename": "post_20260624_141536.json",
     "title": "Korean Work Culture Reality: An Insider's Look from a Seoul Salaryman",
     "category": "korean-life",
@@ -223,8 +250,8 @@
     "source": "auto",
     "scheduled_at": null,
     "published_at": null,
-    "has_image": true,
-    "thumbnail": "/posts/thumbnails/thumb_20260618_144406.png",
+    "has_image": false,
+    "thumbnail": "",
     "has_faq": false,
     "has_tldr": false,
     "has_comparison": false,
