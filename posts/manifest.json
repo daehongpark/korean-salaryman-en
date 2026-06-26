@@ -1,5 +1,32 @@
 [
   {
+    "filename": "post_20260626_140048.json",
+    "title": "Navigating Korean Apartment Culture: What to Know About Your Neighbors",
+    "category": "culture-explained",
+    "keyword": "korean apartment culture neighbors",
+    "summary": "Korean apartment culture revolves around respectful coexistence within dense urban environments, prioritizing collective harmony over individual expression in shared spaces. Understanding the nuances of noise etiquette, utilizing apartment management for disputes, and practicing nunchi are essential for navigating neighborly relations smoothly.",
+    "tags": [
+      "korean apartment culture neighbors",
+      "culture-explained",
+      "korea",
+      "korean salaryman"
+    ],
+    "created_at": "2026-06-26T23:00:48.594894",
+    "status": "draft",
+    "source": "auto",
+    "scheduled_at": null,
+    "published_at": null,
+    "has_image": true,
+    "thumbnail": "/posts/thumbnails/thumb_20260626_140045.png",
+    "has_faq": false,
+    "has_tldr": false,
+    "has_comparison": false,
+    "has_steps": false,
+    "has_references": false,
+    "seo_score": null,
+    "monthly_search": null
+  },
+  {
     "filename": "post_20260625_140609.json",
     "title": "Navigating Seoul's Metro: Essential Korean Subway Etiquette for Tourists",
     "category": "korean-life",
@@ -250,8 +277,8 @@
     "source": "auto",
     "scheduled_at": null,
     "published_at": null,
-    "has_image": true,
-    "thumbnail": "/posts/thumbnails/thumb_20260618_144406.png",
+    "has_image": false,
+    "thumbnail": "",
     "has_faq": false,
     "has_tldr": false,
     "has_comparison": false,
