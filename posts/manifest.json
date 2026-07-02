@@ -17,10 +17,10 @@
       "ai in korea"
     ],
     "created_at": "2026-07-01T23:05:47.705173",
-    "status": "scheduled",
+    "status": "published",
     "source": "auto",
     "scheduled_at": "2026-07-02T12:30:00.000Z",
-    "published_at": null,
+    "published_at": "2026-07-02T13:18:35.336Z",
     "has_image": true,
     "thumbnail": "/posts/thumbnails/thumb_20260701_140545.png",
     "has_faq": true,
