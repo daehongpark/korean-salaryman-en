@@ -76,10 +76,10 @@
       "byeongyeok"
     ],
     "created_at": "2026-06-30T22:53:39.719311",
-    "status": "scheduled",
+    "status": "published",
     "source": "auto",
     "scheduled_at": "2026-07-02T22:30:00.000Z",
-    "published_at": null,
+    "published_at": "2026-07-02T22:37:57.953Z",
     "has_image": true,
     "thumbnail": "/posts/thumbnails/thumb_20260630_135337.png",
     "has_faq": true,
