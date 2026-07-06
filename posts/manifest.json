@@ -1,5 +1,32 @@
 [
   {
+    "filename": "post_20260706_145546.json",
+    "title": "Korean Fried Chicken vs. American: Why Ours Hits Different (2026)",
+    "category": "k-trends",
+    "keyword": "korean fried chicken vs american",
+    "summary": "Korean fried chicken differentiates itself through a unique double-frying method for an ultra-crispy texture and an extensive range of distinct sauces, making it a beloved social ritual in Korea. While typically pricier than American fast-food options, it offers a premium, shareable experience deeply rooted in local culture.",
+    "tags": [
+      "korean fried chicken vs american",
+      "k-trends",
+      "korea",
+      "korean salaryman"
+    ],
+    "created_at": "2026-07-06T23:55:46.336788",
+    "status": "draft",
+    "source": "auto",
+    "scheduled_at": null,
+    "published_at": null,
+    "has_image": true,
+    "thumbnail": "/posts/thumbnails/thumb_20260706_145542.png",
+    "has_faq": false,
+    "has_tldr": false,
+    "has_comparison": false,
+    "has_steps": false,
+    "has_references": false,
+    "seo_score": null,
+    "monthly_search": null
+  },
+  {
     "filename": "post_20260705_130544.json",
     "title": "The Tanghulu Korean Dessert Trend: A Salaryman's Take (July 2026)",
     "category": "k-trends",
@@ -558,8 +585,8 @@
     "source": "auto",
     "scheduled_at": null,
     "published_at": null,
-    "has_image": true,
-    "thumbnail": "/posts/thumbnails/thumb_20260618_144406.png",
+    "has_image": false,
+    "thumbnail": "",
     "has_faq": false,
     "has_tldr": false,
     "has_comparison": false,
