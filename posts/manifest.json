@@ -1,5 +1,32 @@
 [
   {
+    "filename": "post_20260708_132910.json",
+    "title": "The Digital Nomad Visa is here, but what about Seoul's housing market? (주택담보대출)",
+    "category": "k-trends",
+    "keyword": "The 'Digital Nomad Visa' is here, but what about the housing market? (주택담보대출)",
+    "summary": "While South Korea's Digital Nomad Visa opens doors for remote workers, securing housing in Seoul presents unique challenges due to high upfront costs for wolse (monthly rent) and the inaccessibility of jeonse (lump-sum deposit) and jutaek dambo daechul (mortgages) for most foreigners. Digital nomads should expect to pay substantial deposits for monthly rentals and work with local real estate agents to navigate the fast-paced market.",
+    "tags": [
+      "The 'Digital Nomad Visa' is here, but what about the housing market? (주택담보대출)",
+      "k-trends",
+      "korea",
+      "korean salaryman"
+    ],
+    "created_at": "2026-07-08T22:29:10.228766",
+    "status": "draft",
+    "source": "auto",
+    "scheduled_at": null,
+    "published_at": null,
+    "has_image": true,
+    "thumbnail": "/posts/thumbnails/thumb_20260708_132906.png",
+    "has_faq": false,
+    "has_tldr": false,
+    "has_comparison": false,
+    "has_steps": false,
+    "has_references": false,
+    "seo_score": null,
+    "monthly_search": null
+  },
+  {
     "filename": "post_20260707_140809.json",
     "title": "Renting an Apartment in Seoul: An Insider's Guide to Korea's Housing",
     "category": "korean-life",
@@ -650,8 +677,8 @@
     "source": "auto",
     "scheduled_at": null,
     "published_at": null,
-    "has_image": true,
-    "thumbnail": "/posts/thumbnails/thumb_20260618_144406.png",
+    "has_image": false,
+    "thumbnail": "",
     "has_faq": false,
     "has_tldr": false,
     "has_comparison": false,
