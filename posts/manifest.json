@@ -337,10 +337,10 @@
       "KakaoBank"
     ],
     "created_at": "2026-07-10T22:55:37.853549",
-    "status": "scheduled",
+    "status": "published",
     "source": "auto",
     "scheduled_at": "2026-07-21T22:00:00.000Z",
-    "published_at": null,
+    "published_at": "2026-07-21T22:27:36.137Z",
     "has_image": true,
     "thumbnail": "/posts/thumbnails/thumb_20260710_135534.png",
     "has_faq": true,
