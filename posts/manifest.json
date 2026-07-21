@@ -74,9 +74,9 @@
       "korean salaryman"
     ],
     "created_at": "2026-07-18T21:48:07.253589",
-    "status": "draft",
+    "status": "scheduled",
     "source": "auto",
-    "scheduled_at": null,
+    "scheduled_at": "2026-07-22T07:00:00.000Z",
     "published_at": null,
     "has_image": true,
     "thumbnail": "/posts/thumbnails/thumb_20260718_124803.png",
@@ -105,7 +105,7 @@
       "seoul life"
     ],
     "created_at": "2026-07-17T22:01:13.064169",
-    "status": "published",
+    "status": "draft",
     "source": "auto",
     "scheduled_at": null,
     "published_at": null,
@@ -117,8 +117,7 @@
     "has_steps": false,
     "has_references": true,
     "seo_score": null,
-    "monthly_search": null,
-    "slug": "my-honest-korean-spicy-instant-noodles-ranking-wha"
+    "monthly_search": null
   },
   {
     "filename": "post_20260716_131721.json",
