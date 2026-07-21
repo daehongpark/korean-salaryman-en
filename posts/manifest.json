@@ -194,9 +194,9 @@
       "korean trends"
     ],
     "created_at": "2026-07-14T22:04:38.836162",
-    "status": "draft",
+    "status": "scheduled",
     "source": "auto",
-    "scheduled_at": null,
+    "scheduled_at": "2026-07-21T11:00:00.000Z",
     "published_at": null,
     "has_image": true,
     "thumbnail": "/posts/thumbnails/thumb_20260714_130434.png",
