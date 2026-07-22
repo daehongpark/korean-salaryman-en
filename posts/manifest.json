@@ -101,10 +101,10 @@
       "korean salaryman"
     ],
     "created_at": "2026-07-18T21:48:07.253589",
-    "status": "scheduled",
+    "status": "published",
     "source": "auto",
     "scheduled_at": "2026-07-22T07:00:00.000Z",
-    "published_at": null,
+    "published_at": "2026-07-22T09:09:59.446Z",
     "has_image": true,
     "thumbnail": "/posts/thumbnails/thumb_20260718_124803.png",
     "has_faq": false,
