@@ -44,10 +44,10 @@
       "korean credit card"
     ],
     "created_at": "2026-07-27T23:09:09.005466",
-    "status": "scheduled",
+    "status": "published",
     "source": "auto",
     "scheduled_at": "2026-07-28T22:30:00.000Z",
-    "published_at": null,
+    "published_at": "2026-07-28T23:03:37.468Z",
     "has_image": true,
     "thumbnail": "/posts/thumbnails/thumb_20260727_140905.png",
     "has_faq": true,
