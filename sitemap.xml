@@ -89,6 +89,12 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://en.koreansalaryman.com/p/what-koreans-are-obsessed-with-right-now-my-inside.html</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://en.koreansalaryman.com/p/taking-on-the-korean-buldak-ramen-spicy-challenge.html</loc>
     <lastmod>2026-07-22</lastmod>
     <changefreq>monthly</changefreq>
@@ -97,6 +103,12 @@
   <url>
     <loc>https://en.koreansalaryman.com/p/korean-dating-culture-explained-a-seoul-salarymans.html</loc>
     <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://en.koreansalaryman.com/p/korean-table-manners-explained-the-unwritten-rules.html</loc>
+    <lastmod>2026-07-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
