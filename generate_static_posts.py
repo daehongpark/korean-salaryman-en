@@ -168,8 +168,11 @@ def build_page(template, post, filename, slug, manifest_entry):
     tags = post.get("tags") or []
     content = post.get("content") or ""
 
-    # 주소는 슬러그 기반 (HTML 안에서는 한글 URL 그대로 — 가독성·공유 우선)
-    page_url = "%s/p/%s.html" % (SITE, slug)
+    # 주소는 슬러그 기반. vercel.json의 cleanUrls:true가 .html → 무확장 URL로
+    # 308 리다이렉트시키므로, canonical/og:url은 리다이렉트 없이 바로 200이 되는
+    # 무확장 최종 주소를 가리켜야 한다(안 그러면 canonical이 자기 자신을
+    # 리다이렉트시킨 URL을 가리키는 자기순환이 됨 — 색인 이탈의 원인이었음).
+    page_url = "%s/p/%s" % (SITE, slug)
 
     # ── pageTitle / pageDesc (post.html JS 로직과 동일) ──
     page_title = post.get("seo_title") or ("%s | Korean Salaryman" % title)

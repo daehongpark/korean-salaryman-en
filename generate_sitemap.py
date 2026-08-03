@@ -19,25 +19,25 @@ MANIFEST   = BLOG_DIR / "posts" / "manifest.json"
 OUTPUT     = BLOG_DIR / "sitemap.xml"
 
 # 고정 페이지 (priority, changefreq)
+# ★ income.html/challenge.html/class.html은 본진(koreansalaryman.com) 전용 페이지라
+#   이 EN 사이트에는 파일 자체가 없다 — 예전엔 이 목록에 그대로 남아 있어서
+#   sitemap이 존재하지 않는 URL 3개를 제출하고 있었다(404).
 STATIC_PAGES = [
-    ("",               "1.0",  "daily"),
-    ("blog.html",      "0.95", "daily"),
-    ("archive.html",   "0.9",  "daily"),
-    ("about.html",     "0.8",  "monthly"),
-    ("income.html",    "0.9",  "weekly"),
-    ("challenge.html", "0.9",  "weekly"),
-    ("class.html",     "0.8",  "monthly"),
+    ("",           "1.0",  "daily"),
+    ("blog",       "0.95", "daily"),
+    ("archive",    "0.9",  "daily"),
+    ("about",      "0.8",  "monthly"),
 ]
 
-# 7개 카테고리 페이지 (영문 키 기반)
+# 카테고리 페이지 — EN 사이트 실제 카테고리 4개.
+# ★ 예전엔 본진(koreansalaryman.com)의 7개 카테고리(money/ai/startup/finance/
+#   realestate/trending/book)가 그대로 남아 있었다 — 이 사이트엔 해당 페이지가
+#   없어 전부 404였고, 정작 실제로 존재하는 EN 카테고리는 누락돼 있었다.
 CATEGORY_PAGES = [
-    "category-money.html",
-    "category-ai.html",
-    "category-startup.html",
-    "category-finance.html",
-    "category-realestate.html",
-    "category-trending.html",
-    "category-book.html",
+    "category-essay",
+    "category-korean-life",
+    "category-k-trends",
+    "category-culture-explained",
 ]
 
 
@@ -79,7 +79,9 @@ def generate_sitemap():
                     continue
                 date = (post.get("created_at") or today)[:10]
                 slug = post.get("slug")
-                loc  = f"{BASE_URL}/p/{slug}.html" if slug else f"{BASE_URL}/p/{filename.replace('.json', '.html')}"
+                # cleanUrls:true가 .html → 무확장으로 308 리다이렉트하므로, 리다이렉트
+                # 없이 바로 200이 되는 최종 주소를 sitemap에 실어야 canonical과 일치한다.
+                loc  = f"{BASE_URL}/p/{slug}" if slug else f"{BASE_URL}/p/{filename.replace('.json', '')}"
                 urls.append(f"""  <url>
     <loc>{loc}</loc>
     <lastmod>{date}</lastmod>

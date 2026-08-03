@@ -6,282 +6,246 @@
 
   <url>
     <loc>https://en.koreansalaryman.com/</loc>
-    <lastmod>2026-07-14</lastmod>
+    <lastmod>2026-08-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/blog.html</loc>
-    <lastmod>2026-07-14</lastmod>
+    <loc>https://en.koreansalaryman.com/blog</loc>
+    <lastmod>2026-08-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/archive.html</loc>
-    <lastmod>2026-07-14</lastmod>
+    <loc>https://en.koreansalaryman.com/archive</loc>
+    <lastmod>2026-08-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/about.html</loc>
-    <lastmod>2026-07-14</lastmod>
+    <loc>https://en.koreansalaryman.com/about</loc>
+    <lastmod>2026-08-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/income.html</loc>
-    <lastmod>2026-07-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://en.koreansalaryman.com/challenge.html</loc>
-    <lastmod>2026-07-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://en.koreansalaryman.com/class.html</loc>
-    <lastmod>2026-07-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://en.koreansalaryman.com/category-money.html</loc>
-    <lastmod>2026-07-14</lastmod>
+    <loc>https://en.koreansalaryman.com/category-essay</loc>
+    <lastmod>2026-08-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/category-ai.html</loc>
-    <lastmod>2026-07-14</lastmod>
+    <loc>https://en.koreansalaryman.com/category-korean-life</loc>
+    <lastmod>2026-08-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/category-startup.html</loc>
-    <lastmod>2026-07-14</lastmod>
+    <loc>https://en.koreansalaryman.com/category-k-trends</loc>
+    <lastmod>2026-08-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/category-finance.html</loc>
-    <lastmod>2026-07-14</lastmod>
+    <loc>https://en.koreansalaryman.com/category-culture-explained</loc>
+    <lastmod>2026-08-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/category-realestate.html</loc>
-    <lastmod>2026-07-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://en.koreansalaryman.com/category-trending.html</loc>
-    <lastmod>2026-07-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://en.koreansalaryman.com/category-book.html</loc>
-    <lastmod>2026-07-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://en.koreansalaryman.com/p/why-an-ordinary-korean-salaryman-decided-to-write.html</loc>
+    <loc>https://en.koreansalaryman.com/p/why-an-ordinary-korean-salaryman-decided-to-write</loc>
     <lastmod>2026-07-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/why-is-korean-food-so-popular-a-salarymans-honest.html</loc>
+    <loc>https://en.koreansalaryman.com/p/why-is-korean-food-so-popular-a-salarymans-honest</loc>
     <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/renting-an-apartment-in-seoul-an-insiders-guide-to.html</loc>
+    <loc>https://en.koreansalaryman.com/p/renting-an-apartment-in-seoul-an-insiders-guide-to</loc>
     <lastmod>2026-07-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/why-koreans-are-so-mad-at-their-football-associati.html</loc>
+    <loc>https://en.koreansalaryman.com/p/why-koreans-are-so-mad-at-their-football-associati</loc>
     <lastmod>2026-07-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/korean-fried-chicken-vs-american-why-ours-hits-dif.html</loc>
+    <loc>https://en.koreansalaryman.com/p/korean-fried-chicken-vs-american-why-ours-hits-dif</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/korean-military-service-explained-a-locals-reality.html</loc>
+    <loc>https://en.koreansalaryman.com/p/korean-military-service-explained-a-locals-reality</loc>
     <lastmod>2026-07-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/what-is-a-korean-officetel-your-insider-guide-for.html</loc>
+    <loc>https://en.koreansalaryman.com/p/what-is-a-korean-officetel-your-insider-guide-for</loc>
     <lastmod>2026-07-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/korean-subway-etiquette-for-tourists-my-salarymans.html</loc>
+    <loc>https://en.koreansalaryman.com/p/korean-subway-etiquette-for-tourists-my-salarymans</loc>
     <lastmod>2026-07-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/seouls-latest-fixations-what-koreans-are-obsessed.html</loc>
+    <loc>https://en.koreansalaryman.com/p/seouls-latest-fixations-what-koreans-are-obsessed</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/korean-military-service-explained-a-locals-take-fr.html</loc>
+    <loc>https://en.koreansalaryman.com/p/korean-military-service-explained-a-locals-take-fr</loc>
     <lastmod>2026-06-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/a-seoul-salarymans-guide-what-do-koreans-eat-for-b.html</loc>
+    <loc>https://en.koreansalaryman.com/p/a-seoul-salarymans-guide-what-do-koreans-eat-for-b</loc>
     <lastmod>2026-06-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/the-korean-lunchbox-dosirak-trend-a-salarymans-hon.html</loc>
+    <loc>https://en.koreansalaryman.com/p/the-korean-lunchbox-dosirak-trend-a-salarymans-hon</loc>
     <lastmod>2026-06-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/your-guide-to-k-drama-filming-locations-in-seoul-a.html</loc>
+    <loc>https://en.koreansalaryman.com/p/your-guide-to-k-drama-filming-locations-in-seoul-a</loc>
     <lastmod>2026-06-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/navigating-korean-apartment-culture-what-to-know-a.html</loc>
+    <loc>https://en.koreansalaryman.com/p/navigating-korean-apartment-culture-what-to-know-a</loc>
     <lastmod>2026-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/navigating-seouls-metro-essential-korean-subway-et.html</loc>
+    <loc>https://en.koreansalaryman.com/p/navigating-seouls-metro-essential-korean-subway-et</loc>
     <lastmod>2026-06-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/korean-work-culture-reality-an-insiders-look-from.html</loc>
+    <loc>https://en.koreansalaryman.com/p/korean-work-culture-reality-an-insiders-look-from</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/korean-corn-dog-street-food-a-seoul-salarymans-hon.html</loc>
+    <loc>https://en.koreansalaryman.com/p/korean-corn-dog-street-food-a-seoul-salarymans-hon</loc>
     <lastmod>2026-06-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/navigating-modern-korean-wedding-customs-a-salarym.html</loc>
+    <loc>https://en.koreansalaryman.com/p/navigating-modern-korean-wedding-customs-a-salarym</loc>
     <lastmod>2026-06-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/why-koreans-use-we-instead-of-i-the-insiders-guide.html</loc>
+    <loc>https://en.koreansalaryman.com/p/why-koreans-use-we-instead-of-i-the-insiders-guide</loc>
     <lastmod>2026-06-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/the-k-ramyeon-fusion-bowl-koreas-latest-viral-food.html</loc>
+    <loc>https://en.koreansalaryman.com/p/the-k-ramyeon-fusion-bowl-koreas-latest-viral-food</loc>
     <lastmod>2026-06-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/dalgona-candy-from-squid-game-where-to-buy-it-in-2.html</loc>
+    <loc>https://en.koreansalaryman.com/p/dalgona-candy-from-squid-game-where-to-buy-it-in-2</loc>
     <lastmod>2026-06-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/why-korean-diet-culture-isnt-what-you-see-on-k-dra.html</loc>
+    <loc>https://en.koreansalaryman.com/p/why-korean-diet-culture-isnt-what-you-see-on-k-dra</loc>
     <lastmod>2026-06-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/korean-group-harmony-explained-an-insiders-look-at.html</loc>
+    <loc>https://en.koreansalaryman.com/p/korean-group-harmony-explained-an-insiders-look-at</loc>
     <lastmod>2026-06-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/whats-the-average-salary-for-a-korean-salaryman-in.html</loc>
+    <loc>https://en.koreansalaryman.com/p/whats-the-average-salary-for-a-korean-salaryman-in</loc>
     <lastmod>2026-06-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/your-essential-korean-public-transportation-guide.html</loc>
+    <loc>https://en.koreansalaryman.com/p/your-essential-korean-public-transportation-guide</loc>
     <lastmod>2026-06-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/koreas-investment-craze-why-everyone-even-me-is-ta.html</loc>
+    <loc>https://en.koreansalaryman.com/p/koreas-investment-craze-why-everyone-even-me-is-ta</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/seouls-hell-subway-jiokcheol-surviving-your-mornin.html</loc>
+    <loc>https://en.koreansalaryman.com/p/seouls-hell-subway-jiokcheol-surviving-your-mornin</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/instant-tteokbokki-bars-seouls-hottest-korea-viral.html</loc>
+    <loc>https://en.koreansalaryman.com/p/instant-tteokbokki-bars-seouls-hottest-korea-viral</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/korean-military-service-explained-what-its-really.html</loc>
+    <loc>https://en.koreansalaryman.com/p/korean-military-service-explained-what-its-really</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/your-korean-hospital-visit-as-a-foreigner-my-salar.html</loc>
+    <loc>https://en.koreansalaryman.com/p/your-korean-hospital-visit-as-a-foreigner-my-salar</loc>
     <lastmod>2026-06-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/still-craving-dalgona-where-to-buy-the-squid-game.html</loc>
+    <loc>https://en.koreansalaryman.com/p/still-craving-dalgona-where-to-buy-the-squid-game</loc>
     <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/korean-honorifics-explained-simply-your-guide-to-r.html</loc>
+    <loc>https://en.koreansalaryman.com/p/korean-honorifics-explained-simply-your-guide-to-r</loc>
     <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://en.koreansalaryman.com/p/my-seoul-salaryman-budget-cost-of-living-in-seoul.html</loc>
+    <loc>https://en.koreansalaryman.com/p/my-seoul-salaryman-budget-cost-of-living-in-seoul</loc>
     <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
