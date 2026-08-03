@@ -10,7 +10,7 @@
 <meta name="keywords" content="Korea blog, Korean life, Korean culture, K-trends, living in Korea, Seoul salaryman, Korea explained">
 <meta name="author" content="Korean Salaryman">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-<link id="canonical" rel="canonical" href="https://en.koreansalaryman.com/blog.html">
+<link id="canonical" rel="canonical" href="https://en.koreansalaryman.com/blog">
 
 <!-- ── Open Graph ── -->
 <meta property="og:type" content="website">
@@ -576,7 +576,7 @@ function renderPosts(){
       ? `<span class="seo-badge" title="SEO score">⚡ ${Math.round(p.seo_score)}</span>` : '';
 
     html += `
-      <a class="card" href="/p/${encodeURIComponent(slug)}.html">
+      <a class="card" href="/p/${encodeURIComponent(slug)}">
         <div class="card-media">${thumbOf(p, glyph)}</div>
         <div class="card-cat">${catLabel(p.category)}</div>
         <h3>${escapeHtml(p.title||'')}</h3>

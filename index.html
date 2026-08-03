@@ -381,7 +381,7 @@ function renderFeed(posts){
 
   let html = `
     <div class="feature">
-      <a class="feature-card" href="/p/${encodeURIComponent(slugOf(feat))}.html">
+      <a class="feature-card" href="/p/${encodeURIComponent(slugOf(feat))}">
         <div class="feature-media">${thumbOf(feat,'월')}</div>
         <div class="feature-text">
           <div class="feature-cat">${catLabel(feat.category)}</div>
@@ -398,7 +398,7 @@ function renderFeed(posts){
       <div class="grid">`;
     rest.forEach((p,i)=>{
       html += `
-        <a class="card" href="/p/${encodeURIComponent(slugOf(p))}.html">
+        <a class="card" href="/p/${encodeURIComponent(slugOf(p))}">
           <div class="card-media">${thumbOf(p, glyphs[i%glyphs.length])}</div>
           <div class="card-cat">${catLabel(p.category)}</div>
           <h3>${esc(p.title)}</h3>

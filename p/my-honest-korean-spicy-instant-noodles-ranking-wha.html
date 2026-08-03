@@ -598,13 +598,13 @@ function renderPostNav(manifest, currentId) {
   if (!nav) return;
   let html = '';
   if (prev) {
-    html += `<a class="post-nav-item" href="/p/${encodeURIComponent(prev.slug || prev.filename.replace(/\.json$/,''))}.html">
+    html += `<a class="post-nav-item" href="/p/${encodeURIComponent(prev.slug || prev.filename.replace(/\.json$/,''))}">
       <div class="post-nav-label">← Previous</div>
       <div class="post-nav-title">${prev.title}</div>
     </a>`;
   } else { html += '<div></div>'; }
   if (next) {
-    html += `<a class="post-nav-item" href="/p/${encodeURIComponent(next.slug || next.filename.replace(/\.json$/,''))}.html" style="text-align:right;">
+    html += `<a class="post-nav-item" href="/p/${encodeURIComponent(next.slug || next.filename.replace(/\.json$/,''))}" style="text-align:right;">
       <div class="post-nav-label">Next →</div>
       <div class="post-nav-title">${next.title}</div>
     </a>`;
@@ -651,7 +651,7 @@ fetch('/posts/manifest.json')
         relBox.innerHTML = '<p style="font-size:13px;color:var(--text3);">No related posts yet.</p>';
       } else {
         relBox.innerHTML = related.map(p => `
-          <a class="rel-item" href="/p/${encodeURIComponent(p.slug || p.filename.replace(/\.json$/,''))}.html">
+          <a class="rel-item" href="/p/${encodeURIComponent(p.slug || p.filename.replace(/\.json$/,''))}">
             <div class="rel-dot"></div>
             <div>
               <div class="rel-title">${p.title}</div>

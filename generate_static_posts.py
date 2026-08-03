@@ -146,7 +146,7 @@ fetch('./posts/manifest.json')
         relBox.innerHTML = '<p style="font-size:13px;color:var(--text3);">No related posts yet.</p>';
       } else {
         relBox.innerHTML = related.map(p => `
-          <a class="rel-item" href="/p/${encodeURIComponent(p.slug || p.filename.replace(/\.json$/,''))}.html">
+          <a class="rel-item" href="/p/${encodeURIComponent(p.slug || p.filename.replace(/\.json$/,''))}">
             <div class="rel-dot"></div>
             <div>
               <div class="rel-title">${p.title}</div>
@@ -439,7 +439,7 @@ def generate_archive(manifest):
             title = esc_text(it.get("title") or "(untitled)")
             date = esc_text(format_date_kr(it.get("created_at") or ""))
             rows.append(
-                '      <li><a href="/p/%s.html">%s</a><span class="post-date">%s</span></li>'
+                '      <li><a href="/p/%s">%s</a><span class="post-date">%s</span></li>'
                 % (esc_attr(slug), title, date)
             )
             total_links += 1
@@ -505,7 +505,7 @@ def main():
             # 옛 /p/post_xxx.html 자리에 새 슬러그로 보내는 리다이렉트 stub
             old_pid = filename[:-5] if filename.endswith(".json") else filename
             if old_pid != out_slug:
-                stub_html = STUB % {"new_url": "/p/%s.html" % out_slug}
+                stub_html = STUB % {"new_url": "/p/%s" % out_slug}
                 with open(os.path.join(OUT_DIR, old_pid + ".html"), "w", encoding="utf-8") as f:
                     f.write(stub_html)
                 stubs += 1

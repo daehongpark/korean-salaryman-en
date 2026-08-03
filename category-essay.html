@@ -10,7 +10,7 @@
 <meta name="twitter:title" content="Essays — Korean Salaryman">
 <meta name="twitter:description" content="Personal essays.">
 <title>Essays — Korean Salaryman</title>
-<link rel="canonical" href="https://en.koreansalaryman.com/category-essay.html">
+<link rel="canonical" href="https://en.koreansalaryman.com/category-essay">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@700;900&display=swap" rel="stylesheet">
@@ -244,7 +244,7 @@ fetch('./posts/manifest.json')
     }
 
     list.innerHTML = '<div class="grid">' + filtered.map((p,i) => `
-      <a class="card" href="/p/${encodeURIComponent(slugOf(p))}.html">
+      <a class="card" href="/p/${encodeURIComponent(slugOf(p))}">
         <div class="card-media">${thumbOf(p, glyphs[i%glyphs.length])}</div>
         <div class="card-cat">${catLabel(p.category)}</div>
         <h3>${esc(p.title)}</h3>
