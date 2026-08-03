@@ -350,10 +350,10 @@ ARCHIVE_TEMPLATE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>All Posts — Korean Salaryman</title>
 <meta name="description" content="Every post on Korean Salaryman, grouped by category — K-Trends, Korean Life, Culture Explained, and Essays.">
-<link rel="canonical" href="https://en.koreansalaryman.com/archive.html">
+<link rel="canonical" href="https://en.koreansalaryman.com/archive">
 <meta property="og:title" content="All Posts — Korean Salaryman">
 <meta property="og:description" content="Every post on Korean Salaryman, grouped by category.">
-<meta property="og:url" content="https://en.koreansalaryman.com/archive.html">
+<meta property="og:url" content="https://en.koreansalaryman.com/archive">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
