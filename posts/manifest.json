@@ -4,9 +4,11 @@
     "summary": "",
     "category": "korean-life",
     "tags": [],
-    "status": "draft",
+    "status": "scheduled",
     "created_at": "2026-08-04T07:20:36.437Z",
-    "filename": "post_20260804072036..json"
+    "filename": "post_20260804072036..json",
+    "scheduled_at": "2026-08-04T08:30:00.000Z",
+    "keyword": ""
   },
   {
     "filename": "post_20260803_141324.json",
